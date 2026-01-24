@@ -10,23 +10,23 @@ const TECH_STACK_ROW_2 = [
 
 const TechStack: React.FC = () => {
   return (
-    <section className="py-12 bg-black border-y border-zinc-900 overflow-hidden relative">
-      
-      {/* Label */}
-      <div className="absolute left-0 top-0 bottom-0 z-10 bg-gradient-to-r from-black via-black/80 to-transparent w-20 md:w-40 flex items-center justify-center">
-        <span className="text-titanix-yellow/50 text-xs font-bold uppercase -rotate-90 whitespace-nowrap tracking-widest">
+    <section className="py-16 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-900/50 to-zinc-950" />
+      <div className="absolute inset-0 grid-bg opacity-30" />
+
+      <div className="absolute left-0 top-0 bottom-0 z-10 w-32 md:w-60 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent flex items-center justify-center">
+        <span className="text-yellow-500/40 text-xs font-bold uppercase -rotate-90 whitespace-nowrap tracking-[0.3em]">
           Core Technologies
         </span>
       </div>
-      <div className="absolute right-0 top-0 bottom-0 z-10 bg-gradient-to-l from-black via-black/80 to-transparent w-20 md:w-40"></div>
+      <div className="absolute right-0 top-0 bottom-0 z-10 w-32 md:w-60 bg-gradient-to-l from-zinc-950 via-zinc-950/80 to-transparent" />
 
-      <div className="flex flex-col gap-6">
-        {/* Row 1: Forward Scroll */}
+      <div className="flex flex-col gap-8 relative">
         <div className="flex whitespace-nowrap overflow-hidden">
           <div className="flex animate-scroll hover:[animation-play-state:paused]">
             {[...TECH_STACK_ROW_1, ...TECH_STACK_ROW_1, ...TECH_STACK_ROW_1].map((tech, i) => (
-              <div key={i} className="mx-8 group cursor-default">
-                <span className="font-display text-4xl md:text-5xl font-bold text-zinc-800 uppercase transition-colors duration-300 group-hover:text-titanix-yellow group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]">
+              <div key={i} className="mx-6 md:mx-10 group cursor-default">
+                <span className="font-display text-4xl md:text-6xl font-bold text-zinc-800 uppercase transition-all duration-500 group-hover:text-yellow-400 group-hover:drop-shadow-[0_0_20px_rgba(250,204,21,0.5)]">
                   {tech}
                 </span>
               </div>
@@ -34,12 +34,11 @@ const TechStack: React.FC = () => {
           </div>
         </div>
 
-        {/* Row 2: Reverse Scroll */}
         <div className="flex whitespace-nowrap overflow-hidden">
-           <div className="flex animate-scroll-reverse hover:[animation-play-state:paused]">
+          <div className="flex animate-scroll-reverse hover:[animation-play-state:paused]">
             {[...TECH_STACK_ROW_2, ...TECH_STACK_ROW_2, ...TECH_STACK_ROW_2].map((tech, i) => (
-              <div key={i} className="mx-8 group cursor-default">
-                 <span className="font-display text-4xl md:text-5xl font-bold text-zinc-800/50 uppercase transition-colors duration-300 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
+              <div key={i} className="mx-6 md:mx-10 group cursor-default">
+                <span className="font-display text-4xl md:text-6xl font-bold text-zinc-700/40 uppercase transition-all duration-500 group-hover:text-amber-400 group-hover:drop-shadow-[0_0_20px_rgba(245,158,11,0.5)]">
                   {tech}
                 </span>
               </div>
