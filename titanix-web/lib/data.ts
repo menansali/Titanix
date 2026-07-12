@@ -19,6 +19,8 @@ export interface Project {
   tech: string[];
   /** Local app-icon path under /public/apps. Falls back to a monogram tile. */
   icon?: string;
+  /** Themed generated app-icon (inline SVG) for apps without an exported icon. */
+  art?: 'lipstick' | 'visitly' | 'gymbuddy';
 }
 
 export interface Stat {
@@ -98,6 +100,7 @@ export const PROJECTS: Project[] = [
     category: 'iOS · AI',
     year: '2025',
     status: 'Shipped',
+    art: 'lipstick',
     description:
       'Snap a selfie and get AI-personalized lipstick shades with an AR-style virtual try-on — fully on-device face, skin, and lip analysis.',
     tech: ['SwiftUI', 'CoreML', 'Vision', 'AVFoundation', 'StoreKit'],
@@ -116,31 +119,12 @@ export const PROJECTS: Project[] = [
 
   // ── In development ─────────────────────────────────────────
   {
-    id: 6,
-    title: 'SheetGenius AI',
-    category: 'iOS · AI',
-    year: '2025',
-    status: 'In Development',
-    description:
-      'An AI spreadsheet assistant that turns natural language into Excel formulas, converts PDFs to Excel, and cleans, debugs and analyzes data via chat.',
-    tech: ['SwiftUI', 'Firebase', 'Cloud Functions', 'RevenueCat'],
-  },
-  {
-    id: 7,
-    title: 'ExploreNMK',
-    category: 'iOS · Travel',
-    year: '2026',
-    status: 'In Development',
-    description:
-      'A travel guide to North Macedonia — 52+ locations with maps, curated multi-day itineraries, events, and full four-language support.',
-    tech: ['SwiftUI', 'SwiftData', 'MapKit', 'CoreLocation'],
-  },
-  {
     id: 8,
     title: 'Visitly',
     category: 'iOS · Travel',
     year: '2025',
     status: 'In Development',
+    art: 'visitly',
     description:
       'Mark the countries you’ve visited on an interactive world map, log places within each, and share a visual stats card of your journey.',
     tech: ['SwiftUI', 'MapKit', 'CoreLocation', 'Combine'],
@@ -151,68 +135,17 @@ export const PROJECTS: Project[] = [
     category: 'iOS · Health & Fitness',
     year: '2025',
     status: 'In Development',
+    art: 'gymbuddy',
     description:
       'An accountability app for gym beginners — matches you with a workout partner, guides sessions, and tracks streaks so you actually show up.',
     tech: ['SwiftUI', 'Combine', 'CoreLocation', 'Firebase'],
-  },
-  {
-    id: 10,
-    title: 'FlipFrenzy',
-    category: 'iOS · Games',
-    year: '2026',
-    status: 'In Development',
-    description:
-      'A physics-based arcade game — flick escalating objects onto targets for points, with daily challenges, slow-mo replays, and Game Center leaderboards.',
-    tech: ['SpriteKit', 'GameplayKit', 'CoreHaptics', 'GameKit', 'StoreKit 2'],
-  },
-  {
-    id: 11,
-    title: 'Response',
-    category: 'iOS · Games',
-    year: '2026',
-    status: 'In Development',
-    description:
-      'An offline narrative game where the story adapts to how you behave under pressure via a player-modeling engine, with optional Apple Watch integration.',
-    tech: ['SwiftUI', 'SpriteKit', 'WatchConnectivity'],
-  },
-  {
-    id: 12,
-    title: 'iWallpaper',
-    category: 'macOS · Utilities',
-    year: '2025',
-    status: 'In Development',
-    description:
-      'A native macOS app for browsing and applying high-quality live video wallpapers, with per-monitor assignment and performance-aware playback.',
-    tech: ['SwiftUI', 'AppKit', 'Metal', 'AVFoundation', 'Supabase'],
-  },
-
-  // ── IoT / hardware ─────────────────────────────────────────
-  {
-    id: 13,
-    title: 'Env Monitor Pro',
-    category: 'IoT · Analytics',
-    year: '2024',
-    status: 'Shipped',
-    description:
-      'Automated indoor/outdoor air-quality monitoring — PM1, PM2.5, PM10 and humidity — visualized in live Grafana dashboards.',
-    tech: ['Raspberry Pi', 'Python', 'OPC-N3', 'Grafana', 'Bash'],
-  },
-  {
-    id: 14,
-    title: 'Edge LoRa Network',
-    category: 'Hardware · Embedded',
-    year: '2024',
-    status: 'Shipped',
-    description:
-      'Long-range, low-power sensor mesh on T-Beam and Nano 33 BLE with custom sleep cycles and efficient protocols.',
-    tech: ['C++', 'Arduino', 'LilyGO T-Beam', 'LoRa', 'Nano 33 BLE'],
   },
 ];
 
 export const STATS: Stat[] = [
   { value: '2021', label: 'Building since' },
   { value: '3', label: 'Core disciplines' },
-  { value: '14', label: 'Products built' },
+  { value: '10+', label: 'Products built' },
   { value: '∞', label: 'Ideas in the lab' },
 ];
 

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { PROJECTS } from '@/lib/data';
 import Reveal from './ui/Reveal';
+import AppArt from './AppArt';
 
 // Fallback monogram gradients for apps without an exported icon.
 const ACCENTS = [
@@ -23,7 +24,7 @@ export default function Work() {
         </div>
         <p className="max-w-sm text-titanix-muted">
           A slice of the Titanix lab — native iOS apps across lifestyle, AI,
-          travel and games, plus the IoT systems that started it all.
+          beauty, travel and fitness.
         </p>
       </Reveal>
 
@@ -39,6 +40,8 @@ export default function Work() {
                   <div className="relative h-16 w-16 overflow-hidden rounded-[1.15rem] border border-titanix-border shadow-glow">
                     <Image src={p.icon} alt={`${p.title} app icon`} fill sizes="64px" className="object-cover" />
                   </div>
+                ) : p.art ? (
+                  <AppArt name={p.art} className="h-16 w-16 rounded-[1.15rem] shadow-glow" />
                 ) : (
                   <div
                     className={`flex h-16 w-16 items-center justify-center rounded-[1.15rem] bg-gradient-to-br ${ACCENTS[i % ACCENTS.length]} shadow-glow`}
