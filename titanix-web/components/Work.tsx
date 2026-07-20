@@ -23,8 +23,8 @@ export default function Work() {
           </h2>
         </div>
         <p className="max-w-sm text-titanix-muted">
-          A slice of the Titanix lab — native iOS apps across lifestyle, AI,
-          beauty, travel and fitness.
+          A slice of the Titanix lab — native iOS apps and SaaS platforms
+          across lifestyle, AI, beauty, health, and hospitality.
         </p>
       </Reveal>
 

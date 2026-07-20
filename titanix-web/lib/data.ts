@@ -107,38 +107,36 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 5,
-    title: 'AirPollution NMK',
+    title: 'Aer',
     category: 'iOS · Health · IoT',
-    year: '2025',
+    year: '2026',
     status: 'Shipped',
-    icon: '/apps/airpollution.png',
+    icon: '/apps/aer.png',
     description:
-      'Real-time air-quality monitoring with 7-day AQI forecasts for 35 cities, personalized health guidance, maps, alerts, and home-screen widgets.',
-    tech: ['SwiftUI', 'WidgetKit', 'FastAPI', 'PostgreSQL', 'ML Forecasting'],
-  },
-
-  // ── In development ─────────────────────────────────────────
-  {
-    id: 8,
-    title: 'Visitly',
-    category: 'iOS · Travel',
-    year: '2025',
-    status: 'In Development',
-    art: 'visitly',
-    description:
-      'Mark the countries you’ve visited on an interactive world map, log places within each, and share a visual stats card of your journey.',
-    tech: ['SwiftUI', 'MapKit', 'CoreLocation', 'Combine'],
+      'Real-time air-quality monitoring with 7-day AQI forecasts across 35 cities — personalized health guidance, maps, alerts, and home-screen widgets, backed by a FastAPI + ML forecasting pipeline.',
+    tech: ['SwiftUI', 'WidgetKit', 'FastAPI', 'PostgreSQL', 'scikit-learn'],
   },
   {
-    id: 9,
-    title: 'GymBuddy',
-    category: 'iOS · Health & Fitness',
-    year: '2025',
-    status: 'In Development',
-    art: 'gymbuddy',
+    id: 6,
+    title: 'PetPortraits',
+    category: 'iOS · AI',
+    year: '2026',
+    status: 'Shipped',
+    icon: '/apps/petportraits.png',
     description:
-      'An accountability app for gym beginners — matches you with a workout partner, guides sessions, and tracks streaks so you actually show up.',
-    tech: ['SwiftUI', 'Combine', 'CoreLocation', 'Firebase'],
+      'One photo of any pet becomes a gallery-grade AI portrait in ~20 seconds — Renaissance oils, film noir, watercolor and more — with on-device styling, StoreKit 2 subscriptions, and print upsells.',
+    tech: ['SwiftUI', 'StoreKit 2', 'Gemini Image', 'Vercel Functions'],
+  },
+  {
+    id: 7,
+    title: 'skeniraj.mk',
+    category: 'SaaS · Hospitality',
+    year: '2026',
+    status: 'Shipped',
+    icon: '/apps/skeniraj.png',
+    description:
+      'A QR-menu platform for restaurants, bars, cafés, hotels, and food trucks — build a menu once, share it via a scannable code, and manage it all from a multi-tenant dashboard with billing.',
+    tech: ['Next.js', 'tRPC', 'Drizzle', 'PostgreSQL', 'Stripe'],
   },
 ];
 

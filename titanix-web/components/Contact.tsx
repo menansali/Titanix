@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <section id="contact" className="section">
       <Reveal>
-        <div className="relative overflow-hidden rounded-[2.5rem] border border-titanix-border bg-void-fade p-10 text-center sm:p-16">
+        <div className="relative overflow-hidden rounded-[2rem] border border-titanix-border bg-void-fade p-7 text-center sm:rounded-[2.5rem] sm:p-16">
           <div className="pointer-events-none absolute inset-0 grid-backdrop opacity-60" />
           <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-titanix-violet/20 blur-[100px]" />
 
@@ -20,10 +20,10 @@ export default function Contact() {
             </p>
 
             <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-              <a href={`mailto:${CONTACT.email}`} className="btn-primary group">
-                <Mail size={16} />
-                {CONTACT.email}
-                <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+              <a href={`mailto:${CONTACT.email}`} className="btn-primary group w-full max-w-xs justify-center !px-5 text-[0.9rem] sm:w-auto sm:max-w-none sm:!px-7 sm:text-sm">
+                <Mail size={16} className="shrink-0" />
+                <span className="truncate">{CONTACT.email}</span>
+                <ArrowRight size={15} className="shrink-0 transition-transform group-hover:translate-x-1" />
               </a>
             </div>
 

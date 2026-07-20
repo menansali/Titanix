@@ -22,7 +22,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex gap-16">
+          <div className="flex gap-10 sm:gap-16">
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-widest text-titanix-faint">
                 Navigate

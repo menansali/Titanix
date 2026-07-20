@@ -21,7 +21,7 @@ export default function Focus() {
           const Icon = p.icon;
           return (
             <Reveal key={p.id} delay={i * 0.1}>
-              <div className="group relative h-full overflow-hidden rounded-3xl glass p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-titanix-glow/30">
+              <div className="group relative h-full overflow-hidden rounded-3xl glass p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-titanix-glow/30 sm:p-8">
                 {/* Hover glow */}
                 <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-titanix-violet/20 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
 

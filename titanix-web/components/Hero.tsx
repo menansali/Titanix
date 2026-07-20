@@ -16,8 +16,8 @@ const fade = {
 
 export default function Hero() {
   return (
-    <section id="top" className="relative flex min-h-screen items-center overflow-hidden pt-28">
-      <div className="section !py-0">
+    <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 sm:pt-28">
+      <div className="section w-full min-w-0 !py-0">
         {/* Floating prism */}
         <motion.div
           className="pointer-events-none absolute right-4 top-24 hidden opacity-90 lg:block xl:right-16"
@@ -30,7 +30,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        <div className="relative z-10 max-w-3xl">
+        <div className="relative z-10 w-full min-w-0 max-w-3xl">
           <motion.div variants={fade} custom={0} initial="hidden" animate="show">
             <span className="eyebrow">
               <Flame size={13} className="text-titanix-glow" />
@@ -43,7 +43,7 @@ export default function Hero() {
             custom={1}
             initial="hidden"
             animate="show"
-            className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl"
+            className="mt-6 font-display text-[2.5rem] font-bold leading-[1.05] tracking-tight [text-wrap:balance] sm:text-6xl md:text-7xl"
           >
             We forge{' '}
             <span className="text-gradient">iOS apps</span>,{' '}
@@ -56,7 +56,7 @@ export default function Hero() {
             custom={2}
             initial="hidden"
             animate="show"
-            className="mt-7 max-w-xl text-lg leading-relaxed text-titanix-muted"
+            className="mt-6 max-w-xl text-base leading-relaxed text-titanix-muted sm:mt-7 sm:text-lg"
           >
             Titanix is a product studio turning bold ideas into real, shipped
             software — from native iOS experiences and scalable SaaS platforms
@@ -68,13 +68,13 @@ export default function Hero() {
             custom={3}
             initial="hidden"
             animate="show"
-            className="mt-9 flex flex-wrap items-center gap-4"
+            className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
           >
-            <a href="#contact" className="btn-primary group">
+            <a href="#contact" className="btn-primary group w-full sm:w-auto">
               Start a project
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="#work" className="btn-ghost">
+            <a href="#work" className="btn-ghost w-full sm:w-auto">
               See the work
             </a>
           </motion.div>
@@ -85,7 +85,7 @@ export default function Hero() {
             custom={4}
             initial="hidden"
             animate="show"
-            className="mt-16 grid max-w-lg grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4"
+            className="mt-12 grid max-w-lg grid-cols-2 gap-x-8 gap-y-6 sm:mt-16 sm:grid-cols-4"
           >
             {STATS.map((s) => (
               <div key={s.label}>
