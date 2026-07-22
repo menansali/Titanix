@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { PROJECTS } from '@/lib/data';
 import Reveal from './ui/Reveal';
+import TiltCard from './ui/TiltCard';
 import AppArt from './AppArt';
 
 // Fallback monogram gradients for apps without an exported icon.
@@ -28,7 +29,8 @@ export default function Work() {
 
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {PROJECTS.map((p, i) => (
-          <Reveal key={p.id} delay={(i % 3) * 0.08}>
+          <Reveal key={p.id} delay={(i % 3) * 0.08} className="h-full">
+            <TiltCard className="h-full">
             <article className="group relative flex h-full flex-col rounded-3xl glass p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-titanix-glow/30">
               {/* Hover glow */}
               <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-titanix-yellow/15 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
@@ -83,6 +85,7 @@ export default function Work() {
                 ))}
               </div>
             </article>
+            </TiltCard>
           </Reveal>
         ))}
       </div>

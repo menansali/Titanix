@@ -1,22 +1,29 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Flame } from 'lucide-react';
 import { MARK_SHAPES } from './Logo';
+import Magnetic from './ui/Magnetic';
 import { STATS } from '@/lib/data';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function AnimatedMark({ size }: { size: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" fill="none" aria-hidden="true">
       {MARK_SHAPES.map((s, i) => (
-        <motion.polygon
-          key={i}
-          points={s.points}
-          fill={s.fill}
-          initial={{ opacity: 0, x: 24, y: -24 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 + i * 0.14, ease: [0.21, 0.47, 0.32, 0.98] }}
-        />
+        <g key={i} data-chev={i}>
+          <motion.polygon
+            points={s.points}
+            fill={s.fill}
+            initial={{ opacity: 0, x: 24, y: -24 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 + i * 0.14, ease: [0.21, 0.47, 0.32, 0.98] }}
+          />
+        </g>
       ))}
     </svg>
   );
@@ -32,6 +39,32 @@ const fade = {
 };
 
 export default function Hero() {
+  const prismRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-driven: the mark drifts down slower than the page (parallax) while
+  // its four chevrons spread apart, scrubbed to scroll position.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = gsap.context(() => {
+      const scrub = {
+        trigger: '#top',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      };
+      gsap.to(prismRef.current, { yPercent: 45, ease: 'none', scrollTrigger: scrub });
+      gsap.utils.toArray<SVGGElement>('[data-chev]').forEach((el, i) => {
+        gsap.to(el, {
+          x: (i - 1.5) * 7,
+          y: (i - 1.5) * 15,
+          ease: 'none',
+          scrollTrigger: scrub,
+        });
+      });
+    }, prismRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 sm:pt-28">
       <div className="section w-full min-w-0 !py-0">
@@ -42,8 +75,10 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
         >
-          <div className="animate-floaty drop-shadow-[0_0_60px_rgba(239,226,0,0.35)]">
-            <AnimatedMark size={240} />
+          <div ref={prismRef}>
+            <div className="animate-floaty drop-shadow-[0_0_60px_rgba(239,226,0,0.35)]">
+              <AnimatedMark size={240} />
+            </div>
           </div>
         </motion.div>
 
@@ -87,13 +122,17 @@ export default function Hero() {
             animate="show"
             className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
           >
-            <a href="#contact" className="btn-primary group w-full sm:w-auto">
-              Start a project
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </a>
-            <a href="#work" className="btn-ghost w-full sm:w-auto">
-              See the work
-            </a>
+            <Magnetic className="w-full sm:w-auto">
+              <a href="#contact" className="btn-primary group w-full sm:w-auto">
+                Start a project
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </a>
+            </Magnetic>
+            <Magnetic className="w-full sm:w-auto">
+              <a href="#work" className="btn-ghost w-full sm:w-auto">
+                See the work
+              </a>
+            </Magnetic>
           </motion.div>
 
           {/* Stats */}

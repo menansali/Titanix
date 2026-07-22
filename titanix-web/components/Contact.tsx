@@ -1,6 +1,7 @@
 import { Mail, MessageCircle, Instagram, ArrowRight } from 'lucide-react';
 import { CONTACT } from '@/lib/data';
 import Reveal from './ui/Reveal';
+import Magnetic from './ui/Magnetic';
 
 export default function Contact() {
   return (
@@ -20,30 +21,36 @@ export default function Contact() {
             </p>
 
             <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-              <a href={`mailto:${CONTACT.email}`} className="btn-primary group w-full max-w-xs justify-center !px-5 text-[0.9rem] sm:w-auto sm:max-w-none sm:!px-7 sm:text-sm">
-                <Mail size={16} className="shrink-0" />
-                <span className="truncate">{CONTACT.email}</span>
-                <ArrowRight size={15} className="shrink-0 transition-transform group-hover:translate-x-1" />
-              </a>
+              <Magnetic className="w-full max-w-xs sm:w-auto sm:max-w-none">
+                <a href={`mailto:${CONTACT.email}`} className="btn-primary group w-full justify-center !px-5 text-[0.9rem] sm:w-auto sm:!px-7 sm:text-sm">
+                  <Mail size={16} className="shrink-0" />
+                  <span className="truncate">{CONTACT.email}</span>
+                  <ArrowRight size={15} className="shrink-0 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Magnetic>
             </div>
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href={CONTACT.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost"
-              >
-                <MessageCircle size={16} /> WhatsApp
-              </a>
-              <a
-                href={CONTACT.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost"
-              >
-                <Instagram size={16} /> {CONTACT.instagram}
-              </a>
+              <Magnetic>
+                <a
+                  href={CONTACT.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost"
+                >
+                  <MessageCircle size={16} /> WhatsApp
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href={CONTACT.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost"
+                >
+                  <Instagram size={16} /> {CONTACT.instagram}
+                </a>
+              </Magnetic>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import Logo from './Logo';
+import Magnetic from './ui/Magnetic';
 
 const LINKS = [
   { label: 'Focus', href: '#focus' },
@@ -50,9 +51,11 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:block">
-            <a href="#contact" className="btn-primary !py-2.5 !px-6">
-              Start a project
-            </a>
+            <Magnetic strength={7}>
+              <a href="#contact" className="btn-primary !py-2.5 !px-6">
+                Start a project
+              </a>
+            </Magnetic>
           </div>
 
           <button
