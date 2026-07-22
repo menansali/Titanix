@@ -5,11 +5,9 @@ import AppArt from './AppArt';
 
 // Fallback monogram gradients for apps without an exported icon.
 const ACCENTS = [
-  'from-violet-500 to-indigo-500',
-  'from-fuchsia-500 to-violet-600',
-  'from-indigo-500 to-blue-500',
-  'from-purple-500 to-pink-500',
-  'from-violet-600 to-cyan-500',
+  'from-titanix-glow to-titanix-gold',
+  'from-white to-[#CFCFC4]',
+  'from-titanix-yellow to-titanix-gold',
 ];
 
 export default function Work() {
@@ -33,7 +31,7 @@ export default function Work() {
           <Reveal key={p.id} delay={(i % 3) * 0.08}>
             <article className="group relative flex h-full flex-col rounded-3xl glass p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-titanix-glow/30">
               {/* Hover glow */}
-              <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-titanix-violet/20 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-titanix-yellow/15 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
 
               <div className="relative flex items-start justify-between">
                 {p.icon ? (
@@ -46,7 +44,7 @@ export default function Work() {
                   <div
                     className={`flex h-16 w-16 items-center justify-center rounded-[1.15rem] bg-gradient-to-br ${ACCENTS[i % ACCENTS.length]} shadow-glow`}
                   >
-                    <span className="font-display text-2xl font-bold text-white">
+                    <span className="font-display text-2xl font-bold text-black">
                       {p.title.charAt(0)}
                     </span>
                   </div>
@@ -55,8 +53,8 @@ export default function Work() {
                 <span
                   className={`rounded-full px-3 py-1 text-xs font-medium ${
                     p.status === 'Shipped'
-                      ? 'bg-titanix-glow/15 text-titanix-glow'
-                      : 'bg-titanix-cyan/15 text-titanix-cyan'
+                      ? 'bg-titanix-yellow/15 text-titanix-glow'
+                      : 'bg-white/10 text-white/80'
                   }`}
                 >
                   {p.status}

@@ -8,7 +8,7 @@ export default function Contact() {
       <Reveal>
         <div className="relative overflow-hidden rounded-[2rem] border border-titanix-border bg-void-fade p-7 text-center sm:rounded-[2.5rem] sm:p-16">
           <div className="pointer-events-none absolute inset-0 grid-backdrop opacity-60" />
-          <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-titanix-violet/20 blur-[100px]" />
+          <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-titanix-yellow/15 blur-[100px]" />
 
           <div className="relative">
             <h2 className="mx-auto max-w-2xl font-display text-4xl font-bold tracking-tight sm:text-6xl">

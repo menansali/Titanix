@@ -2,8 +2,25 @@
 
 import { motion } from 'framer-motion';
 import { ArrowRight, Flame } from 'lucide-react';
-import { ActiveMark } from './Logo';
+import { MARK_SHAPES } from './Logo';
 import { STATS } from '@/lib/data';
+
+function AnimatedMark({ size }: { size: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      {MARK_SHAPES.map((s, i) => (
+        <motion.polygon
+          key={i}
+          points={s.points}
+          fill={s.fill}
+          initial={{ opacity: 0, x: 24, y: -24 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5 + i * 0.14, ease: [0.21, 0.47, 0.32, 0.98] }}
+        />
+      ))}
+    </svg>
+  );
+}
 
 const fade = {
   hidden: { opacity: 0, y: 26 },
@@ -25,8 +42,8 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
         >
-          <div className="animate-floaty drop-shadow-[0_0_60px_rgba(124,58,237,0.5)]">
-            <ActiveMark size={240} />
+          <div className="animate-floaty drop-shadow-[0_0_60px_rgba(239,226,0,0.35)]">
+            <AnimatedMark size={240} />
           </div>
         </motion.div>
 

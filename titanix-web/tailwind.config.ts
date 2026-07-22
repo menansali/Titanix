@@ -8,19 +8,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Titanix rebrand — violet + indigo on deep violet-black
+        // Titanix brand — logo yellow + white on near-black
         titanix: {
-          void: '#0B0A14',   // primary background
-          deep: '#100E1D',    // slightly raised surfaces
-          panel: 'rgba(23, 21, 40, 0.6)', // glass panels
-          border: 'rgba(139, 122, 255, 0.14)',
-          violet: '#7C3AED',
-          indigo: '#6366F1',
-          glow: '#8B5CF6',
-          cyan: '#22D3EE',    // rare secondary spark
-          text: '#FAFAFA',
-          muted: '#A1A1AA',
-          faint: '#6B6B78',
+          void: '#0A0A08',   // primary background
+          deep: '#12120C',    // slightly raised surfaces
+          panel: 'rgba(26, 26, 18, 0.6)', // glass panels
+          border: 'rgba(239, 226, 0, 0.14)',
+          yellow: '#EFE200',  // primary accent, sampled from the logo
+          gold: '#C7BC00',    // darker yellow for gradient depth
+          glow: '#F6EB2E',    // lighter yellow highlight
+          text: '#FAFAF5',
+          muted: '#A8A89E',
+          faint: '#6E6E64',
         },
       },
       fontFamily: {
@@ -29,13 +28,13 @@ const config: Config = {
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       backgroundImage: {
-        'brand-gradient': 'linear-gradient(120deg, #7C3AED 0%, #6366F1 55%, #8B5CF6 100%)',
-        'brand-text': 'linear-gradient(120deg, #C4B5FD 0%, #A78BFA 40%, #818CF8 100%)',
-        'void-fade': 'radial-gradient(120% 120% at 50% 0%, #1A1533 0%, #0B0A14 60%)',
+        'brand-gradient': 'linear-gradient(120deg, #F6EB2E 0%, #EFE200 55%, #C7BC00 100%)',
+        'brand-text': 'linear-gradient(120deg, #FFF9A8 0%, #F6EB2E 40%, #EFE200 100%)',
+        'void-fade': 'radial-gradient(120% 120% at 50% 0%, #1C1B0E 0%, #0A0A08 60%)',
       },
       boxShadow: {
-        glow: '0 0 40px -8px rgba(124, 58, 237, 0.45)',
-        'glow-lg': '0 0 80px -12px rgba(124, 58, 237, 0.55), 0 0 32px -8px rgba(99, 102, 241, 0.4)',
+        glow: '0 0 40px -8px rgba(239, 226, 0, 0.35)',
+        'glow-lg': '0 0 80px -12px rgba(239, 226, 0, 0.45), 0 0 32px -8px rgba(246, 235, 46, 0.3)',
         glass: '0 8px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.04)',
       },
       keyframes: {

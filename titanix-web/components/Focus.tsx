@@ -23,10 +23,10 @@ export default function Focus() {
             <Reveal key={p.id} delay={i * 0.1}>
               <div className="group relative h-full overflow-hidden rounded-3xl glass p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-titanix-glow/30 sm:p-8">
                 {/* Hover glow */}
-                <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-titanix-violet/20 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-titanix-yellow/15 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
 
                 <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-gradient shadow-glow">
-                  <Icon size={22} className="text-white" strokeWidth={2} />
+                  <Icon size={22} className="text-black" strokeWidth={2} />
                 </div>
 
                 <h3 className="mt-6 font-display text-2xl font-bold">{p.title}</h3>
