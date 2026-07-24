@@ -1,0 +1,25 @@
+# Titanix
+
+> Titanix is a product studio (est. 2021) that designs and ships iOS apps, SaaS platforms, and IoT systems — from bare metal and embedded firmware to the App Store and cloud. Website: https://titanix.dev
+
+## What we do
+
+- **iOS Apps** — Native iOS applications in Swift & SwiftUI: on-device and cloud AI, WidgetKit, Live Activities, StoreKit subscriptions, full App Store launches.
+- **SaaS Platforms** — End-to-end web products: auth, billing, multi-tenant dashboards, APIs, real-time data. Typical stack: Next.js, TypeScript, PostgreSQL, Stripe.
+- **IoT Systems** — Hardware + software: embedded firmware, LoRa/edge networks, sensor data pipelines, live telemetry.
+
+## Shipped products
+
+- **Lovly** (iOS, Lifestyle) — couples app with a shared live-drawing canvas that appears on each partner's Lock Screen.
+- **Memopix** (iOS, Photo & Video) — turns photos into shaped photo-collage keepsakes ready to print or gift.
+- **Spiritual Growth: Muslim Ref** (iOS, Lifestyle) — offline-first Islamic companion: prayer times, Qibla compass, Tasbih, Hijri calendar, widgets.
+- **Lipstick Finder** (iOS, AI) — on-device AI lipstick-shade matching from a selfie with AR-style try-on.
+- **Aer** (iOS, Health/IoT) — real-time air-quality monitoring with 7-day ML-powered AQI forecasts across 35 cities.
+- **PetPortraits** (iOS, AI) — turns one pet photo into gallery-grade AI portraits in ~20 seconds.
+- **skeniraj.mk** (SaaS, Hospitality) — QR-menu platform for restaurants and hotels with a multi-tenant dashboard and billing.
+
+## Contact
+
+- Email: contact@titanix.dev
+- WhatsApp: +372 5395 1655
+- Instagram: https://instagram.com/titanixdev
