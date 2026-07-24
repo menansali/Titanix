@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://titanix.dev/sitemap.xml',
+    sitemap: 'https://www.titanix.dev/sitemap.xml',
   };
 }

@@ -1,6 +1,6 @@
 # Titanix
 
-> Titanix is a product studio (est. 2021) that designs and ships iOS apps, SaaS platforms, and IoT systems — from bare metal and embedded firmware to the App Store and cloud. Website: https://titanix.dev
+> Titanix is a product studio (est. 2021) that designs and ships iOS apps, SaaS platforms, and IoT systems — from bare metal and embedded firmware to the App Store and cloud. Website: https://www.titanix.dev
 
 ## What we do
 

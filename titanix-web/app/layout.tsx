@@ -21,7 +21,8 @@ const mono = JetBrains_Mono({
   display: 'swap',
 });
 
-const SITE_URL = 'https://titanix.dev';
+// www is the primary host in Vercel (apex 307-redirects to it) — keep in sync.
+const SITE_URL = 'https://www.titanix.dev';
 const SITE_NAME = 'Titanix';
 const SITE_TITLE = 'Titanix — iOS Apps, SaaS & IoT Studio';
 const SITE_DESCRIPTION =
