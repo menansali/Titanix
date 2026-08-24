@@ -10,13 +10,12 @@
 
 ## Shipped products
 
-- **Lovly** (iOS, Lifestyle) — couples app with a shared live-drawing canvas that appears on each partner's Lock Screen.
-- **Memopix** (iOS, Photo & Video) — turns photos into shaped photo-collage keepsakes ready to print or gift.
-- **Spiritual Growth: Muslim Ref** (iOS, Lifestyle) — offline-first Islamic companion: prayer times, Qibla compass, Tasbih, Hijri calendar, widgets.
-- **Lipstick Finder** (iOS, AI) — on-device AI lipstick-shade matching from a selfie with AR-style try-on.
-- **Aer** (iOS, Health/IoT) — real-time air-quality monitoring with 7-day ML-powered AQI forecasts across 35 cities.
-- **PetPortraits** (iOS, AI) — turns one pet photo into gallery-grade AI portraits in ~20 seconds.
-- **skeniraj.mk** (SaaS, Hospitality) — QR-menu platform for restaurants and hotels with a multi-tenant dashboard and billing.
+- **Lovly** (iOS, Lifestyle/Social) — couples app with a shared drawing canvas, moods and love notes on each partner's Lock Screen. https://apps.apple.com/app/id6760272304
+- **Memopix** (iOS, Photo & Video) — turns 20-60 photos into shaped photo-collage keepsakes, print-ready as PNG, JPEG or PDF. https://apps.apple.com/app/id6789686385
+- **Qaza Qada: Missed Salah** (iOS, Lifestyle) — estimates missed prayers, builds a make-up plan, and keeps the remaining count on the Lock Screen; also daily verses, offline prayer times, Qibla and Tasbih. https://apps.apple.com/app/id6757791803
+- **Aer: Air Quality** (iOS, Weather/Health) — live AQI for 35 cities in North Macedonia with a 7-day Copernicus (CAMS) forecast, alerts and widgets. https://apps.apple.com/app/id6790945433
+- **Pet Portraits** (iOS, AI) — turns one dog or cat photo into gallery-grade AI portraits and animated Living Portraits. https://apps.apple.com/app/id6793742748
+- **skeniraj.mk** (SaaS, Hospitality) — QR-menu platform for restaurants and hotels with a multi-tenant dashboard and billing. https://skeniraj.mk
 
 ## Contact
 

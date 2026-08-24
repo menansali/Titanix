@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { ArrowUpRight } from 'lucide-react';
 import { PROJECTS } from '@/lib/data';
 import Reveal from './ui/Reveal';
 import TiltCard from './ui/TiltCard';
@@ -10,6 +11,12 @@ const ACCENTS = [
   'from-white to-[#CFCFC4]',
   'from-titanix-yellow to-titanix-gold',
 ];
+
+const CARD =
+  'group relative flex h-full flex-col rounded-3xl glass p-6 transition-all duration-300 ' +
+  'hover:-translate-y-1.5 hover:border-titanix-glow/30 focus-visible:outline-none ' +
+  'focus-visible:ring-2 focus-visible:ring-titanix-glow/60 focus-visible:ring-offset-2 ' +
+  'focus-visible:ring-offset-titanix-void';
 
 export default function Work() {
   return (
@@ -23,15 +30,14 @@ export default function Work() {
         </div>
         <p className="max-w-sm text-titanix-muted">
           A slice of the Titanix lab — native iOS apps and SaaS platforms
-          across lifestyle, AI, beauty, health, and hospitality.
+          across lifestyle, photography, AI, health, and hospitality.
         </p>
       </Reveal>
 
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {PROJECTS.map((p, i) => (
-          <Reveal key={p.id} delay={(i % 3) * 0.08} className="h-full">
-            <TiltCard className="h-full">
-            <article className="group relative flex h-full flex-col rounded-3xl glass p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-titanix-glow/30">
+        {PROJECTS.map((p, i) => {
+          const body = (
+            <>
               {/* Hover glow */}
               <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-titanix-yellow/15 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
 
@@ -52,15 +58,24 @@ export default function Work() {
                   </div>
                 )}
 
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-medium ${
-                    p.status === 'Shipped'
-                      ? 'bg-titanix-yellow/15 text-titanix-glow'
-                      : 'bg-white/10 text-white/80'
-                  }`}
-                >
-                  {p.status}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      p.status === 'Shipped'
+                        ? 'bg-titanix-yellow/15 text-titanix-glow'
+                        : 'bg-white/10 text-white/80'
+                    }`}
+                  >
+                    {p.status}
+                  </span>
+                  {p.url && (
+                    <ArrowUpRight
+                      size={16}
+                      aria-hidden="true"
+                      className="shrink-0 text-titanix-glow opacity-40 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="relative mt-5 flex items-baseline justify-between gap-3">
@@ -84,10 +99,29 @@ export default function Work() {
                   </span>
                 ))}
               </div>
-            </article>
-            </TiltCard>
-          </Reveal>
-        ))}
+            </>
+          );
+
+          return (
+            <Reveal key={p.id} delay={(i % 3) * 0.08} className="h-full">
+              <TiltCard className="h-full">
+                {p.url ? (
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${p.title} — opens in a new tab`}
+                    className={CARD}
+                  >
+                    {body}
+                  </a>
+                ) : (
+                  <article className={CARD}>{body}</article>
+                )}
+              </TiltCard>
+            </Reveal>
+          );
+        })}
       </div>
     </section>
   );

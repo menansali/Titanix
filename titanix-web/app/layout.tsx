@@ -150,6 +150,7 @@ const structuredData = {
           applicationCategory: p.category,
           author: { '@id': `${SITE_URL}/#organization` },
           ...(p.icon ? { image: `${SITE_URL}${p.icon}` } : {}),
+          ...(p.url ? { url: p.url, installUrl: p.url } : {}),
         },
       })),
     },

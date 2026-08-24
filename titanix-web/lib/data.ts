@@ -19,6 +19,8 @@ export interface Project {
   tech: string[];
   /** Local app-icon path under /public/apps. Falls back to a monogram tile. */
   icon?: string;
+  /** App Store / product URL — makes the portfolio card clickable. */
+  url?: string;
   /** Themed generated app-icon (inline SVG) for apps without an exported icon. */
   art?: 'lipstick' | 'visitly' | 'gymbuddy';
 }
@@ -61,15 +63,17 @@ export const PILLARS: Pillar[] = [
 
 export const PROJECTS: Project[] = [
   // ── Shipped ────────────────────────────────────────────────
+  // Names, categories and copy mirror the live App Store listings.
   {
     id: 1,
     title: 'Lovly',
-    category: 'iOS · Lifestyle',
+    category: 'iOS · Lifestyle · Social',
     year: '2026',
     status: 'Shipped',
     icon: '/apps/lovly.png',
+    url: 'https://apps.apple.com/app/id6760272304',
     description:
-      'A couple app where partners draw together on one shared canvas that appears live on each other’s Lock Screen — plus moods, mini-messages, and shared moments.',
+      'A couples app that lives on the Lock Screen: one shared canvas both partners draw on, plus moods, mini love notes, a days-together counter and shared memories — no feed, no streaks, no ads.',
     tech: ['SwiftUI', 'WidgetKit', 'Live Activities', 'Firebase', 'RevenueCat'],
   },
   {
@@ -79,61 +83,55 @@ export const PROJECTS: Project[] = [
     year: '2026',
     status: 'Shipped',
     icon: '/apps/memopix.png',
+    url: 'https://apps.apple.com/app/id6789686385',
     description:
-      'Turns your photos into shaped photo-collage keepsakes — a heart made of 40 photos — ready to export or print as a gift.',
+      'Turns 20–60 photos into one shaped keepsake — a heart of wedding photos, a name or a year built from family moments — across 28 templates, with print-ready PNG, JPEG and PDF export.',
     tech: ['Swift 6', 'SwiftUI', 'Vision', 'PDFKit', 'StoreKit 2'],
   },
   {
     id: 3,
-    title: 'Spiritual Growth: Muslim Ref',
+    title: 'Qaza Qada: Missed Salah',
     category: 'iOS · Lifestyle',
     year: '2026',
     status: 'Shipped',
-    icon: '/apps/muslimref.png',
+    icon: '/apps/qazaqada.png',
+    url: 'https://apps.apple.com/app/id6757791803',
     description:
-      'A private, offline-first Islamic companion: daily verses and reflections, accurate prayer times, Qibla compass, digital Tasbih, Hijri calendar, and widgets.',
+      'Estimates how many prayers you owe — correctly subtracting the days most qada calculators get wrong — then builds a make-up plan at your own pace, with the remaining count on your Lock Screen, daily verses, and offline prayer times, Qibla and Tasbih.',
     tech: ['SwiftUI', 'WidgetKit', 'CoreLocation', 'RevenueCat'],
   },
   {
     id: 4,
-    title: 'Lipstick Finder',
-    category: 'iOS · AI',
-    year: '2025',
-    status: 'Shipped',
-    art: 'lipstick',
-    description:
-      'Snap a selfie and get AI-personalized lipstick shades with an AR-style virtual try-on — fully on-device face, skin, and lip analysis.',
-    tech: ['SwiftUI', 'CoreML', 'Vision', 'AVFoundation', 'StoreKit'],
-  },
-  {
-    id: 5,
     title: 'Aer',
-    category: 'iOS · Health · IoT',
+    category: 'iOS · Weather · Health',
     year: '2026',
     status: 'Shipped',
     icon: '/apps/aer.png',
+    url: 'https://apps.apple.com/app/id6790945433',
     description:
-      'Real-time air-quality monitoring with 7-day AQI forecasts across 35 cities — personalized health guidance, maps, alerts, and home-screen widgets, backed by a FastAPI + ML forecasting pipeline.',
+      'Live air quality for 35 cities across North Macedonia with a 7-day AQI forecast from the Copernicus (CAMS) model — plain-language health guidance, maps, alerts, widgets, and a Live Activity for pollution spikes.',
     tech: ['SwiftUI', 'WidgetKit', 'FastAPI', 'PostgreSQL', 'scikit-learn'],
   },
   {
-    id: 6,
-    title: 'PetPortraits',
+    id: 5,
+    title: 'Pet Portraits',
     category: 'iOS · AI',
     year: '2026',
     status: 'Shipped',
     icon: '/apps/petportraits.png',
+    url: 'https://apps.apple.com/app/id6793742748',
     description:
-      'One photo of any pet becomes a gallery-grade AI portrait in ~20 seconds — Renaissance oils, film noir, watercolor and more — with on-device styling, StoreKit 2 subscriptions, and print upsells.',
+      'One photo of a dog or cat becomes a gallery-grade AI portrait in seconds — 15+ styles from Renaissance oils to vintage noir — then animates into a shareable Living Portrait or a moving wallpaper.',
     tech: ['SwiftUI', 'StoreKit 2', 'Gemini Image', 'Vercel Functions'],
   },
   {
-    id: 7,
+    id: 6,
     title: 'skeniraj.mk',
     category: 'SaaS · Hospitality',
     year: '2026',
     status: 'Shipped',
     icon: '/apps/skeniraj.png',
+    url: 'https://skeniraj.mk',
     description:
       'A QR-menu platform for restaurants, bars, cafés, hotels, and food trucks — build a menu once, share it via a scannable code, and manage it all from a multi-tenant dashboard with billing.',
     tech: ['Next.js', 'tRPC', 'Drizzle', 'PostgreSQL', 'Stripe'],
