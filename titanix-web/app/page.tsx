@@ -9,7 +9,6 @@ import Focus from '@/components/Focus';
 import Work from '@/components/Work';
 import Process from '@/components/Process';
 import Studio from '@/components/Studio';
-import AskTitanix from '@/components/AskTitanix';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
@@ -28,7 +27,6 @@ export default function Home() {
         <Work />
         <Process />
         <Studio />
-        <AskTitanix />
         <Contact />
       </main>
       <Footer />

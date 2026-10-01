@@ -12,7 +12,7 @@ The Titanix website, live at https://www.titanix.dev. A product studio positione
 
 ## Stack
 
-Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 3 · Framer Motion · GSAP · lucide-react · Vercel Analytics · Anthropic SDK · next-view-transitions
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 3 · Framer Motion · GSAP · lucide-react · Vercel Analytics · next-view-transitions
 
 ## Commands
 
@@ -43,11 +43,10 @@ npm run lint      # eslint
 | `RESEND_API_KEY` | for the form to email | Without it, the form falls back to opening a pre-filled email. |
 | `CONTACT_FROM_EMAIL` | no | Sender address; must be on a domain verified in Resend. Default `Titanix Website <website@titanix.dev>`. |
 | `CONTACT_TO_EMAIL` | no | Where briefs go. Default `contact@titanix.dev`. |
-| `ANTHROPIC_API_KEY` | for Ask Titanix | Powers the AI scoper (`/api/scope`, model `claude-opus-5-5`). Without it the scoper shows an offline message. Set a monthly spend limit in the Anthropic Console. |
 
 ## Analytics
 
-Vercel Analytics is mounted in `app/layout.tsx` (enable it in the Vercel project's Analytics tab). Custom events: `Case study opened`, `Store link clicked`, `Contact clicked`, `Contact form submitted`, `Scope requested`, `Scope generated`, `Scope sent to brief`.
+Vercel Analytics is mounted in `app/layout.tsx` (enable it in the Vercel project's Analytics tab). Custom events: `Case study opened`, `Store link clicked`, `Contact clicked`, `Contact form submitted`.
 
 ## Design tokens
 

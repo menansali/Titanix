@@ -4,10 +4,6 @@ export const PROJECT_TYPES = ['iOS app', 'SaaS platform', 'IoT system', 'Somethi
 export const BUDGETS = ['Under €5k', '€5k–15k', '€15k–40k', '€40k+', 'Not sure yet'] as const;
 export const TIMELINES = ['As soon as possible', '1–3 months', '3+ months', 'Just exploring'] as const;
 
-// Length limits for the Ask Titanix idea box.
-export const IDEA_MIN = 15;
-export const IDEA_MAX = 1500;
-
 export interface Brief {
   name: string;
   email: string;

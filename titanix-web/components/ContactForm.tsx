@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { track } from '@vercel/analytics';
 import { CONTACT } from '@/lib/data';
-import { BRIEF_EVENT, type BriefPrefill } from './AskTitanix';
 import { BUDGETS, PROJECT_TYPES, TIMELINES, briefBody, briefSubject, type Brief } from '@/lib/contact';
 
 type State = 'idle' | 'sending' | 'sent' | 'mailto' | 'error';
@@ -45,27 +44,6 @@ function Choice({
 export default function ContactForm() {
   const [state, setState] = useState<State>('idle');
   const [error, setError] = useState('');
-  const formRef = useRef<HTMLFormElement>(null);
-
-  // "Send this to Titanix" in the AI scoper pre-fills the brief.
-  useEffect(() => {
-    function onBrief(e: Event) {
-      const { type, message } = (e as CustomEvent<BriefPrefill>).detail;
-      setState('idle');
-      // Wait a tick in case the form is re-mounting after a previous send.
-      requestAnimationFrame(() => {
-        const form = formRef.current;
-        if (!form) return;
-        const radio = form.querySelector<HTMLInputElement>(`input[name="type"][value="${CSS.escape(type)}"]`);
-        if (radio) radio.checked = true;
-        const textarea = form.elements.namedItem('message') as HTMLTextAreaElement | null;
-        if (textarea) textarea.value = message;
-        form.querySelector<HTMLInputElement>('#cf-name')?.focus({ preventScroll: true });
-      });
-    }
-    window.addEventListener(BRIEF_EVENT, onBrief);
-    return () => window.removeEventListener(BRIEF_EVENT, onBrief);
-  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -120,7 +98,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} className="mx-auto max-w-2xl space-y-6 text-left">
+    <form onSubmit={onSubmit} className="mx-auto max-w-2xl space-y-6 text-left">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="cf-name" className={LABEL}>Name</label>

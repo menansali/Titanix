@@ -11,7 +11,6 @@ const LINKS = [
   { label: 'Work', href: '/#work' },
   { label: 'Process', href: '/#process' },
   { label: 'Studio', href: '/#studio' },
-  { label: 'Ask AI', href: '/#scope' },
 ];
 
 export default function Navbar() {
