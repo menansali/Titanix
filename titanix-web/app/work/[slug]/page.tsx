@@ -2,11 +2,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Link } from 'next-view-transitions';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react';
-import Background from '@/components/Background';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Reveal from '@/components/ui/Reveal';
 import TrackedLink from '@/components/ui/TrackedLink';
 import { PROJECTS } from '@/lib/data';
 import { SITE_URL } from '@/lib/site';
@@ -85,33 +83,34 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Background />
       <Navbar />
-      <main className="pt-28 sm:pt-32">
+      <main className="pt-24 sm:pt-28">
         {/* Header */}
-        <section className="section !pb-10 !pt-6">
-          <Link
-            href="/#work"
-            className="inline-flex items-center gap-1.5 text-sm text-titanix-muted transition-colors hover:text-titanix-text"
-          >
-            <ArrowLeft size={15} /> All work
-          </Link>
+        <section className="section !pb-12 !pt-6">
+          <div className="flex items-center justify-between border-b border-titanix-border pb-4">
+            <Link href="/#work" className="inline-flex items-center gap-1.5 text-sm text-titanix-muted transition-colors hover:text-titanix-text">
+              <ArrowLeft size={15} /> Index
+            </Link>
+            <span className="font-mono text-[11px] text-titanix-faint">
+              TX-{String(p.id).padStart(2, '0')} · {p.year}
+            </span>
+          </div>
 
-          <div className="mt-10 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-            <Reveal>
+          <div className="mt-12 grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+            <div>
               <div className="flex items-center gap-5">
                 {p.icon && (
                   <div
-                    className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[1.4rem] border border-titanix-border shadow-glow"
+                    className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[1.2rem] border border-titanix-border"
                     style={{ viewTransitionName: `icon-${p.slug}` }}
                   >
                     <Image src={p.icon} alt={`${p.title} app icon`} fill sizes="80px" className="object-cover" priority />
                   </div>
                 )}
                 <div>
-                  <p className="text-xs font-medium uppercase tracking-wider text-titanix-glow">{p.category}</p>
+                  <p className="label">{p.category}</p>
                   <h1
-                    className="mt-1.5 w-fit font-display text-4xl font-bold tracking-tight sm:text-5xl"
+                    className="mt-2 w-fit font-display text-4xl font-bold tracking-tight sm:text-5xl"
                     style={{ viewTransitionName: `title-${p.slug}` }}
                   >
                     {p.title}
@@ -119,7 +118,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
                 </div>
               </div>
 
-              <p className="mt-8 font-display text-2xl font-semibold leading-snug text-titanix-text [text-wrap:balance] sm:text-3xl">
+              <p className="mt-10 font-display text-2xl font-semibold leading-snug text-titanix-text [text-wrap:balance] sm:text-3xl">
                 {cs.tagline}
               </p>
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-titanix-muted">{p.description}</p>
@@ -132,104 +131,90 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
                     rel="noopener noreferrer"
                     event="Store link clicked"
                     props={{ project: p.slug, from: 'case-study' }}
-                    className="btn-primary group w-full sm:w-auto"
+                    className="btn-primary group"
                   >
                     {isAppStore ? 'View on the App Store' : `Visit ${p.title}`}
-                    <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    <ArrowUpRight size={16} />
                   </TrackedLink>
                 )}
-                <Link href="/#contact" className="btn-ghost w-full sm:w-auto">
+                <Link href="/#contact" className="btn-ghost">
                   Build something like this
                 </Link>
               </div>
-            </Reveal>
 
-            {p.cover && (
-              <Reveal delay={0.1}>
-                <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl border border-titanix-border shadow-glow-lg">
-                  <Image
-                    src={p.cover}
-                    alt={`${p.title} — ${cs.tagline}`}
-                    fill
-                    sizes="(min-width: 1024px) 28rem, 90vw"
-                    className="object-cover"
-                    priority
-                  />
+              {/* Spec */}
+              <dl className="mt-12 border-t border-titanix-border">
+                {cs.facts.map((f) => (
+                  <div key={f.label} className="grid grid-cols-[10rem_1fr] border-b border-titanix-border py-2.5 text-sm">
+                    <dt className="text-titanix-faint">{f.label}</dt>
+                    <dd className="font-mono text-[13px]">{f.value}</dd>
+                  </div>
+                ))}
+                <div className="grid grid-cols-[10rem_1fr] border-b border-titanix-border py-2.5 text-sm">
+                  <dt className="text-titanix-faint">Stack</dt>
+                  <dd className="font-mono text-[13px]">{p.tech.join(' · ')}</dd>
                 </div>
-              </Reveal>
+              </dl>
+            </div>
+
+            {p.screenshots?.[0] ? (
+              <div className="relative mx-auto aspect-[1290/2796] w-full max-w-[19rem] overflow-hidden rounded-[2rem] border border-titanix-border">
+                <Image
+                  src={p.screenshots[0]}
+                  alt={`${p.title} on iPhone`}
+                  fill
+                  sizes="19rem"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            ) : p.cover && (
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden border border-titanix-border">
+                <Image
+                  src={p.cover}
+                  alt={`${p.title}: ${cs.tagline}`}
+                  fill
+                  sizes="(min-width: 1024px) 28rem, 90vw"
+                  className="object-cover"
+                  priority
+                />
+              </div>
             )}
           </div>
         </section>
 
-        {/* Facts */}
-        <section className="section !py-0">
-          <Reveal>
-            <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-titanix-border bg-titanix-border sm:grid-cols-4">
-              {cs.facts.map((f) => (
-                <div key={f.label} className="bg-titanix-void p-6">
-                  <dt className="text-xs uppercase tracking-wider text-titanix-faint">{f.label}</dt>
-                  <dd className="mt-2 font-display text-2xl font-bold text-gradient">{f.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </section>
-
         {/* Problem + what we built */}
-        <section className="section">
-          <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
-            <Reveal>
-              <span className="eyebrow">The problem</span>
-              <p className="mt-6 text-lg leading-relaxed text-titanix-muted">{cs.problem}</p>
-
-              <h2 className="mt-12 text-xs font-semibold uppercase tracking-widest text-titanix-faint">Stack</h2>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {p.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-lg border border-titanix-border bg-white/[0.02] px-3 py-1 text-sm text-titanix-muted"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <span className="eyebrow">What we built</span>
-              <ul className="mt-6 space-y-4">
-                {cs.built.map((b) => (
-                  <li key={b} className="flex gap-3 text-titanix-text">
-                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-gradient">
-                      <Check size={12} className="text-black" strokeWidth={3} />
-                    </span>
-                    <span className="leading-relaxed">{b}</span>
+        <section className="section !pt-0">
+          <div className="grid gap-12 border-t border-titanix-border pt-10 lg:grid-cols-2 lg:gap-20">
+            <div>
+              <p className="label">The problem</p>
+              <p className="mt-5 text-lg leading-relaxed text-titanix-muted">{cs.problem}</p>
+            </div>
+            <div>
+              <p className="label">What we built</p>
+              <ol className="mt-5 border-t border-titanix-border">
+                {cs.built.map((b, n) => (
+                  <li key={b} className="grid grid-cols-[2.5rem_1fr] border-b border-titanix-border py-3.5">
+                    <span className="font-mono text-xs text-titanix-yellow">{String(n + 1).padStart(2, '0')}</span>
+                    <span className="leading-relaxed text-titanix-text">{b}</span>
                   </li>
                 ))}
-              </ul>
-            </Reveal>
+              </ol>
+            </div>
           </div>
         </section>
 
         {/* Screenshots */}
         {p.screenshots && (
           <section className="section !pt-0" aria-label={`${p.title} screenshots`}>
-            <Reveal>
-              <span className="eyebrow">On the App Store</span>
-            </Reveal>
+            <p className="label border-t border-titanix-border pt-4">Screens</p>
             <div className="-mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8">
               {p.screenshots.map((src, n) => (
                 <div
                   key={src}
-                  className="relative aspect-[392/696] w-52 shrink-0 snap-start overflow-hidden rounded-[1.75rem] border border-titanix-border sm:w-60"
+                  className="relative aspect-[1290/2796] w-52 shrink-0 snap-start overflow-hidden rounded-[1.5rem] border border-titanix-border sm:w-60"
                 >
-                  <Image
-                    src={src}
-                    alt={`${p.title} screenshot ${n + 1}`}
-                    fill
-                    sizes="240px"
-                    className="object-cover"
-                  />
+                  <Image src={src} alt={`${p.title} screenshot ${n + 1}`} fill sizes="240px" className="object-cover" />
                 </div>
               ))}
             </div>
@@ -240,20 +225,20 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
         <section className="section !pt-0">
           <Link
             href={`/work/${next.slug}`}
-            className="group flex items-center justify-between gap-6 rounded-3xl glass p-6 transition-all duration-300 hover:border-titanix-glow/30 sm:p-8"
+            className="group flex items-center justify-between gap-6 border-y border-titanix-border py-8 transition-colors hover:border-titanix-yellow"
           >
             <div className="flex items-center gap-4">
               {next.icon && (
-                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-titanix-border">
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[0.9rem] border border-titanix-border">
                   <Image src={next.icon} alt="" fill sizes="56px" className="object-cover" />
                 </div>
               )}
               <div>
-                <p className="text-xs uppercase tracking-wider text-titanix-faint">Next case study</p>
+                <p className="label">Next</p>
                 <p className="mt-1 font-display text-2xl font-bold">{next.title}</p>
               </div>
             </div>
-            <ArrowRight className="shrink-0 text-titanix-glow transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="shrink-0 text-titanix-faint transition-all group-hover:translate-x-1 group-hover:text-titanix-yellow" />
           </Link>
         </section>
       </main>

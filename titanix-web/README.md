@@ -6,13 +6,13 @@ The Titanix website, live at https://www.titanix.dev. A product studio positione
 ## Brand
 
 - **Palette:** logo yellow on near-black (`#0A0A08`, `#EFE200`, gradient `#F6EB2E → #C7BC00`)
-- **Aesthetic:** dark, glassmorphism, grid backdrops, restrained motion
+- **Aesthetic:** technical datasheet — flat dark background, hairline rules, mono labels, yellow as a marking colour (see CLAUDE.md → Styling)
 - **Logo:** `components/Logo.tsx`
 - **Type:** Space Grotesk (display) · Inter (body) · JetBrains Mono (accents)
 
 ## Stack
 
-Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 3 · Framer Motion · GSAP · lucide-react · Vercel Analytics · next-view-transitions
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 3 · GSAP · lucide-react · Vercel Analytics · next-view-transitions
 
 ## Commands
 
@@ -33,8 +33,9 @@ npm run lint      # eslint
 - `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, `public/llms.txt` — SEO layer. Keep `llms.txt` in sync with `lib/data.ts`.
 - `lib/data.ts` — single source of truth for pillars, projects (incl. case-study copy and App Store screenshots), stats, and contact info. **Edit content here.**
 - `lib/contact.ts` — form options and email formatting shared by the form and the API route.
-- `components/` — `Hero`, `Focus`, `Work`, `Process`, `Studio`, `Contact` + `ContactForm`, plus `Navbar`, `Footer`, `Background`, `Marquee`, `Logo`.
-- `public/work/` — case-study cover images (exported from the Instagram kit).
+- `components/` — `Hero`, `Showreel`, `LiveAir`, `Focus`, `Pipeline`, `Work`, `Process`, `Studio`, `LabLog`, `Contact` + `ContactForm`, plus `Navbar`, `Footer`, `Logo`, and `ui/` (`SectionHead`, `TrackedLink`).
+- `public/work/` — case-study cover images (exported from the Instagram kit; used for social share images and skeniraj.mk).
+- `public/team/` — founder photo.
 
 ## Environment variables
 

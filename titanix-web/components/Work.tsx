@@ -1,147 +1,112 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { PROJECTS } from '@/lib/data';
-import Reveal from './ui/Reveal';
-import TiltCard from './ui/TiltCard';
+import SectionHead from './ui/SectionHead';
 import TrackedLink from './ui/TrackedLink';
 
-// Fallback monogram gradients for apps without an exported icon.
-const ACCENTS = [
-  'from-titanix-glow to-titanix-gold',
-  'from-white to-[#CFCFC4]',
-  'from-titanix-yellow to-titanix-gold',
-];
-
-const CARD =
-  'group relative flex h-full flex-col rounded-3xl glass p-6 transition-all duration-300 ' +
-  'hover:-translate-y-1.5 hover:border-titanix-glow/30 focus-visible:outline-none ' +
-  'focus-visible:ring-2 focus-visible:ring-titanix-glow/60 focus-visible:ring-offset-2 ' +
-  'focus-visible:ring-offset-titanix-void';
+const code = (id: number) => `TX-${String(id).padStart(2, '0')}`;
 
 export default function Work() {
+  // Preview the real product: first App Store screenshot, else the cover.
+  const previewable = PROJECTS.filter((p) => p.screenshots?.[0] || p.cover);
+  const img = (p: (typeof PROJECTS)[number]) => p.screenshots?.[0] ?? p.cover!;
+  const [hover, setHover] = useState(previewable[0]?.slug);
+  const preview = previewable.find((p) => p.slug === hover) ?? previewable[0];
+
   return (
-    <section id="work" className="section">
-      <Reveal className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-        <div className="max-w-2xl">
-          <span className="eyebrow">Selected work</span>
-          <h2 className="mt-5 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            Apps &amp; systems we&apos;ve <span className="text-gradient">built</span>.
-          </h2>
-        </div>
-        <p className="max-w-sm text-titanix-muted">
-          Native iOS apps and SaaS platforms live today, plus the IoT lab
-          work they grew out of. Tap a product for the full case study.
-        </p>
-      </Reveal>
+    <section id="work" className="section" aria-labelledby="work-title">
+      <SectionHead
+        n="04"
+        label="Index"
+        id="work-title"
+        title="Everything we've shipped, and what it grew out of."
+        intro="Six products live, plus the hardware lab work behind them. Open any product for the full case study."
+      />
 
-      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {PROJECTS.map((p, i) => {
-          const body = (
-            <>
-              {/* Hover glow */}
-              <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-titanix-yellow/15 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
-
-              <div className="relative flex items-start justify-between">
-                {p.icon ? (
-                  <div
-                    className="relative h-16 w-16 overflow-hidden rounded-[1.15rem] border border-titanix-border shadow-glow"
-                    style={p.caseStudy ? { viewTransitionName: `icon-${p.slug}` } : undefined}
-                  >
-                    <Image src={p.icon} alt={`${p.title} app icon`} fill sizes="64px" className="object-cover" />
-                  </div>
-                ) : (
-                  <div
-                    className={`flex h-16 w-16 items-center justify-center rounded-[1.15rem] bg-gradient-to-br ${ACCENTS[i % ACCENTS.length]} shadow-glow`}
-                  >
-                    <span className="font-display text-2xl font-bold text-black">
-                      {p.title.charAt(0)}
+      <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_20rem] xl:grid-cols-[1fr_24rem]">
+        <ol className="border-t border-titanix-border">
+          {PROJECTS.map((p) => {
+            const row = (
+              <>
+                <span className="font-mono text-xs text-titanix-faint">{code(p.id)}</span>
+                <span className="flex min-w-0 items-center gap-4">
+                  {p.icon ? (
+                    <span
+                      className="relative h-11 w-11 shrink-0 overflow-hidden rounded-[0.7rem] border border-titanix-border"
+                      style={p.caseStudy ? { viewTransitionName: `icon-${p.slug}` } : undefined}
+                    >
+                      <Image src={p.icon} alt="" fill sizes="44px" className="object-cover" />
                     </span>
-                  </div>
-                )}
-
-                <div className="flex items-center gap-2">
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      p.status === 'Shipped'
-                        ? 'bg-titanix-yellow/15 text-titanix-glow'
-                        : 'bg-white/10 text-white/80'
-                    }`}
-                  >
-                    {p.status}
-                  </span>
-                  {(p.caseStudy || p.url) && (
-                    <ArrowUpRight
-                      size={16}
-                      aria-hidden="true"
-                      className="shrink-0 text-titanix-glow opacity-40 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
+                  ) : (
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[0.7rem] border border-dashed border-titanix-border font-mono text-[10px] text-titanix-faint">
+                      LAB
+                    </span>
                   )}
-                </div>
-              </div>
-
-              <div className="relative mt-5 flex items-baseline justify-between gap-3">
-                <h3
-                  className="font-display text-xl font-bold leading-tight"
-                  style={p.caseStudy ? { viewTransitionName: `title-${p.slug}` } : undefined}
-                >
-                  {p.title}
-                </h3>
-                {p.year && (
-                  <span className="shrink-0 font-mono text-xs text-titanix-faint">{p.year}</span>
-                )}
-              </div>
-              <p className="mt-1.5 text-xs font-medium uppercase tracking-wider text-titanix-glow">
-                {p.category}
-              </p>
-              <p className="relative mt-3 flex-1 text-sm leading-relaxed text-titanix-muted">
-                {p.description}
-              </p>
-
-              <div className="relative mt-5 flex flex-wrap gap-1.5">
-                {p.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-lg border border-titanix-border bg-white/[0.02] px-2 py-0.5 text-[11px] text-titanix-muted"
-                  >
-                    {t}
+                  <span className="min-w-0">
+                    <span
+                      className="block truncate font-display text-lg font-bold sm:text-xl"
+                      style={p.caseStudy ? { viewTransitionName: `title-${p.slug}` } : undefined}
+                    >
+                      {p.title}
+                    </span>
+                    <span className="block truncate text-sm text-titanix-faint">{p.category}</span>
                   </span>
-                ))}
-              </div>
-            </>
-          );
-
-          return (
-            <Reveal key={p.id} delay={(i % 3) * 0.08} className="h-full">
-              <TiltCard className="h-full">
+                </span>
+                <span className="hidden font-mono text-xs text-titanix-muted sm:block">
+                  {p.status === 'Lab' ? 'Lab' : p.year}
+                </span>
+                <span className="flex justify-end">
+                  {p.caseStudy && (
+                    <ArrowUpRight size={18} className="text-titanix-faint transition-colors group-hover:text-titanix-yellow" />
+                  )}
+                </span>
+              </>
+            );
+            const cls =
+              'group grid grid-cols-[3.5rem_1fr_auto] items-center gap-4 border-b border-titanix-border py-4 sm:grid-cols-[4rem_1fr_4rem_2rem]';
+            return (
+              <li key={p.id} onMouseEnter={() => (p.screenshots?.[0] || p.cover) && setHover(p.slug)}>
                 {p.caseStudy ? (
                   <TrackedLink
                     href={`/work/${p.slug}`}
                     event="Case study opened"
                     props={{ project: p.slug, from: 'home' }}
-                    aria-label={`${p.title} — read the case study`}
-                    className={CARD}
+                    className={`${cls} transition-colors hover:bg-white/[0.02] focus-visible:bg-white/[0.04] focus-visible:outline-none`}
+                    onFocus={() => setHover(p.slug)}
                   >
-                    {body}
-                  </TrackedLink>
-                ) : p.url ? (
-                  <TrackedLink
-                    href={p.url}
-                    event="Store link clicked"
-                    props={{ project: p.slug, from: 'home' }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${p.title} — opens in a new tab`}
-                    className={CARD}
-                  >
-                    {body}
+                    {row}
                   </TrackedLink>
                 ) : (
-                  <article className={CARD}>{body}</article>
+                  <div className={cls}>{row}</div>
                 )}
-              </TiltCard>
-            </Reveal>
-          );
-        })}
+              </li>
+            );
+          })}
+        </ol>
+
+        {/* Hover preview (desktop) */}
+        {preview && (
+          <div className="hidden lg:block">
+            <div className="sticky top-24">
+              <div className="relative mx-auto aspect-[1290/2796] w-[78%] overflow-hidden rounded-[1.75rem] border border-titanix-border bg-titanix-deep">
+                {previewable.map((p) => (
+                  <Image
+                    key={p.slug}
+                    src={img(p)}
+                    alt=""
+                    fill
+                    sizes="24rem"
+                    className={`${p.screenshots?.[0] ? 'object-cover' : 'object-contain'} transition-opacity duration-300 ${p.slug === preview.slug ? 'opacity-100' : 'opacity-0'}`}
+                  />
+                ))}
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-titanix-muted">{preview.description}</p>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

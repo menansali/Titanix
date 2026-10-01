@@ -1,6 +1,5 @@
 import { Link } from 'next-view-transitions';
 import { ArrowUpRight } from 'lucide-react';
-import Reveal from './ui/Reveal';
 
 // Same Copernicus (CAMS) model Aer uses, via Open-Meteo. Server-rendered and
 // revalidated every 15 minutes; renders nothing if the feed is unavailable.
@@ -94,12 +93,10 @@ export default async function LiveAir() {
 
   return (
     <section aria-labelledby="live-air" className="section !py-12 sm:!py-16">
-      <Reveal>
-        <div className="relative overflow-hidden rounded-3xl glass p-6 sm:p-8">
-          <div className="pointer-events-none absolute inset-0 grid-backdrop opacity-40" />
+        <div className="relative border border-titanix-border p-6 sm:p-8">
           <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
             <div>
-              <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-titanix-muted">
+              <p className="label flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-titanix-yellow opacity-75 motion-reduce:animate-none" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-titanix-yellow" />
@@ -121,7 +118,7 @@ export default async function LiveAir() {
                   return (
                     <span
                       key={r.name}
-                      className="inline-flex items-center gap-2 rounded-full border border-titanix-border bg-white/[0.02] px-3 py-1.5 text-xs text-titanix-muted"
+                      className="inline-flex items-center gap-2 rounded-md border border-titanix-border px-3 py-1.5 text-xs text-titanix-muted"
                     >
                       <span className="h-2 w-2 rounded-full" style={{ backgroundColor: b.color }} />
                       {r.name} <span className="font-mono text-titanix-text">{r.aqi}</span>
@@ -131,13 +128,13 @@ export default async function LiveAir() {
               </div>
               <Link
                 href="/work/aer"
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-titanix-glow hover:underline"
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-titanix-yellow hover:underline"
               >
                 How we built Aer <ArrowUpRight size={14} />
               </Link>
             </div>
 
-            <div className="rounded-2xl border border-titanix-border bg-titanix-void/60 p-5">
+            <div className="border border-titanix-border p-5">
               <div className="flex items-end justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-wider text-titanix-faint">European AQI · {main.name}</p>
@@ -162,7 +159,6 @@ export default async function LiveAir() {
             </div>
           </div>
         </div>
-      </Reveal>
     </section>
   );
 }

@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { ViewTransitions } from 'next-view-transitions';
-import { PILLARS, PROJECTS, CONTACT } from '@/lib/data';
+import { PILLARS, PROJECTS, CONTACT, FOUNDER } from '@/lib/data';
 import { SITE_URL, SITE_NAME } from '@/lib/site';
 import './globals.css';
 
@@ -99,6 +99,14 @@ const structuredData = {
       },
       description: SITE_DESCRIPTION,
       foundingDate: '2021',
+      founder: {
+        '@type': 'Person',
+        name: FOUNDER.name,
+        jobTitle: FOUNDER.role,
+        image: `${SITE_URL}${FOUNDER.photo}`,
+        alumniOf: { '@type': 'CollegeOrUniversity', name: 'South East European University' },
+        sameAs: [FOUNDER.linkedin, FOUNDER.github],
+      },
       email: CONTACT.email,
       telephone: CONTACT.whatsapp,
       sameAs: [CONTACT.instagramUrl],
@@ -162,7 +170,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <ViewTransitions>
       <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${mono.variable}`}>
-        <body className="noise font-sans antialiased">
+        <body className="font-sans antialiased">
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

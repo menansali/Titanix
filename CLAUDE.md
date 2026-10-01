@@ -21,7 +21,8 @@ Vercel deploys on push to `master` (project root `titanix-web`). `www.titanix.de
 ## Architecture
 
 - **Content:** `lib/data.ts` is the single source of truth — pillars, projects, stats, contact. Each project with a `caseStudy` gets a statically generated page at `/work/[slug]` (`app/work/[slug]/page.tsx`), a sitemap entry, and JSON-LD. Project copy mirrors the live App Store listings; screenshots are App Store CDN (`*.mzstatic.com`) URLs.
-- **Home page:** `app/page.tsx` composes `Hero`, `Marquee`, `Showreel`, `LiveAir`, `Focus`, `Pipeline`, `Work`, `Process`, `Studio`, `Contact`. Nav links use `/#section` so they work from case-study pages too.
+- **Home page:** `app/page.tsx` composes `Hero` (with the datasheet panel), `Showreel`, `LiveAir`, `Focus`, `Pipeline`, `Work` (index + screenshot preview), `Process`, `Studio` (founder), `LabLog`, `Contact`. Sections use `components/ui/SectionHead.tsx` (numbered mono label on a hairline) — keep the numbers in page order.
+- **Founder & lab log:** `FOUNDER` and `LAB_LOG` in `lib/data.ts`. Lab-log entries are real releases (App Store version history, GitHub); add new ones at the top when an app ships an update. Nav links use `/#section` so they work from case-study pages too.
 - **Scroll-pinned sections:** `Showreel` (CSS-3D iPhone that spins between the iOS apps' first screenshots, swapping the screen while the back faces the viewer) and `Pipeline` (a packet travels sensor → firmware → edge → cloud → app → ship). Both are a tall outer section with a `sticky top-0 h-[100svh]` child, driven by `lib/useScrollProgress.ts` (GSAP ScrollTrigger); per-frame updates go through refs, React state only changes when the active item changes.
 - **Live air widget:** `components/LiveAir.tsx` is a server component fetching Open-Meteo's CAMS air-quality API (same model as Aer), revalidated every 15 min; it renders nothing if the feed fails. This makes the home page ISR.
 - **Page transitions:** `next-view-transitions` wraps the layout; use its `Link` (or `components/ui/TrackedLink.tsx`) for internal links. App icons/titles share `view-transition-name`s (`icon-<slug>`, `title-<slug>`) between work cards and case-study headers.
@@ -31,7 +32,9 @@ Vercel deploys on push to `master` (project root `titanix-web`). `www.titanix.de
 
 ## Styling
 
-Tailwind v3 with a `titanix` token set in `tailwind.config.ts` (yellow `#EFE200` on near-black `#0A0A08`), plus component classes in `app/globals.css` (`section`, `eyebrow`, `glass`, `btn-primary`, `btn-ghost`, `text-gradient`). Prefer these over ad-hoc values.
+Deliberately *not* the generic AI-site look. "Datasheet" system: flat `#0A0A08` background, hairline borders (`border-titanix-border`, neutral white ~11%), monospace labels (`.label`), small radii (`rounded-md`), and yellow `#EFE200` used only as a marking colour (CTA, active state, numbers). Component classes in `app/globals.css`: `section`, `label`, `chip`, `btn-primary`, `btn-ghost`.
+
+Avoid reintroducing: gradient text, glass/blur cards, glow shadows, blurred background blobs, pill "eyebrow" labels, icon-in-rounded-square card grids, fade-up-on-scroll for everything, cursor-magnetic/tilt effects. Copy: plain and specific, first person for the founder bio, no stock phrases or em-dash-heavy sentences.
 
 ## Other folders
 

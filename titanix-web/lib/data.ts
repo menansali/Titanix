@@ -1,12 +1,10 @@
-import { Cpu, Smartphone, Cloud, LucideIcon } from 'lucide-react';
-
 export interface Pillar {
   id: string;
   title: string;
-  tagline: string;
   description: string;
-  icon: LucideIcon;
-  points: string[];
+  stack: string[];
+  /** Case-study slugs (or lab project titles) that show this discipline. */
+  examples: string[];
 }
 
 export interface CaseStudy {
@@ -46,38 +44,35 @@ export interface Stat {
   label: string;
 }
 
-// Three pillars — the rebrand focus
+// The three disciplines.
 export const PILLARS: Pillar[] = [
   {
     id: 'ios',
-    title: 'iOS Apps',
-    tagline: 'Native. Fast. Beautiful.',
+    title: 'iOS apps',
     description:
-      'Native iOS applications built in Swift & SwiftUI — crafted for performance, polish, and the App Store.',
-    icon: Smartphone,
-    points: ['Swift & SwiftUI', 'On-device & Cloud AI', 'App Store launch', 'Delightful UX'],
+      'Native apps in Swift and SwiftUI, including widgets, Live Activities and subscriptions, taken all the way through App Store review.',
+    stack: ['Swift', 'SwiftUI', 'WidgetKit', 'StoreKit 2', 'RevenueCat'],
+    examples: ['lovly', 'memopix', 'qaza-qada', 'aer', 'pet-portraits'],
   },
   {
     id: 'saas',
-    title: 'SaaS Platforms',
-    tagline: 'Products that scale.',
+    title: 'SaaS platforms',
     description:
-      'End-to-end SaaS products — from auth and billing to dashboards and APIs — engineered to grow with you.',
-    icon: Cloud,
-    points: ['Web platforms & APIs', 'Auth, billing & multi-tenant', 'Real-time dashboards', 'Cloud-native scale'],
+      'Web products with accounts, billing, multi-tenant dashboards and APIs, deployed and running in production.',
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'tRPC', 'Stripe'],
+    examples: ['skeniraj'],
   },
   {
     id: 'iot',
-    title: 'IoT Systems',
-    tagline: 'Bare metal to cloud.',
+    title: 'IoT systems',
     description:
-      'End-to-end hardware + software: smart devices, edge networks, and the pipelines that make sensor data useful.',
-    icon: Cpu,
-    points: ['Embedded firmware', 'LoRa / edge networks', 'Sensor data pipelines', 'Live telemetry'],
+      'Sensors, firmware, long-range radio networks and the pipelines that turn raw readings into something people can use.',
+    stack: ['C++', 'Arduino', 'Raspberry Pi', 'LoRa', 'Grafana'],
+    examples: ['env-monitor', 'edge-lora'],
   },
 ];
 
-const shot = (path: string) => `https://is1-ssl.mzstatic.com/image/thumb/${path}/392x696bb.jpg`;
+const shot = (path: string) => `https://is1-ssl.mzstatic.com/image/thumb/${path}/645x1398bb.jpg`;
 
 export const PROJECTS: Project[] = [
   // ── Shipped ────────────────────────────────────────────────
@@ -343,18 +338,36 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-export const STATS: Stat[] = [
-  { value: '2021', label: 'Building since' },
-  { value: '6', label: 'Products live' },
-  { value: '5.0★', label: 'App Store rating' },
-  { value: '12', label: 'Languages shipped' },
-];
+export const FOUNDER = {
+  name: 'Menan Sali',
+  role: 'Co-founder',
+  photo: '/team/menan.jpg',
+  linkedin: 'https://www.linkedin.com/in/menansali/',
+  github: 'https://github.com/menansali',
+};
 
-export const TECH_MARQUEE: string[] = [
-  'Swift', 'SwiftUI', 'SwiftData', 'CoreML', 'Vision', 'WidgetKit',
-  'Live Activities', 'StoreKit', 'RevenueCat', 'Firebase', 'MapKit', 'SpriteKit',
-  'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Supabase', 'Python',
-  'C++', 'LoRa', 'Raspberry Pi', 'Grafana',
+export interface LogEntry {
+  /** ISO date (YYYY-MM-DD). */
+  date: string;
+  project: string;
+  /** Case-study slug, when there is one. */
+  slug?: string;
+  url?: string;
+  title: string;
+  note: string;
+}
+
+// Real releases, newest first — dates and notes from the App Store / GitHub.
+export const LAB_LOG: LogEntry[] = [
+  { date: '2026-09-19', project: 'Lovly', slug: 'lovly', title: 'v1.0.7', note: 'Drawings now lift off the canvas and land on your partner\'s Lock Screen. Onboarding redrawn by hand.' },
+  { date: '2026-09-18', project: 'Memopix', slug: 'memopix', title: 'v1.5', note: 'Six new templates, including Family Tree, In Loving Memory and Halloween. Invite links fixed.' },
+  { date: '2026-09-01', project: 'Pet Portraits', slug: 'pet-portraits', title: 'v1.0.3', note: 'Now runs on iOS 17 and later, so it reaches many more iPhones.' },
+  { date: '2026-08-14', project: 'Aer', slug: 'aer', title: 'Launch', note: 'Live air quality and a 7-day forecast for 35 cities across North Macedonia.' },
+  { date: '2026-08-11', project: 'Qaza Qada', slug: 'qaza-qada', title: 'v1.5.0', note: 'Rebuilt around the missed-prayer estimate, with exempt days subtracted and a make-up plan.' },
+  { date: '2026-08-06', project: 'Lovly', slug: 'lovly', title: 'Launch', note: 'A couples app that lives on the Lock Screen.' },
+  { date: '2026-07-27', project: 'Pet Portraits', slug: 'pet-portraits', title: 'Launch', note: 'One photo of a pet becomes a portrait in 15+ styles.' },
+  { date: '2026-07-20', project: 'Memopix', slug: 'memopix', title: 'Launch', note: 'Shape photo collages, printed as PNG, JPEG or PDF.' },
+  { date: '2026-07-18', project: 'ios-ship-doctor', url: 'https://github.com/menansali/ios-ship-doctor', title: 'Open source', note: 'An MCP server that finds why an iOS app would fail App Store review, before you submit.' },
 ];
 
 export const CONTACT = {
@@ -363,4 +376,6 @@ export const CONTACT = {
   whatsappUrl: 'https://wa.me/37253951655',
   instagram: '@titanixdev',
   instagramUrl: 'https://instagram.com/titanixdev',
+  linkedinUrl: 'https://www.linkedin.com/in/menansali/',
+  githubUrl: 'https://github.com/menansali',
 };

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Cloud, Cpu, Gauge, RadioTower, Rocket, Smartphone, type LucideIcon } from 'lucide-react';
 import { useScrollProgress } from '@/lib/useScrollProgress';
+import SectionHead from './ui/SectionHead';
 
 interface Stage {
   title: string;
@@ -102,18 +103,16 @@ export default function Pipeline() {
     <section ref={sectionRef} id="pipeline" aria-labelledby="pipeline-title" className="relative" style={{ height: `${N * 70}svh` }}>
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         <div className="section w-full !py-0">
-          <div className="text-center">
-            <span className="eyebrow">End to end</span>
-            <h2 id="pipeline-title" className="mt-5 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-              From bare metal to the <span className="text-gradient">App Store</span>.
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-titanix-muted">
-              Follow one reading through every layer of the stack — we build every one of them.
-            </p>
-          </div>
+          <SectionHead
+            n="03"
+            label="End to end"
+            id="pipeline-title"
+            title="From bare metal to the App Store."
+            intro="Follow one reading through every layer of the stack. We build each of them."
+          />
 
           {/* Track */}
-          <div className="relative mx-auto mt-10 w-full max-w-5xl" style={{ aspectRatio: '1200 / 200' }} aria-hidden="true">
+          <div className="relative mx-auto mt-12 w-full max-w-5xl" style={{ aspectRatio: '1200 / 200' }} aria-hidden="true">
             <svg viewBox="0 0 1200 200" className="absolute inset-0 h-full w-full overflow-visible">
               <path ref={pathRef} d={PATH} fill="none" stroke="rgba(239,226,0,0.16)" strokeWidth="2" strokeDasharray="6 8" />
               <path
@@ -126,8 +125,7 @@ export default function Pipeline() {
                 pathLength={1}
                 strokeDasharray="1"
                 strokeDashoffset="1"
-                style={{ filter: 'drop-shadow(0 0 6px rgba(246,235,46,0.7))' }}
-              />
+                              />
             </svg>
 
             {NODES.map((n, i) => {
@@ -140,9 +138,9 @@ export default function Pipeline() {
                   style={{ left: `${(n.x / 1200) * 100}%`, top: `${(n.y / 200) * 100}%` }}
                 >
                   <div
-                    className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-all duration-500 sm:h-14 sm:w-14 sm:rounded-2xl ${
+                    className={`flex h-9 w-9 items-center justify-center rounded-md border transition-all duration-500 sm:h-14 sm:w-14 ${
                       on
-                        ? 'border-transparent bg-brand-gradient text-black shadow-glow'
+                        ? 'border-transparent bg-titanix-yellow text-black'
                         : 'border-titanix-border bg-titanix-void text-titanix-faint'
                     } ${i === active ? 'scale-110' : ''}`}
                   >
@@ -161,29 +159,29 @@ export default function Pipeline() {
 
             {/* Packet */}
             <div ref={packetRef} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: '8.33%', top: '30%' }}>
-              <span className="absolute -inset-2 animate-ping rounded-full bg-titanix-glow/40 motion-reduce:animate-none" />
-              <span className="relative block h-3 w-3 rounded-full bg-white shadow-[0_0_18px_6px_rgba(246,235,46,0.8)]" />
+              <span className="absolute -inset-2 animate-ping rounded-full bg-titanix-yellow/30 motion-reduce:animate-none" />
+              <span className="relative block h-3 w-3 rounded-full bg-white ring-4 ring-titanix-yellow/40" />
             </div>
           </div>
 
           {/* Stage detail */}
-          <div className="relative mx-auto mt-8 min-h-[19rem] max-w-3xl sm:mt-12 sm:min-h-[12rem]">
+          <div className="relative mx-auto mt-8 min-h-[19rem] max-w-4xl sm:mt-12 sm:min-h-[12rem]">
             {STAGES.map((s, i) => (
               <div
                 key={s.title}
                 aria-hidden={i !== active}
-                className={`absolute inset-x-0 top-0 grid gap-5 rounded-3xl glass p-5 transition-all duration-500 sm:grid-cols-[1.2fr_1fr] sm:p-7 ${
+                className={`absolute inset-x-0 top-0 grid gap-5 border border-titanix-border bg-titanix-void p-5 transition-all duration-500 sm:grid-cols-[1.2fr_1fr] sm:p-7 ${
                   i === active ? 'translate-y-0 opacity-100' : i < active ? '-translate-y-4 opacity-0' : 'translate-y-4 opacity-0'
                 }`}
               >
                 <div>
                   <p className="font-mono text-xs text-titanix-faint">
-                    0{i + 1} / 0{N} · <span className="text-titanix-glow">{s.tag}</span>
+                    0{i + 1} / 0{N} · <span className="text-titanix-yellow">{s.tag}</span>
                   </p>
                   <h3 className="mt-2 font-display text-2xl font-bold">{s.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-titanix-muted">{s.text}</p>
                 </div>
-                <div className="rounded-2xl border border-titanix-border bg-black/40 p-4 font-mono text-[11px] leading-relaxed text-titanix-glow sm:text-xs">
+                <div className="border border-titanix-border bg-black/40 p-4 font-mono text-[11px] leading-relaxed text-titanix-yellow sm:text-xs">
                   {s.readout.map((line) => (
                     <p key={line} className="whitespace-pre">
                       <span className="text-titanix-faint">› </span>

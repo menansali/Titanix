@@ -2,6 +2,10 @@
 
 > Titanix is a product studio (est. 2021) that designs and ships iOS apps, SaaS platforms, and IoT systems — from bare metal and embedded firmware to the App Store and cloud. Website: https://www.titanix.dev
 
+## People
+
+- **Menan Sali**, co-founder. Computer Science graduate (South East European University); builds native iOS apps and their backends, open-source developer tooling (ios-ship-doctor, an MCP server that finds App Store review problems before submission), and RF/IoT systems. LinkedIn: https://www.linkedin.com/in/menansali/ · GitHub: https://github.com/menansali
+
 ## What we do
 
 - **iOS Apps** — Native iOS applications in Swift & SwiftUI: on-device and cloud AI, WidgetKit, Live Activities, StoreKit subscriptions, full App Store launches.

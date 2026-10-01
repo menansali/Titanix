@@ -1,81 +1,66 @@
-import { Mail, MessageCircle, Instagram } from 'lucide-react';
 import { Link } from 'next-view-transitions';
 import Logo from './Logo';
-import { CONTACT } from '@/lib/data';
+import { CONTACT, PROJECTS } from '@/lib/data';
 
 const NAV = [
-  { label: 'Focus', href: '/#focus' },
   { label: 'Work', href: '/#work' },
   { label: 'Process', href: '/#process' },
   { label: 'Studio', href: '/#studio' },
+  { label: 'Lab log', href: '/#log' },
   { label: 'Contact', href: '/#contact' },
 ];
 
-export default function Footer() {
-  return (
-    <footer className="relative border-t border-titanix-border">
-      <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8">
-        <div className="flex flex-col justify-between gap-10 md:flex-row">
-          <div className="max-w-sm">
-            <Logo size={32} />
-            <p className="mt-4 text-sm text-titanix-muted">
-              A product studio forging iOS apps, SaaS platforms, and IoT systems.
-              From bare metal to the App Store.
-            </p>
-          </div>
+const ELSEWHERE = [
+  { label: 'Instagram', href: CONTACT.instagramUrl },
+  { label: 'LinkedIn', href: CONTACT.linkedinUrl },
+  { label: 'GitHub', href: CONTACT.githubUrl },
+  { label: 'WhatsApp', href: CONTACT.whatsappUrl },
+];
 
-          <div className="flex gap-10 sm:gap-16">
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-titanix-faint">
-                Navigate
-              </h4>
-              <ul className="mt-4 space-y-2.5">
-                {NAV.map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="text-sm text-titanix-muted transition-colors hover:text-titanix-text"
-                    >
+export default function Footer() {
+  const products = PROJECTS.filter((p) => p.caseStudy);
+  return (
+    <footer className="border-t border-titanix-border">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="max-w-xs">
+          <Logo size={28} />
+          <p className="mt-4 text-sm text-titanix-muted">
+            iOS apps, SaaS platforms and IoT systems, from the firmware to the App Store.
+          </p>
+          <a href={`mailto:${CONTACT.email}`} className="mt-4 inline-block font-mono text-sm text-titanix-text hover:text-titanix-yellow">
+            {CONTACT.email}
+          </a>
+        </div>
+
+        {[
+          { title: 'Site', items: NAV.map((n) => ({ ...n, internal: true })) },
+          { title: 'Products', items: products.map((p) => ({ label: p.title, href: `/work/${p.slug}`, internal: true })) },
+          { title: 'Elsewhere', items: ELSEWHERE.map((e) => ({ ...e, internal: false })) },
+        ].map((col) => (
+          <div key={col.title}>
+            <h2 className="label">{col.title}</h2>
+            <ul className="mt-4 space-y-2.5">
+              {col.items.map((l) => (
+                <li key={l.href}>
+                  {l.internal ? (
+                    <Link href={l.href} className="text-sm text-titanix-muted transition-colors hover:text-titanix-text">
                       {l.label}
                     </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-titanix-faint">
-                Connect
-              </h4>
-              <ul className="mt-4 space-y-2.5">
-                <li>
-                  <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-2 text-sm text-titanix-muted transition-colors hover:text-titanix-text">
-                    <Mail size={14} /> Email
-                  </a>
+                  ) : (
+                    <a href={l.href} target="_blank" rel="noopener noreferrer" className="text-sm text-titanix-muted transition-colors hover:text-titanix-text">
+                      {l.label}
+                    </a>
+                  )}
                 </li>
-                <li>
-                  <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-titanix-muted transition-colors hover:text-titanix-text">
-                    <MessageCircle size={14} /> WhatsApp
-                  </a>
-                </li>
-                <li>
-                  <a href={CONTACT.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-titanix-muted transition-colors hover:text-titanix-text">
-                    <Instagram size={14} /> Instagram
-                  </a>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
           </div>
-        </div>
-
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-titanix-border pt-6 sm:flex-row">
-          <p className="text-xs text-titanix-faint">
-            © {2021}–{2026} Titanix. All rights reserved.
-          </p>
-          <p className="font-mono text-xs text-titanix-faint">
-            Forging digital reality — iOS · SaaS · IoT
-          </p>
-        </div>
+        ))}
+      </div>
+      <div className="border-t border-titanix-border">
+        <p className="mx-auto max-w-7xl px-5 py-5 font-mono text-[11px] text-titanix-faint sm:px-8">
+          © 2021–{new Date().getFullYear()} Titanix
+        </p>
       </div>
     </footer>
   );

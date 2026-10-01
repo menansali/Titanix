@@ -13,7 +13,7 @@ const config: Config = {
           void: '#0A0A08',   // primary background
           deep: '#12120C',    // slightly raised surfaces
           panel: 'rgba(26, 26, 18, 0.6)', // glass panels
-          border: 'rgba(239, 226, 0, 0.14)',
+          border: 'rgba(250, 250, 245, 0.11)', // hairlines
           yellow: '#EFE200',  // primary accent, sampled from the logo
           gold: '#C7BC00',    // darker yellow for gradient depth
           glow: '#F6EB2E',    // lighter yellow highlight

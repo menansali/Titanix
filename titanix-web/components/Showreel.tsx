@@ -80,7 +80,7 @@ export default function Showreel() {
         <div className="section grid w-full items-center gap-6 !pb-0 !pt-16 lg:grid-cols-[1fr_1fr] lg:gap-10 lg:!pt-0">
           {/* Copy */}
           <div className="order-2 text-center lg:order-1 lg:text-left">
-            <span className="eyebrow">Live on the App Store</span>
+            <p className="label"><span className="mr-3 text-titanix-yellow">01</span>On the App Store now</p>
             <div className="relative mt-5 min-h-[13rem] sm:min-h-[15rem]">
               {APPS.map((a, i) => (
                 <div
@@ -95,7 +95,7 @@ export default function Showreel() {
                       <Image src={a.icon!} alt="" fill sizes="56px" className="object-cover" />
                     </div>
                     <div className="text-left">
-                      <p className="text-xs font-medium uppercase tracking-wider text-titanix-glow">{a.category}</p>
+                      <p className="text-xs text-titanix-faint">{a.category}</p>
                       <h3 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{a.title}</h3>
                     </div>
                   </div>
@@ -105,7 +105,7 @@ export default function Showreel() {
                   <Link
                     href={`/work/${a.slug}`}
                     tabIndex={i === active ? 0 : -1}
-                    className={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-titanix-glow hover:underline ${
+                    className={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-titanix-yellow hover:underline ${
                       i === active ? '' : 'pointer-events-none'
                     }`}
                   >
@@ -121,7 +121,7 @@ export default function Showreel() {
                 0{active + 1} / 0{N}
               </span>
               <div className="h-px flex-1 overflow-hidden bg-titanix-border">
-                <div ref={barRef} className="h-full origin-left scale-x-0 bg-brand-gradient" />
+                <div ref={barRef} className="h-full origin-left scale-x-0 bg-titanix-yellow" />
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function Showreel() {
 
                 {/* Front: bezel + screen */}
                 <div
-                  className="absolute inset-0 rounded-[14%/6.6%] bg-black p-[3.2%] shadow-[0_40px_120px_-30px_rgba(239,226,0,0.45)]"
+                  className="absolute inset-0 rounded-[14%/6.6%] bg-black p-[3.2%] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9)]"
                   style={{ transform: `translateZ(${DEPTH / 2 + 0.5}px)`, backfaceVisibility: 'hidden' }}
                 >
                   <div className="relative h-full w-full overflow-hidden rounded-[11.5%/5.4%] bg-titanix-deep">

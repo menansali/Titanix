@@ -9,11 +9,10 @@ import { BUDGETS, PROJECT_TYPES, TIMELINES, briefBody, briefSubject, type Brief 
 type State = 'idle' | 'sending' | 'sent' | 'mailto' | 'error';
 
 const FIELD =
-  'w-full rounded-2xl border border-titanix-border bg-white/[0.03] px-4 py-3 text-sm text-titanix-text ' +
-  'placeholder:text-titanix-faint transition-colors focus:border-titanix-glow/50 focus:outline-none ' +
-  'focus:ring-2 focus:ring-titanix-glow/30';
+  'w-full rounded-md border border-titanix-border bg-transparent px-4 py-3 text-sm text-titanix-text ' +
+  'placeholder:text-titanix-faint transition-colors focus:border-titanix-yellow focus:outline-none';
 
-const LABEL = 'mb-1.5 block text-left text-xs font-medium uppercase tracking-wider text-titanix-faint';
+const LABEL = 'label mb-2 block text-left';
 
 function Choice({
   name,
@@ -31,7 +30,7 @@ function Choice({
         {options.map((o, i) => (
           <label key={o} className="cursor-pointer">
             <input type="radio" name={name} value={o} required={i === 0} className="peer sr-only" />
-            <span className="inline-block rounded-full border border-titanix-border bg-white/[0.02] px-4 py-2 text-sm text-titanix-muted transition-colors hover:border-white/20 peer-checked:border-titanix-glow/60 peer-checked:bg-titanix-yellow/15 peer-checked:text-titanix-text peer-focus-visible:ring-2 peer-focus-visible:ring-titanix-glow/40">
+            <span className="inline-block rounded-md border border-titanix-border px-3.5 py-2 text-sm text-titanix-muted transition-colors hover:border-white/40 peer-checked:border-titanix-yellow peer-checked:bg-titanix-yellow peer-checked:font-medium peer-checked:text-black peer-focus-visible:ring-2 peer-focus-visible:ring-titanix-yellow">
               {o}
             </span>
           </label>
@@ -83,8 +82,8 @@ export default function ContactForm() {
 
   if (state === 'sent' || state === 'mailto') {
     return (
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-3 rounded-3xl glass p-8 text-center" role="status">
-        <CheckCircle2 size={32} className="text-titanix-glow" />
+      <div className="flex flex-col items-start gap-3 border border-titanix-border p-8" role="status">
+        <CheckCircle2 size={28} className="text-titanix-yellow" />
         <p className="font-display text-xl font-bold">
           {state === 'sent' ? 'Thanks — your brief is in.' : 'Almost there — your email app should have opened.'}
         </p>
@@ -98,7 +97,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto max-w-2xl space-y-6 text-left">
+    <form onSubmit={onSubmit} className="max-w-2xl space-y-7 text-left">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="cf-name" className={LABEL}>Name</label>
@@ -138,7 +137,7 @@ export default function ContactForm() {
         <p className="text-sm text-red-400" role="alert">{error}</p>
       )}
 
-      <div className="flex justify-center">
+      <div>
         <button type="submit" disabled={state === 'sending'} className="btn-primary group w-full disabled:opacity-60 sm:w-auto">
           {state === 'sending' ? (
             <>
