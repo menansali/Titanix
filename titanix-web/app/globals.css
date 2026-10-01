@@ -93,3 +93,30 @@ body {
   opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* Page transitions (View Transitions API via next-view-transitions).
+   App icons and titles carry a matching view-transition-name on the work
+   card and the case-study header, so they morph between the two pages. */
+::view-transition-group(*) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Something in the hero/marquee is ~27px wider than a phone screen, which made
+   the whole page side-scroll on mobile. `clip` (unlike `hidden`) keeps sticky
+   and GSAP-pinned elements working. */
+html,
+body {
+  overflow-x: clip;
+}

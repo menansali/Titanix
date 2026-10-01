@@ -1,12 +1,15 @@
 import { Mail, MessageCircle, Instagram } from 'lucide-react';
+import { Link } from 'next-view-transitions';
 import Logo from './Logo';
 import { CONTACT } from '@/lib/data';
 
 const NAV = [
-  { label: 'Focus', href: '#focus' },
-  { label: 'Work', href: '#work' },
-  { label: 'Studio', href: '#studio' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Focus', href: '/#focus' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Process', href: '/#process' },
+  { label: 'Studio', href: '/#studio' },
+  { label: 'Ask AI', href: '/#scope' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export default function Footer() {
@@ -30,12 +33,12 @@ export default function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {NAV.map((l) => (
                   <li key={l.href}>
-                    <a
+                    <Link
                       href={l.href}
                       className="text-sm text-titanix-muted transition-colors hover:text-titanix-text"
                     >
                       {l.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

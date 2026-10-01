@@ -10,15 +10,25 @@
 
 ## Shipped products
 
-- **Lovly** (iOS, Lifestyle/Social) — couples app with a shared drawing canvas, moods and love notes on each partner's Lock Screen. https://apps.apple.com/app/id6760272304
-- **Memopix** (iOS, Photo & Video) — turns 20-60 photos into shaped photo-collage keepsakes, print-ready as PNG, JPEG or PDF. https://apps.apple.com/app/id6789686385
-- **Qaza Qada: Missed Salah** (iOS, Lifestyle) — estimates missed prayers, builds a make-up plan, and keeps the remaining count on the Lock Screen; also daily verses, offline prayer times, Qibla and Tasbih. https://apps.apple.com/app/id6757791803
-- **Aer: Air Quality** (iOS, Weather/Health) — live AQI for 35 cities in North Macedonia with a 7-day Copernicus (CAMS) forecast, alerts and widgets. https://apps.apple.com/app/id6790945433
-- **Pet Portraits** (iOS, AI) — turns one dog or cat photo into gallery-grade AI portraits and animated Living Portraits. https://apps.apple.com/app/id6793742748
-- **skeniraj.mk** (SaaS, Hospitality) — QR-menu platform for restaurants and hotels with a multi-tenant dashboard and billing. https://skeniraj.mk
+- **Lovly** (iOS, Lifestyle/Social) — couples app with a shared drawing canvas, moods and love notes on each partner's Lock Screen. Case study: https://www.titanix.dev/work/lovly — App Store: https://apps.apple.com/app/id6760272304
+- **Memopix** (iOS, Photo & Video) — turns 20-60 photos into shaped photo-collage keepsakes across 34 templates, print-ready as PNG, JPEG or PDF. Case study: https://www.titanix.dev/work/memopix — App Store: https://apps.apple.com/app/id6789686385
+- **Qaza Qada: Missed Salah** (iOS, Lifestyle) — estimates missed prayers, builds a make-up plan, and keeps the remaining count on the Lock Screen; also daily verses, offline prayer times, Qibla and Tasbih. Case study: https://www.titanix.dev/work/qaza-qada — App Store: https://apps.apple.com/app/id6757791803
+- **Aer: Air Quality** (iOS, Weather/Health) — live AQI for 35 cities in North Macedonia with a 7-day Copernicus (CAMS) forecast, alerts and widgets. Case study: https://www.titanix.dev/work/aer — App Store: https://apps.apple.com/app/id6790945433
+- **Pet Portraits** (iOS, AI) — turns one dog or cat photo into gallery-grade AI portraits and animated Living Portraits. Case study: https://www.titanix.dev/work/pet-portraits — App Store: https://apps.apple.com/app/id6793742748
+- **skeniraj.mk** (SaaS, Hospitality) — QR-menu platform for restaurants and hotels with a multi-tenant dashboard and billing. Case study: https://www.titanix.dev/work/skeniraj — Live: https://skeniraj.mk
+
+## IoT lab work
+
+- **Env Monitor Pro** — indoor/outdoor particulate (PM1/PM2.5/PM10) and humidity monitoring on Raspberry Pi with an OPC-N3 sensor and Grafana dashboards.
+- **Edge LoRa Network** — low-power long-range sensor network on LilyGO T-Beam and Arduino Nano 33 BLE nodes.
+
+## How we work
+
+Discover (scope the v1) → Build the MVP (weekly working builds) → Launch (App Store review, listing, analytics, payments, deploy) → Grow (iterate on real usage). Engagements: fixed-scope MVP or an ongoing monthly partnership.
 
 ## Contact
 
+- Project brief form: https://www.titanix.dev/#contact
 - Email: contact@titanix.dev
 - WhatsApp: +372 5395 1655
 - Instagram: https://instagram.com/titanixdev

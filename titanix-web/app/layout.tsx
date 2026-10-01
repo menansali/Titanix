@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { ViewTransitions } from 'next-view-transitions';
 import { PILLARS, PROJECTS, CONTACT } from '@/lib/data';
+import { SITE_URL, SITE_NAME } from '@/lib/site';
 import './globals.css';
 
 const inter = Inter({
@@ -21,9 +24,6 @@ const mono = JetBrains_Mono({
   display: 'swap',
 });
 
-// www is the primary host in Vercel (apex 307-redirects to it) — keep in sync.
-const SITE_URL = 'https://www.titanix.dev';
-const SITE_NAME = 'Titanix';
 const SITE_TITLE = 'Titanix — iOS Apps, SaaS & IoT Studio';
 const SITE_DESCRIPTION =
   'Titanix is a product studio forging iOS apps, SaaS platforms, and IoT systems. From bare metal to the App Store, we build things that matter.';
@@ -150,6 +150,7 @@ const structuredData = {
           applicationCategory: p.category,
           author: { '@id': `${SITE_URL}/#organization` },
           ...(p.icon ? { image: `${SITE_URL}${p.icon}` } : {}),
+          ...(p.caseStudy ? { mainEntityOfPage: `${SITE_URL}/work/${p.slug}` } : {}),
           ...(p.url ? { url: p.url, installUrl: p.url } : {}),
         },
       })),
@@ -159,14 +160,17 @@ const structuredData = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${mono.variable}`}>
-      <body className="noise font-sans antialiased">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-        {children}
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${mono.variable}`}>
+        <body className="noise font-sans antialiased">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          />
+          {children}
+          <Analytics />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

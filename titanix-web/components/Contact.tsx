@@ -1,7 +1,9 @@
-import { Mail, MessageCircle, Instagram, ArrowRight } from 'lucide-react';
+import { Mail, MessageCircle, Instagram } from 'lucide-react';
 import { CONTACT } from '@/lib/data';
+import ContactForm from './ContactForm';
 import Reveal from './ui/Reveal';
 import Magnetic from './ui/Magnetic';
+import TrackedLink from './ui/TrackedLink';
 
 export default function Contact() {
   return (
@@ -17,39 +19,48 @@ export default function Contact() {
             </h2>
             <p className="mx-auto mt-5 max-w-lg text-lg text-titanix-muted">
               Got an iOS app, a SaaS idea, or an IoT product in mind? Tell us
-              about it — we reply fast.
+              a little about it — it takes a minute.
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-              <Magnetic className="w-full max-w-xs sm:w-auto sm:max-w-none">
-                <a href={`mailto:${CONTACT.email}`} className="btn-primary group w-full justify-center !px-5 text-[0.9rem] sm:w-auto sm:!px-7 sm:text-sm">
-                  <Mail size={16} className="shrink-0" />
-                  <span className="truncate">{CONTACT.email}</span>
-                  <ArrowRight size={15} className="shrink-0 transition-transform group-hover:translate-x-1" />
-                </a>
-              </Magnetic>
+            <div className="mt-10">
+              <ContactForm />
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <p className="mt-10 text-sm text-titanix-faint">Prefer to talk directly?</p>
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
               <Magnetic>
-                <a
+                <TrackedLink
+                  href={`mailto:${CONTACT.email}`}
+                  event="Contact clicked"
+                  props={{ channel: 'email' }}
+                  className="btn-ghost"
+                >
+                  <Mail size={16} /> {CONTACT.email}
+                </TrackedLink>
+              </Magnetic>
+              <Magnetic>
+                <TrackedLink
                   href={CONTACT.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  event="Contact clicked"
+                  props={{ channel: 'whatsapp' }}
                   className="btn-ghost"
                 >
                   <MessageCircle size={16} /> WhatsApp
-                </a>
+                </TrackedLink>
               </Magnetic>
               <Magnetic>
-                <a
+                <TrackedLink
                   href={CONTACT.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  event="Contact clicked"
+                  props={{ channel: 'instagram' }}
                   className="btn-ghost"
                 >
                   <Instagram size={16} /> {CONTACT.instagram}
-                </a>
+                </TrackedLink>
               </Magnetic>
             </div>
           </div>

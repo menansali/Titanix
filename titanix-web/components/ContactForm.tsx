@@ -1,0 +1,179 @@
+'use client';
+
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
+import { track } from '@vercel/analytics';
+import { CONTACT } from '@/lib/data';
+import { BRIEF_EVENT, type BriefPrefill } from './AskTitanix';
+import { BUDGETS, PROJECT_TYPES, TIMELINES, briefBody, briefSubject, type Brief } from '@/lib/contact';
+
+type State = 'idle' | 'sending' | 'sent' | 'mailto' | 'error';
+
+const FIELD =
+  'w-full rounded-2xl border border-titanix-border bg-white/[0.03] px-4 py-3 text-sm text-titanix-text ' +
+  'placeholder:text-titanix-faint transition-colors focus:border-titanix-glow/50 focus:outline-none ' +
+  'focus:ring-2 focus:ring-titanix-glow/30';
+
+const LABEL = 'mb-1.5 block text-left text-xs font-medium uppercase tracking-wider text-titanix-faint';
+
+function Choice({
+  name,
+  label,
+  options,
+}: {
+  name: keyof Brief;
+  label: string;
+  options: readonly string[];
+}) {
+  return (
+    <fieldset className="text-left">
+      <legend className={LABEL}>{label}</legend>
+      <div className="flex flex-wrap gap-2">
+        {options.map((o, i) => (
+          <label key={o} className="cursor-pointer">
+            <input type="radio" name={name} value={o} required={i === 0} className="peer sr-only" />
+            <span className="inline-block rounded-full border border-titanix-border bg-white/[0.02] px-4 py-2 text-sm text-titanix-muted transition-colors hover:border-white/20 peer-checked:border-titanix-glow/60 peer-checked:bg-titanix-yellow/15 peer-checked:text-titanix-text peer-focus-visible:ring-2 peer-focus-visible:ring-titanix-glow/40">
+              {o}
+            </span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
+export default function ContactForm() {
+  const [state, setState] = useState<State>('idle');
+  const [error, setError] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // "Send this to Titanix" in the AI scoper pre-fills the brief.
+  useEffect(() => {
+    function onBrief(e: Event) {
+      const { type, message } = (e as CustomEvent<BriefPrefill>).detail;
+      setState('idle');
+      // Wait a tick in case the form is re-mounting after a previous send.
+      requestAnimationFrame(() => {
+        const form = formRef.current;
+        if (!form) return;
+        const radio = form.querySelector<HTMLInputElement>(`input[name="type"][value="${CSS.escape(type)}"]`);
+        if (radio) radio.checked = true;
+        const textarea = form.elements.namedItem('message') as HTMLTextAreaElement | null;
+        if (textarea) textarea.value = message;
+        form.querySelector<HTMLInputElement>('#cf-name')?.focus({ preventScroll: true });
+      });
+    }
+    window.addEventListener(BRIEF_EVENT, onBrief);
+    return () => window.removeEventListener(BRIEF_EVENT, onBrief);
+  }, []);
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const brief = Object.fromEntries(
+      ['name', 'email', 'type', 'budget', 'timeline', 'message'].map((k) => [k, String(fd.get(k) ?? '')]),
+    ) as unknown as Brief;
+
+    setState('sending');
+    setError('');
+    track('Contact form submitted', { type: brief.type, budget: brief.budget, timeline: brief.timeline });
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...brief, company: fd.get('company') }),
+      });
+      if (res.ok) {
+        setState('sent');
+        return;
+      }
+      if (res.status === 422) {
+        setError((await res.json()).error ?? 'Please check the form.');
+        setState('error');
+        return;
+      }
+    } catch {
+      // Network failure — fall through to the email fallback.
+    }
+
+    // Delivery not configured or failed: hand the brief to the visitor's mail app.
+    const href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(briefSubject(brief))}&body=${encodeURIComponent(briefBody(brief))}`;
+    window.location.href = href;
+    setState('mailto');
+  }
+
+  if (state === 'sent' || state === 'mailto') {
+    return (
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-3 rounded-3xl glass p-8 text-center" role="status">
+        <CheckCircle2 size={32} className="text-titanix-glow" />
+        <p className="font-display text-xl font-bold">
+          {state === 'sent' ? 'Thanks — your brief is in.' : 'Almost there — your email app should have opened.'}
+        </p>
+        <p className="text-sm text-titanix-muted">
+          {state === 'sent'
+            ? 'We reply fast — usually the same day.'
+            : `Hit send there, or write to ${CONTACT.email} directly.`}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form ref={formRef} onSubmit={onSubmit} className="mx-auto max-w-2xl space-y-6 text-left">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="cf-name" className={LABEL}>Name</label>
+          <input id="cf-name" name="name" required maxLength={120} autoComplete="name" className={FIELD} placeholder="Your name" />
+        </div>
+        <div>
+          <label htmlFor="cf-email" className={LABEL}>Email</label>
+          <input id="cf-email" name="email" type="email" required maxLength={200} autoComplete="email" className={FIELD} placeholder="you@company.com" />
+        </div>
+      </div>
+
+      {/* Honeypot — hidden from people, tempting to bots. */}
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="cf-company">Company</label>
+        <input id="cf-company" name="company" tabIndex={-1} autoComplete="off" />
+      </div>
+
+      <Choice name="type" label="What are we building?" options={PROJECT_TYPES} />
+      <Choice name="budget" label="Budget" options={BUDGETS} />
+      <Choice name="timeline" label="Timeline" options={TIMELINES} />
+
+      <div>
+        <label htmlFor="cf-message" className={LABEL}>About the project</label>
+        <textarea
+          id="cf-message"
+          name="message"
+          required
+          minLength={10}
+          maxLength={5000}
+          rows={5}
+          className={`${FIELD} resize-y`}
+          placeholder="What problem does it solve, and who is it for?"
+        />
+      </div>
+
+      {state === 'error' && (
+        <p className="text-sm text-red-400" role="alert">{error}</p>
+      )}
+
+      <div className="flex justify-center">
+        <button type="submit" disabled={state === 'sending'} className="btn-primary group w-full disabled:opacity-60 sm:w-auto">
+          {state === 'sending' ? (
+            <>
+              <Loader2 size={16} className="animate-spin" /> Sending…
+            </>
+          ) : (
+            <>
+              Send project brief
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </>
+          )}
+        </button>
+      </div>
+    </form>
+  );
+}

@@ -6,7 +6,8 @@ const nextConfig = {
   outputFileTracingRoot: path.resolve(),
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'images.unsplash.com' },
+      // App Store screenshots on case-study pages.
+      { protocol: 'https', hostname: '*.mzstatic.com' },
     ],
   },
 };

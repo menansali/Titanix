@@ -27,8 +27,8 @@ export default function Studio() {
             <p>
               We&apos;re small on purpose. That means senior hands on every
               project, fast decisions, and work we&apos;re proud to put our name
-              on. This rebrand is a new chapter — same obsession with craft, a
-              sharper focus on what&apos;s next.
+              on. We ship our own products too — six of them are live right
+              now — so we know what it takes to launch and keep going.
             </p>
           </div>
         </Reveal>

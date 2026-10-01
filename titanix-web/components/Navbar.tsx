@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'next-view-transitions';
 import Logo from './Logo';
 import Magnetic from './ui/Magnetic';
 
 const LINKS = [
-  { label: 'Focus', href: '#focus' },
-  { label: 'Work', href: '#work' },
-  { label: 'Studio', href: '#studio' },
+  { label: 'Focus', href: '/#focus' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Process', href: '/#process' },
+  { label: 'Studio', href: '/#studio' },
+  { label: 'Ask AI', href: '/#scope' },
 ];
 
 export default function Navbar() {
@@ -34,27 +37,27 @@ export default function Navbar() {
             scrolled ? 'glass' : 'border border-transparent'
           }`}
         >
-          <a href="#top" aria-label="Titanix home">
+          <Link href="/" aria-label="Titanix home">
             <Logo size={30} />
-          </a>
+          </Link>
 
           <div className="hidden items-center gap-1 md:flex">
             {LINKS.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 className="rounded-full px-4 py-2 text-sm font-medium text-titanix-muted transition-colors hover:text-titanix-text"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </div>
 
           <div className="hidden md:block">
             <Magnetic strength={7}>
-              <a href="#contact" className="btn-primary !py-2.5 !px-6">
+              <Link href="/#contact" className="btn-primary !py-2.5 !px-6">
                 Start a project
-              </a>
+              </Link>
             </Magnetic>
           </div>
 
@@ -73,22 +76,22 @@ export default function Navbar() {
         <div className="mx-6 mt-2 md:hidden">
           <div className="glass flex flex-col gap-1 rounded-3xl p-3">
             {LINKS.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className="rounded-2xl px-4 py-3 text-sm font-medium text-titanix-muted transition-colors hover:bg-white/5 hover:text-titanix-text"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               onClick={() => setOpen(false)}
               className="btn-primary mt-1 w-full"
             >
               Start a project
-            </a>
+            </Link>
           </div>
         </div>
       )}

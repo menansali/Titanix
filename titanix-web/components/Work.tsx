@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { PROJECTS } from '@/lib/data';
 import Reveal from './ui/Reveal';
 import TiltCard from './ui/TiltCard';
-import AppArt from './AppArt';
+import TrackedLink from './ui/TrackedLink';
 
 // Fallback monogram gradients for apps without an exported icon.
 const ACCENTS = [
@@ -29,8 +29,8 @@ export default function Work() {
           </h2>
         </div>
         <p className="max-w-sm text-titanix-muted">
-          A slice of the Titanix lab — native iOS apps and SaaS platforms
-          across lifestyle, photography, AI, health, and hospitality.
+          Native iOS apps and SaaS platforms live today, plus the IoT lab
+          work they grew out of. Tap a product for the full case study.
         </p>
       </Reveal>
 
@@ -43,11 +43,12 @@ export default function Work() {
 
               <div className="relative flex items-start justify-between">
                 {p.icon ? (
-                  <div className="relative h-16 w-16 overflow-hidden rounded-[1.15rem] border border-titanix-border shadow-glow">
+                  <div
+                    className="relative h-16 w-16 overflow-hidden rounded-[1.15rem] border border-titanix-border shadow-glow"
+                    style={p.caseStudy ? { viewTransitionName: `icon-${p.slug}` } : undefined}
+                  >
                     <Image src={p.icon} alt={`${p.title} app icon`} fill sizes="64px" className="object-cover" />
                   </div>
-                ) : p.art ? (
-                  <AppArt name={p.art} className="h-16 w-16 rounded-[1.15rem] shadow-glow" />
                 ) : (
                   <div
                     className={`flex h-16 w-16 items-center justify-center rounded-[1.15rem] bg-gradient-to-br ${ACCENTS[i % ACCENTS.length]} shadow-glow`}
@@ -68,7 +69,7 @@ export default function Work() {
                   >
                     {p.status}
                   </span>
-                  {p.url && (
+                  {(p.caseStudy || p.url) && (
                     <ArrowUpRight
                       size={16}
                       aria-hidden="true"
@@ -79,8 +80,15 @@ export default function Work() {
               </div>
 
               <div className="relative mt-5 flex items-baseline justify-between gap-3">
-                <h3 className="font-display text-xl font-bold leading-tight">{p.title}</h3>
-                <span className="shrink-0 font-mono text-xs text-titanix-faint">{p.year}</span>
+                <h3
+                  className="font-display text-xl font-bold leading-tight"
+                  style={p.caseStudy ? { viewTransitionName: `title-${p.slug}` } : undefined}
+                >
+                  {p.title}
+                </h3>
+                {p.year && (
+                  <span className="shrink-0 font-mono text-xs text-titanix-faint">{p.year}</span>
+                )}
               </div>
               <p className="mt-1.5 text-xs font-medium uppercase tracking-wider text-titanix-glow">
                 {p.category}
@@ -105,16 +113,28 @@ export default function Work() {
           return (
             <Reveal key={p.id} delay={(i % 3) * 0.08} className="h-full">
               <TiltCard className="h-full">
-                {p.url ? (
-                  <a
+                {p.caseStudy ? (
+                  <TrackedLink
+                    href={`/work/${p.slug}`}
+                    event="Case study opened"
+                    props={{ project: p.slug, from: 'home' }}
+                    aria-label={`${p.title} — read the case study`}
+                    className={CARD}
+                  >
+                    {body}
+                  </TrackedLink>
+                ) : p.url ? (
+                  <TrackedLink
                     href={p.url}
+                    event="Store link clicked"
+                    props={{ project: p.slug, from: 'home' }}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${p.title} — opens in a new tab`}
                     className={CARD}
                   >
                     {body}
-                  </a>
+                  </TrackedLink>
                 ) : (
                   <article className={CARD}>{body}</article>
                 )}

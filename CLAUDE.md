@@ -4,30 +4,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Single-page marketing/portfolio website for **Titanix Development** (an IoT/mobile/software agency). It is a static React SPA — there is no backend API; the Express server exists only to serve the built static files.
+Marketing/portfolio site for **Titanix** (iOS apps, SaaS, IoT product studio), live at https://www.titanix.dev. The whole site lives in **`titanix-web/`** — a Next.js 15 App Router app. Run all commands from that directory. (An older Vite site used to sit at the repo root; it was removed and only exists in git history.)
 
-## Commands
+## Commands (in `titanix-web/`)
 
-- `npm run dev` — Vite dev server. Note: `vite.config.ts` pins port **3000** (the README's mention of 5173 is stale).
-- `npm run build` — TypeScript + Vite build into `dist/`.
-- `npm run preview` — serve the production build locally via Vite.
-- `npm start` — run the Express server (`server.cjs`) that serves `dist/`.
+- `npm run dev` — dev server on port 3000.
+- `npm run build` — production build (also type-checks).
+- `npm run lint` — eslint.
 
-There is no test runner or linter configured; `tsc` runs only as part of `vite build`.
+There is no test runner.
+
+## Deploy
+
+Vercel deploys on push to `master` (project root `titanix-web`). `www.titanix.dev` is the primary host; `lib/site.ts` holds `SITE_URL` — keep canonical/sitemap/JSON-LD URLs on www.
 
 ## Architecture
 
-- **Page composition:** `App.tsx` renders every section in order (`Header`, `Hero`, `TechStack`, `ClientLogos`, `About`, `Services`, `Portfolio`, `SmartConsultant`, `Newsletter`, `Footer`) plus a `LoadingScreen` overlay. There is no router — it's one scrolling page with anchor navigation. To add or reorder a section, edit `App.tsx`.
-- **Content data:** Portfolio projects and service cards live as typed arrays in `constants.ts` (`PROJECTS`, `SERVICES`), typed by `types.ts`. Edit content here rather than hardcoding in components. Service/project `icon` fields are string names resolved against `lucide-react`.
-- **"Smart Consultant" is a mock.** `services/geminiService.ts` (`analyzeProjectIdea`) is pure keyword-matching with a fake delay — **no real AI call**. Despite `@google/genai` being a dependency and imported in `index.html`'s importmap, no Gemini API is actually used. Don't assume an API key or network call is involved.
+- **Content:** `lib/data.ts` is the single source of truth — pillars, projects, stats, contact. Each project with a `caseStudy` gets a statically generated page at `/work/[slug]` (`app/work/[slug]/page.tsx`), a sitemap entry, and JSON-LD. Project copy mirrors the live App Store listings; screenshots are App Store CDN (`*.mzstatic.com`) URLs.
+- **Home page:** `app/page.tsx` composes `Hero`, `Marquee`, `LiveAir`, `Focus`, `Work`, `Process`, `Studio`, `AskTitanix`, `Contact`. Nav links use `/#section` so they work from case-study pages too.
+- **Live air widget:** `components/LiveAir.tsx` is a server component fetching Open-Meteo's CAMS air-quality API (same model as Aer), revalidated every 15 min; it renders nothing if the feed fails. This makes the home page ISR.
+- **Ask Titanix (AI scoper):** `components/AskTitanix.tsx` → `app/api/scope/route.ts` → Claude (`@anthropic-ai/sdk`, structured output via the zod schema in `lib/scope.ts`). Needs `ANTHROPIC_API_KEY`; without it the route returns 503. Rate-limited per IP in memory (best effort). "Send this to Titanix" dispatches a `titanix:brief` window event that `ContactForm` listens for to prefill the brief. Keep zod/`lib/scope.ts` out of client components — import only the `Scope` type.
+- **Page transitions:** `next-view-transitions` wraps the layout; use its `Link` (or `components/ui/TrackedLink.tsx`) for internal links. App icons/titles share `view-transition-name`s (`icon-<slug>`, `title-<slug>`) between work cards and case-study headers.
+- **Contact form:** `components/ContactForm.tsx` → `app/api/contact/route.ts` → Resend (needs `RESEND_API_KEY`). Without the key the route returns 503 and the form opens a pre-filled `mailto:` instead. Shared options/formatting in `lib/contact.ts`.
+- **Analytics:** Vercel Analytics in `app/layout.tsx`; custom events via `components/ui/TrackedLink.tsx` and the form.
+- **SEO/GEO:** `app/layout.tsx` (metadata + Organization/WebSite/portfolio JSON-LD), `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, `public/llms.txt`. When project content changes, update `llms.txt` too and re-ping IndexNow (key file in `public/`).
 
 ## Styling
 
-- **Tailwind CSS v3** with a custom `titanix` design system in `tailwind.config.js`: brand colors (`titanix-yellow/gold/amber/dark/card/text/muted`), `font-display` (Space Grotesk) vs `font-sans` (Inter), and custom animations (`float`, `blob`, `pulse-glow`, `scroll`, etc.) and `glow`/`glass` shadows. Prefer these tokens over ad-hoc values to stay on-brand (dark theme + gold accents + glassmorphism).
-- Global styles and keyframe/font setup are in `index.css`.
+Tailwind v3 with a `titanix` token set in `tailwind.config.ts` (yellow `#EFE200` on near-black `#0A0A08`), plus component classes in `app/globals.css` (`section`, `eyebrow`, `glass`, `btn-primary`, `btn-ghost`, `text-gradient`). Prefer these over ad-hoc values.
 
-## Conventions & gotchas
+## Other folders
 
-- `@` path alias maps to the repo root (see `vite.config.ts` and `tsconfig.json`).
-- `index.html` contains an **importmap pointing React/lucide/genai to `aistudiocdn.com`** (an AI Studio artifact). The Vite build bundles from `node_modules` instead, so the importmap is effectively unused in the built app — be aware of the discrepancy if debugging module resolution.
-- Two server files exist: `server.cjs` (CommonJS, used by `npm start`, targets cPanel deploy) and `server.js` (ESM equivalent, not wired to a script). Both just static-serve `dist/` and SPA-fallback to `index.html`.
+- `.ig-design/` — Instagram post kit (HTML sources + PNG exports). Case-study covers in `titanix-web/public/work/` are exported from `.ig-design/png/`.
