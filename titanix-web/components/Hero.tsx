@@ -51,6 +51,9 @@ export default async function Hero() {
               <ArrowDownRight size={16} className="transition-transform group-hover:translate-y-0.5" />
             </a>
           </div>
+          <a href="#book" className="fade-in mt-4 inline-block font-mono text-[11px] uppercase tracking-[0.18em] text-titanix-muted underline decoration-titanix-border underline-offset-4 transition-colors hover:text-titanix-yellow hover:decoration-titanix-yellow" style={{ animationDelay: '0.7s' }}>
+            Or book a 15-minute call →
+          </a>
         </div>
 
         <dl className="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4 sm:gap-x-12">

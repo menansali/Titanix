@@ -38,6 +38,7 @@ Discover (scope the v1) → Build the MVP (weekly working builds) → Launch (Ap
 ## Contact
 
 - Project brief form: https://www.titanix.dev/#contact
+- Book a call: https://cal.com/titanix (15 min intro: https://cal.com/titanix/15min, 30 min project call: https://cal.com/titanix/30min)
 - Email: contact@titanix.dev
 - WhatsApp: +372 5395 1655
 - Instagram: https://instagram.com/titanixdev

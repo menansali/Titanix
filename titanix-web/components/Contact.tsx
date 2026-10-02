@@ -27,21 +27,41 @@ export default function Contact() {
         <ContactForm />
 
         <div>
-          {CONTACT.bookingUrl && (
-            <TrackedLink
-              href={CONTACT.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              event="Contact clicked"
-              props={{ channel: 'booking' }}
-              className="group mb-10 block bg-titanix-yellow p-5 text-black transition-colors hover:bg-titanix-glow"
-            >
-              <span className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em]">
-                <CalendarDays size={16} /> <ArrowUpRight size={16} className="transition-transform group-hover:rotate-45" />
+          {CONTACT.booking.length > 0 && (
+            <div id="book" className="mb-10 scroll-mt-24 bg-titanix-yellow p-5 text-black">
+              <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em]">
+                <CalendarDays size={15} /> Book a call
               </span>
-              <span className="mt-6 block font-display text-2xl font-bold leading-tight">Rather talk it through?</span>
-              <span className="mt-1 block text-sm text-black/70">Book a 20-minute intro call.</span>
-            </TrackedLink>
+              <p className="mt-5 font-display text-2xl font-bold leading-tight">Rather talk it through?</p>
+              <ul className="mt-4 border-t border-black/20">
+                {CONTACT.booking.map((b) => (
+                  <li key={b.url}>
+                    <TrackedLink
+                      href={b.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      event="Contact clicked"
+                      props={{ channel: `booking-${b.label}` }}
+                      className="group flex items-center justify-between gap-3 border-b border-black/20 py-3"
+                    >
+                      <span>
+                        <span className="wide block font-display text-lg font-extrabold uppercase">{b.label}</span>
+                        <span className="block text-sm text-black/70">{b.note}</span>
+                      </span>
+                      <ArrowUpRight size={18} className="shrink-0 transition-transform group-hover:rotate-45" />
+                    </TrackedLink>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={CONTACT.bookingProfile}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block font-mono text-[11px] text-black/70 underline underline-offset-4 hover:text-black"
+              >
+                All times on cal.com/titanix
+              </a>
+            </div>
           )}
           <p className="label">Or reach us directly</p>
           <ul className="mt-4 border-t border-titanix-border">

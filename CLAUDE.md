@@ -27,7 +27,7 @@ Vercel deploys on push to `master` (project root `titanix-web`). `www.titanix.de
 - **Live App Store data:** `lib/appstore.ts` reads Apple's public iTunes lookup + review RSS (no key), cached 6h. It feeds the hero rating, `Proof` (ratings + real written reviews, after `Work`), the case-study "Where it is now" row, and `getLabLog()`: any App Store release newer than `LAB_LOG` is added to the lab log automatically. Ratings are summed over the `STOREFRONTS` list (Apple has no global count). Everything falls back to static data if Apple is down.
 - **Notes:** `lib/notes.ts` (plain block data, no MDX) → `/notes` and `/notes/[slug]` (BlogPosting JSON-LD, sitemap). Keep posts factual.
 - **Share images:** `app/_og/render.tsx` builds every OG card (home + per case study) from `terrain.jpg` (a still of the SignalField shader) and static TTFs in `app/_og/` (Satori can't use variable fonts). To re-render the terrain, run the shader headless at 1200×630.
-- **Booking:** set `CONTACT.bookingUrl` (Cal.com/Calendly) to show the "Book a call" card in Contact; empty hides it.
+- **Booking:** `CONTACT.booking` lists the Cal.com slots (15/30 min) shown in the Contact card (`#book`) and the footer; an empty list hides both.
 - `app/not-found.tsx` is the styled 404 ("Signal lost").
 - **Live air widget:** `components/LiveAir.tsx` is a server component fetching Open-Meteo's CAMS air-quality API (same model as Aer), revalidated every 15 min; it renders nothing if the feed fails. This makes the home page ISR.
 - **Page transitions:** `next-view-transitions` wraps the layout; use its `Link` (or `components/ui/TrackedLink.tsx`) for internal links. App icons/titles share `view-transition-name`s (`icon-<slug>`, `title-<slug>`) between work cards and case-study headers.

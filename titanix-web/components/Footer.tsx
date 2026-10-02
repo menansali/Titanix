@@ -33,6 +33,19 @@ export default function Footer() {
           {CONTACT.email}
           <ArrowUpRight className="h-[0.7em] w-[0.7em] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
         </a>
+        {CONTACT.booking.length > 0 && (
+          <p className="mt-6 text-titanix-muted">
+            Or book a call:{' '}
+            {CONTACT.booking.map((b, i) => (
+              <span key={b.url}>
+                {i > 0 && ' · '}
+                <a href={b.url} target="_blank" rel="noopener noreferrer" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+                  {b.label}
+                </a>
+              </span>
+            ))}
+          </p>
+        )}
 
         <div className="mt-16 grid gap-10 border-t border-titanix-border pt-10 sm:grid-cols-3">
           {[

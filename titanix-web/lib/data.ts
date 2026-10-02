@@ -378,6 +378,10 @@ export const CONTACT = {
   instagramUrl: 'https://instagram.com/titanixdev',
   linkedinUrl: 'https://www.linkedin.com/in/menansali/',
   githubUrl: 'https://github.com/menansali',
-  /** Cal.com / Calendly link for an intro call. Empty hides the "Book a call" button. */
-  bookingUrl: '',
+  /** Cal.com intro-call slots. An empty list hides the "Book a call" card. */
+  booking: [
+    { label: '15 min', note: 'Quick intro', url: 'https://cal.com/titanix/15min' },
+    { label: '30 min', note: 'Talk through your project', url: 'https://cal.com/titanix/30min' },
+  ],
+  bookingProfile: 'https://cal.com/titanix',
 };
