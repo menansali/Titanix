@@ -1,11 +1,12 @@
 import { Link } from 'next-view-transitions';
-import { LAB_LOG } from '@/lib/data';
+import { getLabLog } from '@/lib/appstore';
 import SectionHead from './ui/SectionHead';
 
 const fmt = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
-export default function LabLog() {
+export default async function LabLog() {
+  const log = await getLabLog();
   return (
     <section id="log" className="section" aria-labelledby="log-title">
       <SectionHead
@@ -13,11 +14,11 @@ export default function LabLog() {
         label="Lab log"
         id="log-title"
         title="What we shipped lately."
-        intro="Launches and updates from our own products, straight from the App Store and GitHub."
+        intro="Launches and updates from our own products. New App Store releases show up here on their own."
       />
 
       <ol className="mt-12 border-t border-titanix-border">
-        {LAB_LOG.map((e) => {
+        {log.map((e) => {
           const name = e.slug ? (
             <Link href={`/work/${e.slug}`} className="hover:text-titanix-yellow">
               {e.project}

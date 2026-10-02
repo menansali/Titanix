@@ -90,7 +90,21 @@ export default function SignalField() {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = ref.current!;
+    // Compiling the shader blocks the main thread briefly, so wait until the
+    // page is idle (it fades in anyway).
+    let cleanup: (() => void) | undefined;
+    const ric = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 300));
+    const cancel = window.cancelIdleCallback ?? window.clearTimeout;
+    const id = ric(() => (cleanup = start()), { timeout: 1500 });
+    return () => {
+      cancel(id);
+      cleanup?.();
+    };
+  }, []);
+
+  function start(): (() => void) | undefined {
+    const canvas = ref.current;
+    if (!canvas) return;
     const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'low-power' });
     if (!gl) return;
 
@@ -120,11 +134,13 @@ export default function SignalField() {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     const dpr = Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.5);
+    // Drops (never raises) if the GPU can't keep up; see the frame-time check in draw().
+    let quality = 1;
 
     let w = 0, h = 0;
     const resize = () => {
-      w = Math.round(window.innerWidth * dpr);
-      h = Math.round(window.innerHeight * dpr);
+      w = Math.round(window.innerWidth * dpr * quality);
+      h = Math.round(window.innerHeight * dpr * quality);
       canvas.width = w;
       canvas.height = h;
       gl.viewport(0, 0, w, h);
@@ -149,10 +165,26 @@ export default function SignalField() {
     let visible = true;
     const start = performance.now();
     let last = start;
+    let frames = 0, slow = 0;
 
     const draw = (now: number) => {
-      const dt = Math.min(0.05, (now - last) / 1000);
+      const raw = (now - last) / 1000;
+      const dt = Math.min(0.05, raw);
       last = now;
+
+      // Adaptive resolution: after a warm-up, if most frames take longer than
+      // ~22ms, render at a lower resolution (down to 45%).
+      if (!reduced && raw < 0.25) {
+        frames++;
+        if (raw > 0.022) slow++;
+        if (frames === 90) {
+          if (slow > 45 && quality > 0.45) {
+            quality = Math.max(0.45, quality * 0.7);
+            resize();
+          }
+          frames = slow = 0;
+        }
+      }
       const time = reduced ? 12 : (now - start) / 1000;
 
       if (coarse && !reduced) {
@@ -218,7 +250,7 @@ export default function SignalField() {
       document.documentElement.removeEventListener('mouseleave', onLeave);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, []);
+  }
 
   return (
     <canvas

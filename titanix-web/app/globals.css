@@ -57,6 +57,31 @@ body {
   }
 }
 
+/* Hero entrance: pure CSS, so it runs before hydration. */
+/* Starts partly inside the mask: Chrome only counts the headline as the LCP
+   element if some of it is visible on first paint. */
+@keyframes rise {
+  from { transform: translateY(62%); opacity: 0.15; }
+  to { transform: none; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.rise {
+  display: block;
+  animation: rise 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.fade-in {
+  animation: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .fade-in {
+    animation: none;
+  }
+}
+
 /* Labelled cursor targets hide the native pointer (see Cursor.tsx). */
 @media (pointer: fine) {
   [data-cursor],
@@ -110,12 +135,28 @@ body {
    App icons and titles carry a matching view-transition-name on the work
    card and the case-study header, so they morph between the two pages. */
 ::view-transition-group(*) {
-  animation-duration: 0.45s;
+  animation-duration: 0.7s;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-::view-transition-old(root),
+/* The new page sweeps up over the old one behind a soft edge, like a signal
+   front crossing the map; the old page sinks and dims underneath. */
+@keyframes vt-sweep-in {
+  from { mask-position: 0 0%; -webkit-mask-position: 0 0%; }
+  to { mask-position: 0 100%; -webkit-mask-position: 0 100%; }
+}
+@keyframes vt-sink {
+  to { transform: translateY(-6%) scale(0.98); filter: brightness(0.35); }
+}
+::view-transition-old(root) {
+  animation: vt-sink 0.8s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
 ::view-transition-new(root) {
-  animation-duration: 0.3s;
+  -webkit-mask-image: linear-gradient(to top, #000 42%, transparent 58%);
+  mask-image: linear-gradient(to top, #000 42%, transparent 58%);
+  -webkit-mask-size: 100% 260%;
+  mask-size: 100% 260%;
+  mask-repeat: no-repeat;
+  animation: vt-sweep-in 0.8s cubic-bezier(0.7, 0, 0.2, 1) both;
 }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),

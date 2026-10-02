@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { PROJECTS } from '@/lib/data';
 import { SITE_URL } from '@/lib/site';
+import { NOTES } from '@/lib/notes';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -15,6 +16,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
+    })),
+    { url: `${SITE_URL}/notes`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    ...NOTES.map((n) => ({
+      url: `${SITE_URL}/notes/${n.slug}`,
+      lastModified: new Date(`${n.date}T12:00:00Z`),
+      changeFrequency: 'yearly' as const,
+      priority: 0.5,
     })),
   ];
 }

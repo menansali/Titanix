@@ -32,6 +32,9 @@ npm run lint      # eslint
 - `app/layout.tsx` — fonts, metadata, JSON-LD, Vercel Analytics.
 - `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, `public/llms.txt` — SEO layer. Keep `llms.txt` in sync with `lib/data.ts`.
 - `lib/data.ts` — single source of truth for pillars, projects (incl. case-study copy and App Store screenshots), stats, and contact info. **Edit content here.**
+- `lib/appstore.ts` — live App Store versions, ratings and reviews (Apple's public endpoints, cached 6h).
+- `lib/notes.ts` — the Notes posts (`/notes`).
+- `app/_og/` — share-image renderer, fonts and terrain still.
 - `lib/contact.ts` — form options and email formatting shared by the form and the API route.
 - `components/` — `Hero`, `Showreel`, `LiveAir`, `Focus`, `Pipeline`, `Work`, `Process`, `Studio`, `LabLog`, `Contact` + `ContactForm`, plus `Navbar`, `Footer`, `Logo`, `ui/` (`SectionHead`, `TrackedLink`) and `motion/` (`SignalField`, `SmoothScroll`, `Reveal`, `Scramble`, `Marquee`, `RevealImage`, `Wordmark`, `Cursor`).
 - `public/work/` — case-study cover images (exported from the Instagram kit; used for social share images and skeniraj.mk).

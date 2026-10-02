@@ -1,4 +1,4 @@
-import { Github, Instagram, Linkedin, Mail, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, CalendarDays, Github, Instagram, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { CONTACT } from '@/lib/data';
 import ContactForm from './ContactForm';
 import SectionHead from './ui/SectionHead';
@@ -27,6 +27,22 @@ export default function Contact() {
         <ContactForm />
 
         <div>
+          {CONTACT.bookingUrl && (
+            <TrackedLink
+              href={CONTACT.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              event="Contact clicked"
+              props={{ channel: 'booking' }}
+              className="group mb-10 block bg-titanix-yellow p-5 text-black transition-colors hover:bg-titanix-glow"
+            >
+              <span className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em]">
+                <CalendarDays size={16} /> <ArrowUpRight size={16} className="transition-transform group-hover:rotate-45" />
+              </span>
+              <span className="mt-6 block font-display text-2xl font-bold leading-tight">Rather talk it through?</span>
+              <span className="mt-1 block text-sm text-black/70">Book a 20-minute intro call.</span>
+            </TrackedLink>
+          )}
           <p className="label">Or reach us directly</p>
           <ul className="mt-4 border-t border-titanix-border">
             {CHANNELS.map((c) => {

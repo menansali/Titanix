@@ -8,6 +8,7 @@ const NAV = [
   { label: 'Process', href: '/#process' },
   { label: 'Studio', href: '/#studio' },
   { label: 'Lab log', href: '/#log' },
+  { label: 'Notes', href: '/notes' },
   { label: 'Contact', href: '/#contact' },
 ];
 

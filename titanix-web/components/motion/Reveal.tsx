@@ -37,6 +37,9 @@ export default function Reveal({ as: Tag = 'div', children, className, id, chars
         type: chars ? 'lines,chars' : 'lines',
         mask: 'lines',
         autoSplit: true,
+        // Char splits need the aria-label so screen readers read words, and only
+        // headings may carry one. Line splits read fine as they are.
+        aria: chars ? 'auto' : 'none',
         onSplit(self) {
           gsap.set(el, { visibility: 'visible' });
           return gsap.from(chars ? self.chars : self.lines, {

@@ -1,14 +1,15 @@
 import { ArrowDownRight, ArrowRight } from 'lucide-react';
 import { PROJECTS } from '@/lib/data';
-import Reveal from './motion/Reveal';
+import { getRatings } from '@/lib/appstore';
 import Scramble from './motion/Scramble';
 
-export default function Hero() {
+export default async function Hero() {
   const live = PROJECTS.filter((p) => p.status === 'Shipped').length;
+  const ratings = await getRatings();
 
   const stats: [string, string][] = [
     [String(live).padStart(2, '0'), 'Products live'],
-    ['5.0★', 'App Store rating'],
+    ratings ? [`${ratings.average.toFixed(1)}★`, `${ratings.count} App Store ratings`] : ['5.0★', 'App Store rating'],
     ['12', 'Languages shipped'],
     ['2021', 'Founded'],
   ];
@@ -20,27 +21,27 @@ export default function Hero() {
         <Scramble immediate delay={0.35} text="iOS · SaaS · IoT" className="hidden sm:inline" />
       </div>
 
-      <Reveal
-        as="h1"
-        chars
-        immediate
-        delay={0.1}
+      {/* CSS-only entrance so the headline paints before any JavaScript (it's the LCP element). */}
+      <h1
         className="wide my-10 font-display short:my-6 text-[9.1vw] font-extrabold uppercase leading-[0.86] tracking-[-0.025em] sm:text-[9.4vw] 2xl:text-[8.6rem]"
       >
-        <span className="block">From bare</span>
-        <span className="block">metal to the</span>
-        <span className="block">
-          App Store<span className="text-titanix-yellow">.</span>
-        </span>
-      </Reveal>
+        {['From bare', 'metal to the', 'App Store'].map((line, i) => (
+          <span key={line} className="block overflow-hidden pb-[0.04em]">
+            <span className="rise" style={{ animationDelay: `${0.08 + i * 0.09}s` }}>
+              {line}
+              {i === 2 && <span className="text-titanix-yellow">.</span>}
+            </span>
+          </span>
+        ))}
+      </h1>
 
       <div className="grid gap-10 border-t border-titanix-border pt-6 xl:grid-cols-[1fr_auto] xl:items-end">
         <div className="max-w-xl">
-          <Reveal immediate delay={0.55} className="text-lg leading-relaxed text-titanix-muted sm:text-xl" as="p">
+          <p className="fade-in text-lg leading-relaxed text-titanix-muted sm:text-xl" style={{ animationDelay: '0.45s' }}>
             Titanix is a product studio. We design, build and ship iOS apps, SaaS platforms and IoT
             systems, for clients and for ourselves.
-          </Reveal>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+          </p>
+          <div className="fade-in mt-7 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '0.6s' }}>
             <a href="#contact" className="btn-primary group">
               Start a project
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

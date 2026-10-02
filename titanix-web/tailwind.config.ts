@@ -22,7 +22,7 @@ const config: Config = {
           glow: '#F6EB2E',    // lighter yellow highlight
           text: '#FAFAF5',
           muted: '#A8A89E',
-          faint: '#6E6E64',
+          faint: '#8C8C82', // ≥4.5:1 on void for small text
         },
       },
       fontFamily: {

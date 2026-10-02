@@ -33,7 +33,7 @@ export default function Studio() {
         </figure>
 
         <div className="max-w-2xl space-y-5 text-lg leading-relaxed text-titanix-muted">
-          <Reveal as="p" chars className="wide font-display text-4xl font-extrabold uppercase leading-none tracking-tight text-titanix-text sm:text-5xl">
+          <Reveal as="h3" chars className="wide font-display text-4xl font-extrabold uppercase leading-none tracking-tight text-titanix-text sm:text-5xl">
             Hi, I&apos;m Menan.
           </Reveal>
           <Reveal as="p">

@@ -94,7 +94,7 @@ export default function Showreel() {
                     </div>
                     <div className="text-left">
                       <p className="text-xs text-titanix-faint">{a.category}</p>
-                      <h3 className="wide font-display text-3xl font-extrabold uppercase tracking-tight sm:text-4xl">{a.title.split(':')[0]}</h3>
+                      <h2 className="wide font-display text-3xl font-extrabold uppercase tracking-tight sm:text-4xl">{a.title.split(':')[0]}</h2>
                     </div>
                   </div>
                   <p className="mx-auto mt-5 max-w-md font-display text-xl font-semibold leading-snug text-titanix-text [text-wrap:balance] sm:text-2xl lg:mx-0">

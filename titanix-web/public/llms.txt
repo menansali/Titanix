@@ -26,6 +26,11 @@
 - **Env Monitor Pro** — indoor/outdoor particulate (PM1/PM2.5/PM10) and humidity monitoring on Raspberry Pi with an OPC-N3 sensor and Grafana dashboards.
 - **Edge LoRa Network** — low-power long-range sensor network on LilyGO T-Beam and Arduino Nano 33 BLE nodes.
 
+## Notes
+
+- Catching App Store rejections before you hit Submit (ios-ship-doctor): https://www.titanix.dev/notes/catch-app-store-rejections-before-you-submit
+- How the background of this site works (WebGL contour shader): https://www.titanix.dev/notes/how-the-background-of-this-site-works
+
 ## How we work
 
 Discover (scope the v1) → Build the MVP (weekly working builds) → Launch (App Store review, listing, analytics, payments, deploy) → Grow (iterate on real usage). Engagements: fixed-scope MVP or an ongoing monthly partnership.

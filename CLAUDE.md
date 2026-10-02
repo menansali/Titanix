@@ -24,6 +24,11 @@ Vercel deploys on push to `master` (project root `titanix-web`). `www.titanix.de
 - **Home page:** `app/page.tsx` composes `Hero`, `Showreel`, `Marquee`, `Focus`, `Pipeline`, `LiveAir`, `Work` (big-type index + cursor-following screenshot), `Process`, `Studio` (founder), `LabLog`, `Contact`. Sections use `components/ui/SectionHead.tsx` (numbered mono label on a hairline); a velocity `Marquee` sits after `Showreel` — keep the numbers in page order.
 - **Founder & lab log:** `FOUNDER` and `LAB_LOG` in `lib/data.ts`. Lab-log entries are real releases (App Store version history, GitHub); add new ones at the top when an app ships an update. Nav links use `/#section` so they work from case-study pages too.
 - **Scroll-pinned sections:** `Showreel` (CSS-3D iPhone that spins between the iOS apps' first screenshots, swapping the screen while the back faces the viewer) and `Pipeline` (a packet travels sensor → firmware → edge → cloud → app → ship). Both are a tall outer section with a `sticky top-0 h-[100svh]` child, driven by `lib/useScrollProgress.ts` (GSAP ScrollTrigger); per-frame updates go through refs, React state only changes when the active item changes.
+- **Live App Store data:** `lib/appstore.ts` reads Apple's public iTunes lookup + review RSS (no key), cached 6h. It feeds the hero rating, `Proof` (ratings + real written reviews, after `Work`), the case-study "Where it is now" row, and `getLabLog()`: any App Store release newer than `LAB_LOG` is added to the lab log automatically. Ratings are summed over the `STOREFRONTS` list (Apple has no global count). Everything falls back to static data if Apple is down.
+- **Notes:** `lib/notes.ts` (plain block data, no MDX) → `/notes` and `/notes/[slug]` (BlogPosting JSON-LD, sitemap). Keep posts factual.
+- **Share images:** `app/_og/render.tsx` builds every OG card (home + per case study) from `terrain.jpg` (a still of the SignalField shader) and static TTFs in `app/_og/` (Satori can't use variable fonts). To re-render the terrain, run the shader headless at 1200×630.
+- **Booking:** set `CONTACT.bookingUrl` (Cal.com/Calendly) to show the "Book a call" card in Contact; empty hides it.
+- `app/not-found.tsx` is the styled 404 ("Signal lost").
 - **Live air widget:** `components/LiveAir.tsx` is a server component fetching Open-Meteo's CAMS air-quality API (same model as Aer), revalidated every 15 min; it renders nothing if the feed fails. This makes the home page ISR.
 - **Page transitions:** `next-view-transitions` wraps the layout; use its `Link` (or `components/ui/TrackedLink.tsx`) for internal links. App icons/titles share `view-transition-name`s (`icon-<slug>`, `title-<slug>`) between work cards and case-study headers.
 - **Contact form:** `components/ContactForm.tsx` → `app/api/contact/route.ts` → Resend (needs `RESEND_API_KEY`). Without the key the route returns 503 and the form opens a pre-filled `mailto:` instead. Shared options/formatting in `lib/contact.ts`.
@@ -42,6 +47,8 @@ One idea carried through: **signal over terrain**. `components/motion/SignalFiel
   - `motion/Marquee.tsx` (velocity skew), `motion/RevealImage.tsx` (clip wipe + parallax), `motion/Wordmark.tsx` (footer TITANIX), `motion/Cursor.tsx` (dot that opens into a label over `data-cursor="Label"` elements).
   - Every effect checks `prefersReducedMotion()`.
 - Same-page hash links are intercepted in `SmoothScroll` and glide via Lenis.
+
+Hero headline animates with pure CSS (`.rise`) and starts partly visible so it paints as the LCP element before JS; don't move it back to `Reveal`. Page transitions: `::view-transition-new(root)` sweeps up behind a soft mask (`globals.css`).
 
 Avoid: gradient text, glass/blur cards, glow shadows, blurred blobs, pill eyebrow labels, icon-in-rounded-square card grids, magnetic buttons, stacking more effects without a reason. Copy: plain and specific, first person for the founder bio, no stock phrases or em-dash-heavy sentences.
 

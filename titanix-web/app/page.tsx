@@ -11,6 +11,7 @@ import LabLog from '@/components/LabLog';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Marquee from '@/components/motion/Marquee';
+import Proof from '@/components/Proof';
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
         <Pipeline />
         <LiveAir />
         <Work />
+        <Proof />
         <Process />
         <Studio />
         <LabLog />

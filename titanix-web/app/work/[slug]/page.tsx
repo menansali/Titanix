@@ -6,6 +6,9 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import TrackedLink from '@/components/ui/TrackedLink';
+import Reveal from '@/components/motion/Reveal';
+import BuildStory from '@/components/case/BuildStory';
+import { getApps, getRatings } from '@/lib/appstore';
 import { PROJECTS } from '@/lib/data';
 import { SITE_URL } from '@/lib/site';
 
@@ -36,7 +39,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       url: `${SITE_URL}/work/${p.slug}`,
       title,
       description: p.description,
-      ...(p.cover ? { images: [{ url: p.cover, width: 1080, height: 1350, alt: p.title }] } : {}),
     },
     twitter: { card: 'summary_large_image', title, description: p.description },
   };
@@ -50,6 +52,17 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
   const i = CASE_STUDIES.indexOf(p);
   const next = CASE_STUDIES[(i + 1) % CASE_STUDIES.length];
   const isAppStore = p.url?.includes('apps.apple.com');
+
+  const [apps, ratings] = isAppStore ? await Promise.all([getApps(), getRatings(p.slug)]) : [[], null];
+  const live = apps.find((a) => a.slug === p.slug);
+  const fmtDate = (iso: string) =>
+    new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  type Row = [string, string];
+  const result: Row[] = [];
+  if (live) result.push(['Version', live.version], ['Last update', fmtDate(live.released)]);
+  if (ratings) result.push(['Rating', `${ratings.average.toFixed(1)}★ (${ratings.count})`]);
+  result.push(['Status', p.status === 'Shipped' ? 'Live' : p.status]);
+  for (const f of cs.facts) if (result.length < 4) result.push([f.label, f.value]);
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -183,24 +196,43 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
           </div>
         </section>
 
-        {/* Problem + what we built */}
-        <section className="section !pt-0">
-          <div className="grid gap-12 border-t border-titanix-border pt-10 lg:grid-cols-2 lg:gap-20">
-            <div>
-              <p className="label">The problem</p>
-              <p className="mt-5 text-lg leading-relaxed text-titanix-muted">{cs.problem}</p>
-            </div>
-            <div>
-              <p className="label">What we built</p>
-              <ol className="mt-5 border-t border-titanix-border">
-                {cs.built.map((b, n) => (
-                  <li key={b} className="grid grid-cols-[2.5rem_1fr] border-b border-titanix-border py-3.5">
-                    <span className="font-mono text-xs text-titanix-yellow">{String(n + 1).padStart(2, '0')}</span>
-                    <span className="leading-relaxed text-titanix-text">{b}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
+        {/* 01 Problem */}
+        <section className="section !pt-0" aria-labelledby="problem">
+          <div className="grid gap-8 border-t border-titanix-border pt-6 lg:grid-cols-[14rem_1fr]">
+            <p id="problem" className="font-mono text-[11px] uppercase tracking-[0.18em] text-titanix-muted">
+              <span className="mr-3 text-titanix-yellow">(01)</span>The problem
+            </p>
+            <Reveal as="p" className="max-w-4xl font-display text-2xl font-semibold leading-snug tracking-tight sm:text-4xl">
+              {cs.problem}
+            </Reveal>
+          </div>
+        </section>
+
+        {/* 02 What we built */}
+        <section className="section !pt-0" aria-labelledby="built">
+          <p id="built" className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-titanix-muted">
+            <span className="mr-3 text-titanix-yellow">(02)</span>What we built
+          </p>
+          <BuildStory title={p.title} built={cs.built} screenshots={p.screenshots} />
+        </section>
+
+        {/* 03 Result */}
+        <section className="section !pt-0" aria-labelledby="result">
+          <div className="border-t border-titanix-border pt-6">
+            <p id="result" className="font-mono text-[11px] uppercase tracking-[0.18em] text-titanix-muted">
+              <span className="mr-3 text-titanix-yellow">(03)</span>Where it is now
+            </p>
+            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
+              {result.map(([k, v]) => (
+                <div key={k} className="border-l border-titanix-border pl-4">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-titanix-faint">{k}</dt>
+                  <dd className="wide mt-2 font-display text-2xl font-extrabold tracking-tight sm:text-4xl">{v}</dd>
+                </div>
+              ))}
+            </dl>
+            {live && (
+              <p className="mt-8 font-mono text-[11px] text-titanix-faint">Version, date and ratings are read live from the App Store.</p>
+            )}
           </div>
         </section>
 
