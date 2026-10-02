@@ -11,8 +11,16 @@
   text-rendering: optimizeLegibility;
 }
 
-html {
-  scroll-behavior: smooth;
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 body {
@@ -39,9 +47,38 @@ body {
   border: 2px solid #0A0A08;
 }
 
+/* Text waiting for its SplitText reveal stays hidden so it never flashes. */
+[data-reveal] {
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    visibility: visible;
+  }
+}
+
+/* Labelled cursor targets hide the native pointer (see Cursor.tsx). */
+@media (pointer: fine) {
+  [data-cursor],
+  [data-cursor] * {
+    cursor: none;
+  }
+}
+
+@layer utilities {
+  /* Archivo's wide cut, for display type. */
+  .wide {
+    font-stretch: 125%;
+    font-variation-settings: 'wdth' 125;
+  }
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--stroke, #FAFAF5);
+  }
+}
+
 @layer components {
-  /* Datasheet look: hairline rules, mono labels, flat yellow used as a
-     marking colour (CTA, active state, part codes) — never as a glow. */
+  /* Hairline rules, mono labels, flat yellow as a marking colour. */
   .section {
     @apply relative mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 sm:py-24 md:py-28;
   }

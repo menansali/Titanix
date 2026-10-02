@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { FOUNDER } from '@/lib/data';
 import SectionHead from './ui/SectionHead';
+import Reveal from './motion/Reveal';
+import RevealImage from './motion/RevealImage';
 
 export default function Studio() {
   return (
@@ -15,15 +17,15 @@ export default function Studio() {
 
       <div className="mt-12 grid gap-10 md:grid-cols-[18rem_1fr] lg:grid-cols-[22rem_1fr] lg:gap-16">
         <figure>
-          <div className="relative aspect-[4/5] overflow-hidden border border-titanix-border">
+          <RevealImage className="aspect-[4/5] bg-titanix-deep">
             <Image
               src={FOUNDER.photo}
               alt={`${FOUNDER.name}, ${FOUNDER.role.toLowerCase()} of Titanix`}
               fill
               sizes="(min-width: 1024px) 22rem, (min-width: 768px) 18rem, 100vw"
-              className="object-cover"
+              className="object-cover grayscale-[35%]"
             />
-          </div>
+          </RevealImage>
           <figcaption className="mt-3 flex items-baseline justify-between font-mono text-xs">
             <span className="text-titanix-text">{FOUNDER.name}</span>
             <span className="text-titanix-faint">{FOUNDER.role}</span>
@@ -31,17 +33,19 @@ export default function Studio() {
         </figure>
 
         <div className="max-w-2xl space-y-5 text-lg leading-relaxed text-titanix-muted">
-          <p className="font-display text-2xl font-semibold leading-snug text-titanix-text">Hi, I&apos;m Menan.</p>
-          <p>
+          <Reveal as="p" chars className="wide font-display text-4xl font-extrabold uppercase leading-none tracking-tight text-titanix-text sm:text-5xl">
+            Hi, I&apos;m Menan.
+          </Reveal>
+          <Reveal as="p">
             I studied Computer Science at South East European University, and these days I spend most of my
             time shipping native iOS apps and the backends behind them. Five of them went live on the App
             Store this year.
-          </p>
-          <p>
+          </Reveal>
+          <Reveal as="p">
             Titanix started in 2021 as a hardware-and-software shop: Arduino, Raspberry Pi, LoRa sensor
             networks, even radio propagation modelling on real terrain. That is why we still take on IoT
             work, and why we are happy to own a product from the firmware to the App Store listing.
-          </p>
+          </Reveal>
           <p>
             When I need a tool that does not exist yet, I build it and open-source it. The latest is{' '}
             <a

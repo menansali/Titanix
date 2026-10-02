@@ -5,14 +5,14 @@ The Titanix website, live at https://www.titanix.dev. A product studio positione
 
 ## Brand
 
-- **Palette:** logo yellow on near-black (`#0A0A08`, `#EFE200`, gradient `#F6EB2E → #C7BC00`)
-- **Aesthetic:** technical datasheet — flat dark background, hairline rules, mono labels, yellow as a marking colour (see CLAUDE.md → Styling)
+- **Palette:** logo yellow on near-black (`#0A0A08`, `#EFE200`)
+- **Aesthetic:** "signal over terrain": a live WebGL contour map behind the site with the cursor as a transmitter, wide display type, hairline rules, mono labels, yellow as a marking colour (see CLAUDE.md → Styling & motion)
 - **Logo:** `components/Logo.tsx`
-- **Type:** Space Grotesk (display) · Inter (body) · JetBrains Mono (accents)
+- **Type:** Archivo (wide cut for display, normal for text) · JetBrains Mono (labels)
 
 ## Stack
 
-Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 3 · GSAP · lucide-react · Vercel Analytics · next-view-transitions
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 3 · GSAP (ScrollTrigger, SplitText, ScrambleText) · Lenis · raw WebGL2 · lucide-react · Vercel Analytics · next-view-transitions
 
 ## Commands
 
@@ -33,7 +33,7 @@ npm run lint      # eslint
 - `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, `public/llms.txt` — SEO layer. Keep `llms.txt` in sync with `lib/data.ts`.
 - `lib/data.ts` — single source of truth for pillars, projects (incl. case-study copy and App Store screenshots), stats, and contact info. **Edit content here.**
 - `lib/contact.ts` — form options and email formatting shared by the form and the API route.
-- `components/` — `Hero`, `Showreel`, `LiveAir`, `Focus`, `Pipeline`, `Work`, `Process`, `Studio`, `LabLog`, `Contact` + `ContactForm`, plus `Navbar`, `Footer`, `Logo`, and `ui/` (`SectionHead`, `TrackedLink`).
+- `components/` — `Hero`, `Showreel`, `LiveAir`, `Focus`, `Pipeline`, `Work`, `Process`, `Studio`, `LabLog`, `Contact` + `ContactForm`, plus `Navbar`, `Footer`, `Logo`, `ui/` (`SectionHead`, `TrackedLink`) and `motion/` (`SignalField`, `SmoothScroll`, `Reveal`, `Scramble`, `Marquee`, `RevealImage`, `Wordmark`, `Cursor`).
 - `public/work/` — case-study cover images (exported from the Instagram kit; used for social share images and skeniraj.mk).
 - `public/team/` — founder photo.
 

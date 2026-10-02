@@ -66,8 +66,6 @@ export default function Showreel() {
     return () => window.removeEventListener('pointermove', onMove);
   }, []);
 
-  const app = APPS[active];
-
   return (
     <section
       ref={sectionRef}
@@ -80,7 +78,7 @@ export default function Showreel() {
         <div className="section grid w-full items-center gap-6 !pb-0 !pt-16 lg:grid-cols-[1fr_1fr] lg:gap-10 lg:!pt-0">
           {/* Copy */}
           <div className="order-2 text-center lg:order-1 lg:text-left">
-            <p className="label"><span className="mr-3 text-titanix-yellow">01</span>On the App Store now</p>
+            <p className="label"><span className="mr-3 text-titanix-yellow">(01)</span>On the App Store now</p>
             <div className="relative mt-5 min-h-[13rem] sm:min-h-[15rem]">
               {APPS.map((a, i) => (
                 <div
@@ -96,7 +94,7 @@ export default function Showreel() {
                     </div>
                     <div className="text-left">
                       <p className="text-xs text-titanix-faint">{a.category}</p>
-                      <h3 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{a.title}</h3>
+                      <h3 className="wide font-display text-3xl font-extrabold uppercase tracking-tight sm:text-4xl">{a.title.split(':')[0]}</h3>
                     </div>
                   </div>
                   <p className="mx-auto mt-5 max-w-md font-display text-xl font-semibold leading-snug text-titanix-text [text-wrap:balance] sm:text-2xl lg:mx-0">

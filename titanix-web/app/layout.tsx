@@ -1,20 +1,19 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { Archivo, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { ViewTransitions } from 'next-view-transitions';
 import { PILLARS, PROJECTS, CONTACT, FOUNDER } from '@/lib/data';
 import { SITE_URL, SITE_NAME } from '@/lib/site';
+import SmoothScroll from '@/components/motion/SmoothScroll';
+import SignalField from '@/components/motion/SignalField';
+import Cursor from '@/components/motion/Cursor';
 import './globals.css';
 
-const inter = Inter({
+// One variable family for display and text; display type uses the wide axis (`.wide`).
+const archivo = Archivo({
   subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-display',
+  axes: ['wdth'],
+  variable: '--font-archivo',
   display: 'swap',
 });
 
@@ -169,13 +168,19 @@ const structuredData = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ViewTransitions>
-      <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${mono.variable}`}>
+      <html lang="en" className={`${archivo.variable} ${mono.variable}`}>
         <body className="font-sans antialiased">
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
           />
-          {children}
+          <noscript>
+            <style>{'[data-reveal]{visibility:visible}'}</style>
+          </noscript>
+          <SignalField />
+          <div className="relative z-10">{children}</div>
+          <Cursor />
+          <SmoothScroll />
           <Analytics />
         </body>
       </html>

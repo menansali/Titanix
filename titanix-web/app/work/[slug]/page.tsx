@@ -110,7 +110,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
                 <div>
                   <p className="label">{p.category}</p>
                   <h1
-                    className="mt-2 w-fit font-display text-4xl font-bold tracking-tight sm:text-5xl"
+                    className="wide mt-2 w-fit font-display text-4xl font-extrabold uppercase tracking-tight sm:text-6xl"
                     style={{ viewTransitionName: `title-${p.slug}` }}
                   >
                     {p.title}
@@ -235,7 +235,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
               )}
               <div>
                 <p className="label">Next</p>
-                <p className="mt-1 font-display text-2xl font-bold">{next.title}</p>
+                <p className="wide mt-1 font-display text-3xl font-extrabold uppercase tracking-tight sm:text-5xl">{next.title.split(":")[0]}</p>
               </div>
             </div>
             <ArrowRight className="shrink-0 text-titanix-faint transition-all group-hover:translate-x-1 group-hover:text-titanix-yellow" />

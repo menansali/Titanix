@@ -21,7 +21,7 @@ Vercel deploys on push to `master` (project root `titanix-web`). `www.titanix.de
 ## Architecture
 
 - **Content:** `lib/data.ts` is the single source of truth — pillars, projects, stats, contact. Each project with a `caseStudy` gets a statically generated page at `/work/[slug]` (`app/work/[slug]/page.tsx`), a sitemap entry, and JSON-LD. Project copy mirrors the live App Store listings; screenshots are App Store CDN (`*.mzstatic.com`) URLs.
-- **Home page:** `app/page.tsx` composes `Hero` (with the datasheet panel), `Showreel`, `LiveAir`, `Focus`, `Pipeline`, `Work` (index + screenshot preview), `Process`, `Studio` (founder), `LabLog`, `Contact`. Sections use `components/ui/SectionHead.tsx` (numbered mono label on a hairline) — keep the numbers in page order.
+- **Home page:** `app/page.tsx` composes `Hero`, `Showreel`, `Marquee`, `Focus`, `Pipeline`, `LiveAir`, `Work` (big-type index + cursor-following screenshot), `Process`, `Studio` (founder), `LabLog`, `Contact`. Sections use `components/ui/SectionHead.tsx` (numbered mono label on a hairline); a velocity `Marquee` sits after `Showreel` — keep the numbers in page order.
 - **Founder & lab log:** `FOUNDER` and `LAB_LOG` in `lib/data.ts`. Lab-log entries are real releases (App Store version history, GitHub); add new ones at the top when an app ships an update. Nav links use `/#section` so they work from case-study pages too.
 - **Scroll-pinned sections:** `Showreel` (CSS-3D iPhone that spins between the iOS apps' first screenshots, swapping the screen while the back faces the viewer) and `Pipeline` (a packet travels sensor → firmware → edge → cloud → app → ship). Both are a tall outer section with a `sticky top-0 h-[100svh]` child, driven by `lib/useScrollProgress.ts` (GSAP ScrollTrigger); per-frame updates go through refs, React state only changes when the active item changes.
 - **Live air widget:** `components/LiveAir.tsx` is a server component fetching Open-Meteo's CAMS air-quality API (same model as Aer), revalidated every 15 min; it renders nothing if the feed fails. This makes the home page ISR.
@@ -30,11 +30,20 @@ Vercel deploys on push to `master` (project root `titanix-web`). `www.titanix.de
 - **Analytics:** Vercel Analytics in `app/layout.tsx`; custom events via `components/ui/TrackedLink.tsx` and the form.
 - **SEO/GEO:** `app/layout.tsx` (metadata + Organization/WebSite/portfolio JSON-LD), `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, `public/llms.txt`. When project content changes, update `llms.txt` too and re-ping IndexNow (key file in `public/`).
 
-## Styling
+## Styling & motion
 
-Deliberately *not* the generic AI-site look. "Datasheet" system: flat `#0A0A08` background, hairline borders (`border-titanix-border`, neutral white ~11%), monospace labels (`.label`), small radii (`rounded-md`), and yellow `#EFE200` used only as a marking colour (CTA, active state, numbers). Component classes in `app/globals.css`: `section`, `label`, `chip`, `btn-primary`, `btn-ghost`.
+One idea carried through: **signal over terrain**. `components/motion/SignalField.tsx` is a fixed full-screen WebGL2 fragment shader behind everything: drifting topographic contour lines, with the cursor as a radio transmitter (yellow coverage + rings). It's strongest over the hero and footer, dimmed behind content, a static frame under reduced motion, and absent without WebGL2. Page content sits in a `relative z-10` wrapper above it (`app/layout.tsx`), so sections must stay transparent (except the yellow `Process` panel).
 
-Avoid reintroducing: gradient text, glass/blur cards, glow shadows, blurred background blobs, pill "eyebrow" labels, icon-in-rounded-square card grids, fade-up-on-scroll for everything, cursor-magnetic/tilt effects. Copy: plain and specific, first person for the founder bio, no stock phrases or em-dash-heavy sentences.
+- **Type:** Archivo for everything; display type uses its wide cut via the `.wide` utility, often uppercase. JetBrains Mono for labels. `.text-outline` (stroke colour via `--stroke`) for outlined type.
+- **Colour:** near-black `#0A0A08`, hairlines (`border-titanix-border`), yellow `#EFE200` as the marking colour. `Process` is the one full-yellow section.
+- **Motion** (GSAP + plugins registered in `lib/motion.ts`; Lenis smooth scroll in `components/motion/SmoothScroll.tsx`, driven by `gsap.ticker`):
+  - `motion/Reveal.tsx` is the single text reveal (SplitText masked lines/chars, `REVEAL` recipe). Use it rather than new fade-ups. Text inside is hidden via `[data-reveal]` until split.
+  - `motion/Scramble.tsx` decodes mono labels; `SectionHead` uses both.
+  - `motion/Marquee.tsx` (velocity skew), `motion/RevealImage.tsx` (clip wipe + parallax), `motion/Wordmark.tsx` (footer TITANIX), `motion/Cursor.tsx` (dot that opens into a label over `data-cursor="Label"` elements).
+  - Every effect checks `prefersReducedMotion()`.
+- Same-page hash links are intercepted in `SmoothScroll` and glide via Lenis.
+
+Avoid: gradient text, glass/blur cards, glow shadows, blurred blobs, pill eyebrow labels, icon-in-rounded-square card grids, magnetic buttons, stacking more effects without a reason. Copy: plain and specific, first person for the founder bio, no stock phrases or em-dash-heavy sentences.
 
 ## Other folders
 

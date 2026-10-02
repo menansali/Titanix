@@ -1,68 +1,68 @@
-import { ArrowRight } from 'lucide-react';
-import { CONTACT, LAB_LOG, PROJECTS } from '@/lib/data';
-
-const fmt = (iso: string) =>
-  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+import { ArrowDownRight, ArrowRight } from 'lucide-react';
+import { PROJECTS } from '@/lib/data';
+import Reveal from './motion/Reveal';
+import Scramble from './motion/Scramble';
 
 export default function Hero() {
   const live = PROJECTS.filter((p) => p.status === 'Shipped').length;
-  const latest = LAB_LOG[0];
-  const rev = new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
 
-  const spec: [string, string][] = [
-    ['Founded', '2021'],
-    ['Products live', String(live)],
-    ['Platforms', 'iOS · Web · Embedded'],
-    ['App Store rating', '5.0 ★'],
-    ['Languages shipped', '12'],
-    ['Latest release', `${latest.project} ${latest.title} · ${fmt(latest.date)}`],
+  const stats: [string, string][] = [
+    [String(live).padStart(2, '0'), 'Products live'],
+    ['5.0★', 'App Store rating'],
+    ['12', 'Languages shipped'],
+    ['2021', 'Founded'],
   ];
 
   return (
-    <section id="top" className="section flex min-h-[100svh] flex-col justify-center !pb-16 !pt-32">
-      <div className="grid gap-14 lg:grid-cols-[1.35fr_1fr] lg:items-end lg:gap-20">
-        <div>
-          <p className="label">Titanix · Product studio · Est. 2021</p>
-          <h1 className="mt-6 font-display text-[2.6rem] font-bold leading-[1.02] tracking-tight [text-wrap:balance] sm:text-6xl lg:text-7xl">
-            We build and ship iOS apps, SaaS platforms and IoT systems.
-          </h1>
-          <p className="mt-7 max-w-xl text-lg leading-relaxed text-titanix-muted">
-            Six products live, five of them on the App Store this year. We design them, write the code
-            and take them through review, for clients and for ourselves.
-          </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+    <section id="top" className="relative mx-auto flex min-h-[100svh] max-w-[1600px] flex-col justify-between px-5 pb-8 pt-24 sm:px-8 sm:pt-28 lg:pb-10">
+      <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-titanix-muted">
+        <Scramble immediate delay={0.2} text="Product studio / Est. 2021" />
+        <Scramble immediate delay={0.35} text="iOS · SaaS · IoT" className="hidden sm:inline" />
+      </div>
+
+      <Reveal
+        as="h1"
+        chars
+        immediate
+        delay={0.1}
+        className="wide my-10 font-display text-[9.1vw] font-extrabold uppercase leading-[0.86] tracking-[-0.025em] sm:text-[9.4vw] 2xl:text-[8.6rem]"
+      >
+        <span className="block">From bare</span>
+        <span className="block">metal to the</span>
+        <span className="block">
+          App Store<span className="text-titanix-yellow">.</span>
+        </span>
+      </Reveal>
+
+      <div className="grid gap-10 border-t border-titanix-border pt-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div className="max-w-xl">
+          <Reveal immediate delay={0.55} className="text-lg leading-relaxed text-titanix-muted sm:text-xl" as="p">
+            Titanix is a product studio. We design, build and ship iOS apps, SaaS platforms and IoT
+            systems, for clients and for ourselves.
+          </Reveal>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a href="#contact" className="btn-primary group">
               Start a project
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="#work" className="btn-ghost">
+            <a href="#work" className="btn-ghost group">
               See the work
+              <ArrowDownRight size={16} className="transition-transform group-hover:translate-y-0.5" />
             </a>
           </div>
         </div>
 
-        {/* Datasheet */}
-        <div className="border border-titanix-border">
-          <div className="flex items-center justify-between border-b border-titanix-border px-4 py-3">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em]">Titanix — Datasheet</span>
-            <span className="font-mono text-[11px] text-titanix-faint">Rev. {rev}</span>
-          </div>
-          <dl>
-            {spec.map(([k, v]) => (
-              <div key={k} className="grid grid-cols-[9.5rem_1fr] border-b border-titanix-border px-4 py-2.5 text-sm last:border-b-0">
-                <dt className="text-titanix-faint">{k}</dt>
-                <dd className="font-mono text-[13px] text-titanix-text">{v}</dd>
-              </div>
-            ))}
-          </dl>
-          <a
-            href={`mailto:${CONTACT.email}`}
-            className="flex items-center justify-between border-t border-titanix-border bg-titanix-yellow px-4 py-3 font-mono text-[13px] font-medium text-black transition-colors hover:bg-titanix-glow"
-          >
-            {CONTACT.email}
-            <ArrowRight size={14} />
-          </a>
-        </div>
+        <dl className="grid grid-cols-2 gap-x-10 gap-y-5 sm:grid-cols-4">
+          {stats.map(([v, k]) => (
+            <div key={k}>
+              <dt className="sr-only">{k}</dt>
+              <dd>
+                <span className="wide block font-display text-3xl font-bold tracking-tight">{v}</span>
+                <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.18em] text-titanix-faint">{k}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
