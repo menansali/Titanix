@@ -77,7 +77,7 @@ export default function Process() {
         ref={panelRef}
         className="relative overflow-hidden bg-titanix-yellow text-black lg:sticky lg:top-0 lg:flex lg:h-[100svh] lg:flex-col lg:justify-center"
       >
-        <div className="mx-auto w-full max-w-7xl px-5 pb-6 pt-20 sm:px-8 lg:pt-16">
+        <div className="mx-auto w-full max-w-[90rem] px-5 pb-6 pt-20 sm:px-8 lg:pt-16">
           <div className="flex items-center gap-4 border-t border-black/20 pt-4 font-mono text-[11px] uppercase tracking-[0.18em]">
             <span>(05)</span>
             <span className="text-black/60">Process</span>
@@ -94,7 +94,7 @@ export default function Process() {
         <div className="overflow-hidden pb-20 lg:pb-0">
           <div
             ref={trackRef}
-            className="mx-auto flex max-w-7xl flex-col gap-0 px-5 will-change-transform sm:px-8 lg:mx-0 lg:w-max lg:max-w-none lg:flex-row lg:gap-6 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:pr-[8vw]"
+            className="mx-auto flex max-w-[90rem] flex-col gap-0 px-5 will-change-transform sm:px-8 lg:mx-0 lg:w-max lg:max-w-none lg:flex-row lg:gap-6 lg:pl-[max(2rem,calc((100vw-90rem)/2+2rem))] lg:pr-[8vw]"
           >
             {STEPS.map((s, i) => (
               <article

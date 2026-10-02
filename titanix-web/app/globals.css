@@ -80,7 +80,7 @@ body {
 @layer components {
   /* Hairline rules, mono labels, flat yellow as a marking colour. */
   .section {
-    @apply relative mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 sm:py-24 md:py-28;
+    @apply relative mx-auto w-full max-w-[90rem] px-5 py-20 sm:px-8 sm:py-24 md:py-28;
   }
 
   .label {
@@ -88,7 +88,7 @@ body {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-titanix-yellow
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-titanix-yellow
            px-5 py-3 text-sm font-semibold text-black transition-colors
            hover:bg-titanix-glow focus-visible:outline-none focus-visible:ring-2
            focus-visible:ring-titanix-yellow focus-visible:ring-offset-2
@@ -96,7 +96,7 @@ body {
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md border
            border-titanix-border px-5 py-3 text-sm font-semibold text-titanix-text
            transition-colors hover:border-white/40;
   }

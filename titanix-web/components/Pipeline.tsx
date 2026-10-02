@@ -103,6 +103,7 @@ export default function Pipeline() {
     <section ref={sectionRef} id="pipeline" aria-labelledby="pipeline-title" className="relative" style={{ height: `${N * 70}svh` }}>
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         <div className="section w-full !py-0">
+          <div className="short:hidden">
           <SectionHead
             n="03"
             label="End to end"
@@ -110,9 +111,10 @@ export default function Pipeline() {
             title="From bare metal to the App Store."
             intro="Follow one reading through every layer of the stack. We build each of them."
           />
+          </div>
 
           {/* Track */}
-          <div className="relative mx-auto mt-12 w-full max-w-5xl" style={{ aspectRatio: '1200 / 200' }} aria-hidden="true">
+          <div className="relative mx-auto mt-12 w-full max-w-5xl short:mt-8 short:max-w-xl" style={{ aspectRatio: '1200 / 200' }} aria-hidden="true">
             <svg viewBox="0 0 1200 200" className="absolute inset-0 h-full w-full overflow-visible">
               <path ref={pathRef} d={PATH} fill="none" stroke="rgba(239,226,0,0.16)" strokeWidth="2" strokeDasharray="6 8" />
               <path
@@ -165,7 +167,7 @@ export default function Pipeline() {
           </div>
 
           {/* Stage detail */}
-          <div className="relative mx-auto mt-8 min-h-[19rem] max-w-4xl sm:mt-12 sm:min-h-[12rem]">
+          <div className="relative mx-auto mt-8 min-h-[19rem] max-w-4xl sm:mt-12 sm:min-h-[12rem] short:mt-6 short:min-h-[9rem]">
             {STAGES.map((s, i) => (
               <div
                 key={s.title}
@@ -181,7 +183,7 @@ export default function Pipeline() {
                   <h3 className="mt-2 font-display text-2xl font-bold">{s.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-titanix-muted">{s.text}</p>
                 </div>
-                <div className="border border-titanix-border bg-black/40 p-4 font-mono text-[11px] leading-relaxed text-titanix-yellow sm:text-xs">
+                <div className="border border-titanix-border bg-black/40 p-4 short:hidden font-mono text-[11px] leading-relaxed text-titanix-yellow sm:text-xs">
                   {s.readout.map((line) => (
                     <p key={line} className="whitespace-pre">
                       <span className="text-titanix-faint">› </span>
@@ -192,7 +194,7 @@ export default function Pipeline() {
               </div>
             ))}
           </div>
-          <p className="mt-3 text-center text-[11px] text-titanix-faint sm:mt-4">Illustrative readout of a single sensor reading.</p>
+          <p className="mt-3 text-center text-[11px] text-titanix-faint sm:mt-4 short:hidden">Illustrative readout of a single sensor reading.</p>
         </div>
       </div>
     </section>

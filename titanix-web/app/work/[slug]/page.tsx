@@ -97,20 +97,20 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
           </div>
 
           <div className="mt-12 grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-            <div>
-              <div className="flex items-center gap-5">
+            <div className="min-w-0">
+              <div className="flex items-center gap-4 sm:gap-5">
                 {p.icon && (
                   <div
-                    className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[1.2rem] border border-titanix-border"
+                    className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[0.9rem] border border-titanix-border sm:h-20 sm:w-20 sm:rounded-[1.2rem]"
                     style={{ viewTransitionName: `icon-${p.slug}` }}
                   >
                     <Image src={p.icon} alt={`${p.title} app icon`} fill sizes="80px" className="object-cover" priority />
                   </div>
                 )}
-                <div>
+                <div className="min-w-0">
                   <p className="label">{p.category}</p>
                   <h1
-                    className="wide mt-2 w-fit font-display text-4xl font-extrabold uppercase tracking-tight sm:text-6xl"
+                    className="wide mt-2 w-fit break-words font-display text-[7vw] font-extrabold uppercase leading-none tracking-tight sm:text-6xl"
                     style={{ viewTransitionName: `title-${p.slug}` }}
                   >
                     {p.title}
@@ -145,12 +145,12 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
               {/* Spec */}
               <dl className="mt-12 border-t border-titanix-border">
                 {cs.facts.map((f) => (
-                  <div key={f.label} className="grid grid-cols-[10rem_1fr] border-b border-titanix-border py-2.5 text-sm">
+                  <div key={f.label} className="grid grid-cols-[7.5rem_1fr] gap-3 border-b border-titanix-border py-2.5 text-sm sm:grid-cols-[10rem_1fr]">
                     <dt className="text-titanix-faint">{f.label}</dt>
                     <dd className="font-mono text-[13px]">{f.value}</dd>
                   </div>
                 ))}
-                <div className="grid grid-cols-[10rem_1fr] border-b border-titanix-border py-2.5 text-sm">
+                <div className="grid grid-cols-[7.5rem_1fr] gap-3 border-b border-titanix-border py-2.5 text-sm sm:grid-cols-[10rem_1fr]">
                   <dt className="text-titanix-faint">Stack</dt>
                   <dd className="font-mono text-[13px]">{p.tech.join(' · ')}</dd>
                 </div>
@@ -227,15 +227,15 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
             href={`/work/${next.slug}`}
             className="group flex items-center justify-between gap-6 border-y border-titanix-border py-8 transition-colors hover:border-titanix-yellow"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex min-w-0 items-center gap-4">
               {next.icon && (
                 <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[0.9rem] border border-titanix-border">
                   <Image src={next.icon} alt="" fill sizes="56px" className="object-cover" />
                 </div>
               )}
-              <div>
+              <div className="min-w-0">
                 <p className="label">Next</p>
-                <p className="wide mt-1 font-display text-3xl font-extrabold uppercase tracking-tight sm:text-5xl">{next.title.split(":")[0]}</p>
+                <p className="wide mt-1 font-display text-[7vw] font-extrabold uppercase tracking-tight sm:text-5xl">{next.title.split(":")[0]}</p>
               </div>
             </div>
             <ArrowRight className="shrink-0 text-titanix-faint transition-all group-hover:translate-x-1 group-hover:text-titanix-yellow" />

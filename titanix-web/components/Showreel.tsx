@@ -75,11 +75,11 @@ export default function Showreel() {
       style={{ height: `${N * 90 + 30}svh` }}
     >
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
-        <div className="section grid w-full items-center gap-6 !pb-0 !pt-16 lg:grid-cols-[1fr_1fr] lg:gap-10 lg:!pt-0">
+        <div className="section grid w-full items-center gap-6 !pb-0 !pt-16 lg:grid-cols-[1fr_1fr] lg:gap-10 lg:!pt-0 short:grid-cols-[1.3fr_1fr] short:!pt-12">
           {/* Copy */}
-          <div className="order-2 text-center lg:order-1 lg:text-left">
+          <div className="order-2 text-center lg:order-1 lg:text-left short:order-1 short:text-left">
             <p className="label"><span className="mr-3 text-titanix-yellow">(01)</span>On the App Store now</p>
-            <div className="relative mt-5 min-h-[13rem] sm:min-h-[15rem]">
+            <div className="relative mt-5 min-h-[13rem] sm:min-h-[15rem] short:mt-3 short:min-h-[11rem]">
               {APPS.map((a, i) => (
                 <div
                   key={a.slug}
@@ -125,11 +125,11 @@ export default function Showreel() {
           </div>
 
           {/* Phone */}
-          <div className="order-1 flex justify-center lg:order-2" style={{ perspective: '1600px' }} aria-hidden="true">
+          <div className="order-1 flex justify-center lg:order-2 short:order-2" style={{ perspective: '1600px' }} aria-hidden="true">
             <div ref={tiltRef} style={{ transformStyle: 'preserve-3d' }}>
               <div
                 ref={phoneRef}
-                className="relative h-[44svh] max-h-[640px] min-h-[300px] w-auto lg:h-[64svh]"
+                className="relative h-[44svh] max-h-[640px] min-h-[300px] w-auto lg:h-[64svh] short:h-[72svh] short:min-h-0"
                 style={{
                   aspectRatio: '9 / 19.2',
                   transformStyle: 'preserve-3d',

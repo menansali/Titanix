@@ -7,6 +7,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        // Phones in landscape: too short for the stacked pinned layouts.
+        short: { raw: '(max-height: 520px) and (orientation: landscape)' },
+      },
       colors: {
         // Titanix brand — logo yellow + white on near-black
         titanix: {
@@ -29,6 +33,8 @@ const config: Config = {
     },
   },
   plugins: [],
+  // hover: styles only apply on devices that can hover, so taps don't leave rows stuck yellow.
+  future: { hoverOnlyWhenSupported: true },
 };
 
 export default config;

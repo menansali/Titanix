@@ -22,7 +22,7 @@ export default function Footer() {
   const products = PROJECTS.filter((p) => p.caseStudy);
   return (
     <footer className="relative mt-10 overflow-hidden border-t border-titanix-border">
-      <div className="mx-auto max-w-7xl px-5 pt-16 sm:px-8 sm:pt-24">
+      <div className="mx-auto max-w-[90rem] px-5 pt-16 sm:px-8 sm:pt-24">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-titanix-muted">Have something to build?</p>
         <a
           href={`mailto:${CONTACT.email}`}
