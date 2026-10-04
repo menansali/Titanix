@@ -2,6 +2,7 @@ import { Link } from 'next-view-transitions';
 import { ArrowUpRight } from 'lucide-react';
 import { CONTACT, PROJECTS } from '@/lib/data';
 import Wordmark from './motion/Wordmark';
+import BookingLink from './ui/BookingLink';
 
 const NAV = [
   { label: 'Work', href: '/#work' },
@@ -39,9 +40,9 @@ export default function Footer() {
             {CONTACT.booking.map((b, i) => (
               <span key={b.url}>
                 {i > 0 && ' · '}
-                <a href={b.url} target="_blank" rel="noopener noreferrer" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+                <BookingLink href={b.url} slot={b.label} className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
                   {b.label}
-                </a>
+                </BookingLink>
               </span>
             ))}
           </p>

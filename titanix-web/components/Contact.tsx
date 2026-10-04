@@ -3,6 +3,7 @@ import { CONTACT } from '@/lib/data';
 import ContactForm from './ContactForm';
 import SectionHead from './ui/SectionHead';
 import TrackedLink from './ui/TrackedLink';
+import BookingLink from './ui/BookingLink';
 
 const CHANNELS = [
   { label: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: Mail, channel: 'email' },
@@ -36,12 +37,10 @@ export default function Contact() {
               <ul className="mt-4 border-t border-black/20">
                 {CONTACT.booking.map((b) => (
                   <li key={b.url}>
-                    <TrackedLink
+                    <BookingLink
                       href={b.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      event="Contact clicked"
-                      props={{ channel: `booking-${b.label}` }}
+                      slot={b.label}
+                      data-cursor="Book"
                       className="group flex items-center justify-between gap-3 border-b border-black/20 py-3"
                     >
                       <span>
@@ -49,7 +48,7 @@ export default function Contact() {
                         <span className="block text-sm text-black/70">{b.note}</span>
                       </span>
                       <ArrowUpRight size={18} className="shrink-0 transition-transform group-hover:rotate-45" />
-                    </TrackedLink>
+                    </BookingLink>
                   </li>
                 ))}
               </ul>

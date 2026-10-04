@@ -7,7 +7,8 @@ import { ScrollTrigger } from '@/lib/motion';
 /**
  * "What we built" as a reading column next to a sticky iPhone. As each point
  * reaches the middle of the screen it lights up and the phone switches to the
- * next App Store screenshot. Without screenshots it's just the list.
+ * next App Store screenshot. On smaller screens each point shows its screenshot
+ * inline instead. Without screenshots it's just the list.
  */
 export default function BuildStory({ title, built, screenshots = [] }: { title: string; built: string[]; screenshots?: string[] }) {
   const listRef = useRef<HTMLOListElement>(null);
@@ -42,6 +43,12 @@ export default function BuildStory({ title, built, screenshots = [] }: { title: 
               {String(n + 1).padStart(2, '0')}
             </span>
             <span className="font-display text-xl font-semibold leading-snug tracking-tight sm:text-3xl">{b}</span>
+            {shots && (
+              // Below lg there's no sticky phone, so each point carries its own screen.
+              <div className="relative col-start-2 mt-5 aspect-[1290/2796] w-[min(62%,15rem)] overflow-hidden rounded-[1.6rem] border border-titanix-border lg:hidden">
+                <Image src={shots[n % shots.length]} alt={`${title} screen ${(n % shots.length) + 1}`} fill sizes="15rem" className="object-cover" />
+              </div>
+            )}
           </li>
         ))}
       </ol>

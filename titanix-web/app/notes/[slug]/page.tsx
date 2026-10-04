@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import { Link } from 'next-view-transitions';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { ArrowLeft } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Reveal from '@/components/motion/Reveal';
 import { NOTES, getNote } from '@/lib/notes';
 import { SITE_URL } from '@/lib/site';
+import { FOUNDER } from '@/lib/data';
 
 type Params = Promise<{ slug: string }>;
 
@@ -23,7 +25,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     title: n.title,
     description: n.summary,
     alternates: { canonical: `/notes/${n.slug}` },
-    openGraph: { type: 'article', url: `${SITE_URL}/notes/${n.slug}`, title: n.title, description: n.summary, publishedTime: n.date },
+    authors: [{ name: FOUNDER.name, url: FOUNDER.linkedin }],
+    openGraph: { type: 'article', url: `${SITE_URL}/notes/${n.slug}`, title: n.title, description: n.summary, publishedTime: n.date, authors: [FOUNDER.linkedin] },
   };
 }
 
@@ -40,7 +43,16 @@ export default async function NotePage({ params }: { params: Params }) {
     headline: n.title,
     description: n.summary,
     datePublished: n.date,
-    author: { '@id': `${SITE_URL}/#organization` },
+    author: {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#founder`,
+      name: FOUNDER.name,
+      jobTitle: FOUNDER.role,
+      url: `${SITE_URL}/#studio`,
+      image: `${SITE_URL}${FOUNDER.photo}`,
+      sameAs: [FOUNDER.linkedin, FOUNDER.github],
+      worksFor: { '@id': `${SITE_URL}/#organization` },
+    },
     publisher: { '@id': `${SITE_URL}/#organization` },
     mainEntityOfPage: `${SITE_URL}/notes/${n.slug}`,
     keywords: n.tags.join(', '),
@@ -71,6 +83,20 @@ export default async function NotePage({ params }: { params: Params }) {
               {n.title}
             </Reveal>
             <p className="mt-6 text-xl leading-relaxed text-titanix-muted">{n.summary}</p>
+            <div className="mt-8 flex items-center gap-3">
+              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-titanix-border">
+                <Image src={FOUNDER.photo} alt="" fill sizes="44px" className="object-cover" />
+              </div>
+              <p className="text-sm leading-tight">
+                <span className="block text-titanix-text">
+                  By{' '}
+                  <a href={FOUNDER.linkedin} target="_blank" rel="author noopener noreferrer" className="underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+                    {FOUNDER.name}
+                  </a>
+                </span>
+                <span className="font-mono text-[11px] text-titanix-faint">{FOUNDER.role}, Titanix</span>
+              </p>
+            </div>
           </header>
 
           <div className="mx-auto mt-14 max-w-3xl space-y-6 border-t border-titanix-border pt-10 text-lg leading-relaxed text-titanix-muted">

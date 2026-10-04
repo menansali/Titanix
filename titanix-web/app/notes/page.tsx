@@ -9,7 +9,7 @@ import { NOTES } from '@/lib/notes';
 export const metadata: Metadata = {
   title: 'Notes',
   description: 'Write-ups from Titanix on shipping iOS apps, App Review and the things we build.',
-  alternates: { canonical: '/notes' },
+  alternates: { canonical: '/notes', types: { 'application/rss+xml': [{ url: '/notes/feed.xml', title: 'Titanix Notes' }] } },
 };
 
 const fmt = (iso: string) =>
@@ -50,6 +50,9 @@ export default function NotesPage() {
               </li>
             ))}
           </ol>
+          <a href="/notes/feed.xml" className="mt-8 inline-block font-mono text-[11px] text-titanix-faint underline underline-offset-4 hover:text-titanix-text">
+            RSS feed
+          </a>
         </section>
       </main>
       <Footer />

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Archivo, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ViewTransitions } from 'next-view-transitions';
 import { PILLARS, PROJECTS, CONTACT, FOUNDER } from '@/lib/data';
 import { SITE_URL, SITE_NAME } from '@/lib/site';
@@ -46,6 +47,7 @@ export const metadata: Metadata = {
   category: 'technology',
   alternates: {
     canonical: '/',
+    types: { 'application/rss+xml': [{ url: '/notes/feed.xml', title: 'Titanix Notes' }] },
   },
   openGraph: {
     type: 'website',
@@ -100,6 +102,7 @@ const structuredData = {
       foundingDate: '2021',
       founder: {
         '@type': 'Person',
+        '@id': `${SITE_URL}/#founder`,
         name: FOUNDER.name,
         jobTitle: FOUNDER.role,
         image: `${SITE_URL}${FOUNDER.photo}`,
@@ -182,6 +185,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Cursor />
           <SmoothScroll />
           <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     </ViewTransitions>

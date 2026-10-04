@@ -1,5 +1,7 @@
 import { Link } from 'next-view-transitions';
+import { ArrowUpRight } from 'lucide-react';
 import { getLabLog } from '@/lib/appstore';
+import { NOTES } from '@/lib/notes';
 import SectionHead from './ui/SectionHead';
 
 const fmt = (iso: string) =>
@@ -7,6 +9,7 @@ const fmt = (iso: string) =>
 
 export default async function LabLog() {
   const log = await getLabLog();
+  const latest = [...NOTES].sort((a, b) => b.date.localeCompare(a.date))[0];
   return (
     <section id="log" className="section" aria-labelledby="log-title">
       <SectionHead
@@ -49,6 +52,22 @@ export default async function LabLog() {
           );
         })}
       </ol>
+
+      {latest && (
+        <Link
+          href={`/notes/${latest.slug}`}
+          data-cursor="Read"
+          className="group mt-10 flex items-start justify-between gap-6 border-l-2 border-titanix-yellow py-1 pl-5"
+        >
+          <span>
+            <span className="label">Latest note</span>
+            <span className="mt-2 block font-display text-xl font-semibold tracking-tight transition-colors group-hover:text-titanix-yellow sm:text-2xl">
+              {latest.title}
+            </span>
+          </span>
+          <ArrowUpRight className="mt-1 shrink-0 text-titanix-faint transition-all group-hover:rotate-45 group-hover:text-titanix-yellow" />
+        </Link>
+      )}
     </section>
   );
 }
