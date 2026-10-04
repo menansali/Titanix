@@ -29,7 +29,7 @@ const STEPS = [
 ];
 
 const MODELS = [
-  { title: 'Fixed-scope MVP', text: 'A defined first version for a fixed price and timeline. Best for a new product or a proof of concept.' },
+  { title: 'Fixed-scope MVP', text: 'A defined first version for a fixed price and timeline. iOS apps come with our approval guarantee.' },
   { title: 'Ongoing partnership', text: 'A monthly retainer for continuous work after launch: new features, updates and support.' },
 ];
 

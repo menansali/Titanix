@@ -13,7 +13,7 @@ export default async function LabLog() {
   return (
     <section id="log" className="section" aria-labelledby="log-title">
       <SectionHead
-        n="07"
+        n="08"
         label="Lab log"
         id="log-title"
         title="What we shipped lately."

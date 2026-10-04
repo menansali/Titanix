@@ -6,7 +6,8 @@ import BookingLink from './ui/BookingLink';
 
 const NAV = [
   { label: 'Work', href: '/#work' },
-  { label: 'Process', href: '/#process' },
+  { label: 'How we ship', href: '/ship' },
+  { label: 'Offers', href: '/#offers' },
   { label: 'Studio', href: '/#studio' },
   { label: 'Lab log', href: '/#log' },
   { label: 'Notes', href: '/notes' },

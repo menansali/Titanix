@@ -1,3 +1,4 @@
+import { Link } from 'next-view-transitions';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { FOUNDER } from '@/lib/data';
@@ -9,7 +10,7 @@ export default function Studio() {
   return (
     <section id="studio" className="section" aria-labelledby="studio-title">
       <SectionHead
-        n="06"
+        n="07"
         label="Studio"
         id="studio-title"
         title="A small studio. You talk to the people who write the code."
@@ -47,16 +48,12 @@ export default function Studio() {
             work, and why we are happy to own a product from the firmware to the App Store listing.
           </Reveal>
           <p>
-            When I need a tool that does not exist yet, I build it and open-source it. The latest is{' '}
-            <a
-              href="https://github.com/menansali/ios-ship-doctor"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow"
-            >
-              ios-ship-doctor
-            </a>
-            , which finds the reasons an app would be rejected by App Review before you submit it.
+            Every app we ship, ours or a client&apos;s, goes through the same launch process and the same
+            checks before Apple sees it.{' '}
+            <Link href="/ship" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+              This is how we ship
+            </Link>
+            .
           </p>
 
           <div className="flex flex-wrap gap-3 pt-3">

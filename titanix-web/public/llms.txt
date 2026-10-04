@@ -4,7 +4,7 @@
 
 ## People
 
-- **Menan Sali**, co-founder. Computer Science graduate (South East European University); builds native iOS apps and their backends, open-source developer tooling (ios-ship-doctor, an MCP server that finds App Store review problems before submission), and RF/IoT systems. LinkedIn: https://www.linkedin.com/in/menansali/ · GitHub: https://github.com/menansali
+- **Menan Sali**, co-founder. Computer Science graduate (South East European University); builds native iOS apps and their backends, and RF/IoT systems. LinkedIn: https://www.linkedin.com/in/menansali/ · GitHub: https://github.com/menansali
 
 ## What we do
 
@@ -28,8 +28,13 @@
 
 ## Notes
 
-- Catching App Store rejections before you hit Submit (ios-ship-doctor): https://www.titanix.dev/notes/catch-app-store-rejections-before-you-submit
 - How the background of this site works (WebGL contour shader): https://www.titanix.dev/notes/how-the-background-of-this-site-works
+
+## Offers (iOS)
+
+- **App Launch Audit** (48 hours) — an app that is built or nearly built is put through the Titanix pre-submission check and launch review: App Review risks (privacy, permissions, subscriptions, sign-in, account deletion), paywall and pricing, App Store listing, leaked keys, crash risks and analytics. Result: a READY / NOT READY report with the fix for each problem. Fixed price.
+- **Idea to App Store** (fixed scope) — the full process from idea check to a live, monetized native iOS app. Guarantee: if App Review rejects the app Titanix built, it is fixed and resubmitted at no extra cost until approved. Fixed price.
+- Process and details: https://www.titanix.dev/ship
 
 ## How we work
 

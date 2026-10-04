@@ -367,7 +367,94 @@ export const LAB_LOG: LogEntry[] = [
   { date: '2026-08-06', project: 'Lovly', slug: 'lovly', title: 'Launch', note: 'A couples app that lives on the Lock Screen.' },
   { date: '2026-07-27', project: 'Pet Portraits', slug: 'pet-portraits', title: 'Launch', note: 'One photo of a pet becomes a portrait in 15+ styles.' },
   { date: '2026-07-20', project: 'Memopix', slug: 'memopix', title: 'Launch', note: 'Shape photo collages, printed as PNG, JPEG or PDF.' },
-  { date: '2026-07-18', project: 'ios-ship-doctor', url: 'https://github.com/menansali/ios-ship-doctor', title: 'Open source', note: 'An MCP server that finds why an iOS app would fail App Store review, before you submit.' },
+];
+
+export interface ShipStep {
+  title: string;
+  text: string;
+  /** What the client has in hand at the end of the step. */
+  output: string;
+}
+
+// The launch process every app goes through (/ship). Each step is a gate:
+// the next one doesn't start until this one is done.
+export const SHIP_STEPS: ShipStep[] = [
+  {
+    title: 'Check the idea',
+    text: 'Before any code: the top apps in the category, what their 1–2★ reviews complain about, and whether people already pay for a fix.',
+    output: 'A go / no-go with the reasons written down',
+  },
+  {
+    title: 'Find the one screen',
+    text: 'The single screen that shows what the app does in three seconds. It becomes the first screenshot, the demo video and the ad.',
+    output: 'A spec for the core screen',
+  },
+  {
+    title: 'Build one feature well',
+    text: 'Native Swift and SwiftUI, one core feature, and a TestFlight build on your phone every week.',
+    output: 'Weekly builds you can use',
+  },
+  {
+    title: 'Paywall and pricing',
+    text: 'StoreKit subscriptions with the price and terms Apple wants shown, restore purchases, and a retention offer only where Apple allows it.',
+    output: 'A paywall that passes review',
+  },
+  {
+    title: 'The App Store listing',
+    text: 'Keywords, title and subtitle, and screenshots that show the real app, which is what guideline 2.3.3 asks for.',
+    output: 'A listing ready to submit',
+  },
+  {
+    title: 'Pre-submission check',
+    text: 'Every build is checked against the usual rejection reasons before Apple sees it: privacy manifest, permission texts, subscription disclosures, account deletion, sign-in rules, leaked keys and crashes.',
+    output: 'A READY / NOT READY report',
+  },
+  {
+    title: 'Launch and measure',
+    text: 'Analytics checked end to end before release, then the numbers read every week: who opens the paywall, who starts a trial, who stays.',
+    output: 'A live app and a weekly read-out',
+  },
+];
+
+export interface Offer {
+  id: string;
+  title: string;
+  time: string;
+  summary: string;
+  includes: string[];
+  /** The promise attached to the offer, if any. */
+  promise?: string;
+  cta: { label: string; slot: string; url: string };
+}
+
+export const OFFERS: Offer[] = [
+  {
+    id: 'audit',
+    title: 'App Launch Audit',
+    time: '48 hours',
+    summary: 'Your app, built or nearly built, put through our pre-submission check and launch review. You get a READY / NOT READY report with the exact fix for every problem.',
+    includes: [
+      'App Review risks: privacy, permissions, subscriptions, sign-in, account deletion',
+      'Paywall and pricing against Apple’s rules',
+      'App Store listing: keywords, screenshots, first impression',
+      'Leaked keys, crash risks and missing analytics',
+    ],
+    cta: { label: 'Book the audit', slot: '15 min', url: 'https://cal.com/titanix/15min' },
+  },
+  {
+    id: 'launch',
+    title: 'Idea to App Store',
+    time: 'Fixed scope',
+    summary: 'We take your idea through our whole launch process and ship it: a native iOS app with its paywall, listing and analytics, live on the App Store.',
+    includes: [
+      'Idea check before we write code',
+      'Native Swift / SwiftUI app, weekly TestFlight builds',
+      'Subscriptions, App Store listing and analytics',
+      'Submission and launch',
+    ],
+    promise: 'Approved, or we fix it free. If App Review rejects the app we built, we fix and resubmit at no extra cost until it’s live.',
+    cta: { label: 'Talk it through', slot: '30 min', url: 'https://cal.com/titanix/30min' },
+  },
 ];
 
 export const CONTACT = {

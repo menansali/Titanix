@@ -22,7 +22,7 @@ export default function NotesPage() {
       <Navbar />
       <main className="pt-16">
         <section className="section">
-          <SectionHead n={String(NOTES.length).padStart(2, "0")} label="Notes" id="notes-title" title="Notes from the studio." intro="How we ship, what we learn, and the tools we open-source along the way." />
+          <SectionHead n={String(NOTES.length).padStart(2, "0")} label="Notes" id="notes-title" title="Notes from the studio." intro="How we build, what we learn, and how the things we make work." />
           <ol className="mt-14 border-t border-titanix-border">
             {notes.map((n) => (
               <li key={n.slug}>

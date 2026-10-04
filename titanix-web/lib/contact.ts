@@ -1,6 +1,6 @@
 // Shared between the contact form (client) and /api/contact (server).
 
-export const PROJECT_TYPES = ['iOS app', 'SaaS platform', 'IoT system', 'Something else'] as const;
+export const PROJECT_TYPES = ['App Launch Audit', 'iOS app', 'SaaS platform', 'IoT system', 'Something else'] as const;
 export const BUDGETS = ['Under €5k', '€5k–15k', '€15k–40k', '€40k+', 'Not sure yet'] as const;
 export const TIMELINES = ['As soon as possible', '1–3 months', '3+ months', 'Just exploring'] as const;
 

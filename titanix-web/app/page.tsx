@@ -12,6 +12,7 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Marquee from '@/components/motion/Marquee';
 import Proof from '@/components/Proof';
+import Offers from '@/components/Offers';
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
         <Work />
         <Proof />
         <Process />
+        <Offers />
         <Studio />
         <LabLog />
         <Contact />

@@ -17,7 +17,7 @@ export default function Contact() {
   return (
     <section id="contact" className="section" aria-labelledby="contact-title">
       <SectionHead
-        n="08"
+        n="09"
         label="Contact"
         id="contact-title"
         title="Tell us what you want to build."

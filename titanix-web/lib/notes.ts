@@ -21,57 +21,6 @@ export interface Note {
 
 export const NOTES: Note[] = [
   {
-    slug: 'catch-app-store-rejections-before-you-submit',
-    title: 'Catching App Store rejections before you hit Submit',
-    summary:
-      'Some App Store rejections are for things Xcode never warns about. ios-ship-doctor is our open-source MCP server that checks for them in seconds.',
-    date: '2026-10-02',
-    tags: ['iOS', 'App Review', 'Open source'],
-    body: [
-      {
-        type: 'p',
-        text: 'We shipped five apps to the App Store this year. Along the way it became clear that a whole class of rejections has nothing to do with the app itself. They come from files and settings that Xcode builds happily and App Review does not accept.',
-      },
-      { type: 'h2', text: 'The invisible reasons' },
-      {
-        type: 'list',
-        items: [
-          'A required-reason API used in code but not declared in PrivacyInfo.xcprivacy.',
-          'A permission used with no NS…UsageDescription string, which crashes the app and gets it rejected.',
-          'A third-party SDK on Apple’s list shipping without its own privacy manifest.',
-          'A placeholder test credential, like Google’s sample AdMob ID, left in Info.plist.',
-        ],
-      },
-      {
-        type: 'p',
-        text: 'Each of these costs a full submission cycle: hours or days of waiting, then a fix that takes two minutes. We wanted to know about them before submitting, not after.',
-      },
-      { type: 'h2', text: 'What ios-ship-doctor does' },
-      {
-        type: 'p',
-        text: 'ios-ship-doctor is an MCP server, so it works inside the AI assistant you already use (Claude Code, Gemini CLI, Codex, Cursor, Copilot, Windsurf, Zed). Point it at a project and it runs every check and returns one verdict: READY or NOT READY, with the exact file and fix for each problem. You can also run it straight from the terminal:',
-      },
-      { type: 'code', text: 'npx -y ios-ship-doctor-mcp preflight /path/to/your/app' },
-      {
-        type: 'p',
-        text: 'Beyond privacy manifests and permission strings it checks for missing Privacy Policy and Terms links on a paywall, no demo account for App Review, no in-app account deletion, social login without Sign in with Apple, Stripe or PayPal used for digital content, background modes the app never uses, and leftover placeholder content such as lorem ipsum or test API keys. It understands CocoaPods and Swift Package Manager, and modern projects that have no Info.plist file at all.',
-      },
-      {
-        type: 'p',
-        text: 'With an App Store Connect API key it goes one step further: when Apple does reject a build, it pulls the rejection and maps the guideline number to a plain-English fix.',
-      },
-      { type: 'h2', text: 'What it can’t check' },
-      {
-        type: 'p',
-        text: 'It reads project files, so it can’t see crashes, unfinished features, design quality or whether your screenshots match the app. Those are still most rejections. A clean run means no automated check fired, not that the app will be approved. It just removes the avoidable round-trips.',
-      },
-      {
-        type: 'p',
-        text: 'It is MIT licensed and on GitHub. If it saves you a submission cycle, that is the whole point.',
-      },
-    ],
-  },
-  {
     slug: 'how-the-background-of-this-site-works',
     title: 'How the background of this site works',
     summary:
