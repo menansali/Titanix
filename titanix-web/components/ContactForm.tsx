@@ -8,11 +8,11 @@ import { BUDGETS, PROJECT_TYPES, TIMELINES, briefBody, briefSubject, type Brief 
 
 type State = 'idle' | 'sending' | 'sent' | 'mailto' | 'error';
 
-const FIELD =
+export const FIELD =
   'w-full rounded-md border border-titanix-border bg-transparent px-4 py-3 text-sm text-titanix-text ' +
   'placeholder:text-titanix-faint transition-colors focus:border-titanix-yellow focus:outline-none';
 
-const LABEL = 'label mb-2 block text-left';
+export const LABEL = 'label mb-2 block text-left';
 
 function Choice({
   name,

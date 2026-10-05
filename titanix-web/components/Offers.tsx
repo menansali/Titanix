@@ -4,6 +4,21 @@ import { OFFERS } from '@/lib/data';
 import SectionHead from './ui/SectionHead';
 import BookingLink from './ui/BookingLink';
 
+/** A cal.com href opens the booking modal; anything else is a normal link. */
+function Action({ label, href, id, className }: { label: string; href: string; id: string; className: string }) {
+  if (href.startsWith('https://cal.com/'))
+    return (
+      <BookingLink href={href} slot={`${id}-${href.split('/').pop()}`} data-cursor="Book" className={className}>
+        {label} <ArrowUpRight size={16} />
+      </BookingLink>
+    );
+  return (
+    <Link href={href} className={className}>
+      {label} <ArrowRight size={16} />
+    </Link>
+  );
+}
+
 /**
  * The two fixed offers, side by side on a hairline. Used on the home page and
  * on /ship (where `more` is off, since you're already on the details page).
@@ -51,9 +66,8 @@ export default function Offers({ n = '06', more = true }: { n?: string; more?: b
             )}
 
             <div className="mt-auto flex flex-wrap items-center gap-3 pt-10">
-              <BookingLink href={o.cta.url} slot={`${o.id}-${o.cta.slot}`} data-cursor="Book" className="btn-primary">
-                {o.cta.label} <ArrowUpRight size={16} />
-              </BookingLink>
+              <Action {...o.cta} id={o.id} className="btn-primary" />
+              {o.alt && <Action {...o.alt} id={o.id} className="btn-ghost" />}
               {more && (
                 <Link href={`/ship#${o.id}`} className="btn-ghost">
                   How it works <ArrowRight size={16} />

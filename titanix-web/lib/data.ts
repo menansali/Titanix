@@ -424,7 +424,10 @@ export interface Offer {
   includes: string[];
   /** The promise attached to the offer, if any. */
   promise?: string;
-  cta: { label: string; slot: string; url: string };
+  /** cal.com URLs open the booking modal; site paths are normal links. */
+  cta: { label: string; href: string };
+  /** Secondary action. */
+  alt?: { label: string; href: string };
 }
 
 export const OFFERS: Offer[] = [
@@ -439,7 +442,8 @@ export const OFFERS: Offer[] = [
       'App Store listing: keywords, screenshots, first impression',
       'Leaked keys, crash risks and missing analytics',
     ],
-    cta: { label: 'Book the audit', slot: '15 min', url: 'https://cal.com/titanix/15min' },
+    cta: { label: 'Order the audit', href: '/ship#order' },
+    alt: { label: 'Book 15 min', href: 'https://cal.com/titanix/15min' },
   },
   {
     id: 'launch',
@@ -453,7 +457,7 @@ export const OFFERS: Offer[] = [
       'Submission and launch',
     ],
     promise: 'Approved, or we fix it free. If App Review rejects the app we built, we fix and resubmit at no extra cost until it’s live.',
-    cta: { label: 'Talk it through', slot: '30 min', url: 'https://cal.com/titanix/30min' },
+    cta: { label: 'Talk it through', href: 'https://cal.com/titanix/30min' },
   },
 ];
 

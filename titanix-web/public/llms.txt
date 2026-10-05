@@ -34,7 +34,11 @@
 
 - **App Launch Audit** (48 hours) — an app that is built or nearly built is put through the Titanix pre-submission check and launch review: App Review risks (privacy, permissions, subscriptions, sign-in, account deletion), paywall and pricing, App Store listing, leaked keys, crash risks and analytics. Result: a READY / NOT READY report with the fix for each problem. Fixed price.
 - **Idea to App Store** (fixed scope) — the full process from idea check to a live, monetized native iOS app. Guarantee: if App Review rejects the app Titanix built, it is fixed and resubmitted at no extra cost until approved. Fixed price.
-- Process and details: https://www.titanix.dev/ship
+- Process and details: https://www.titanix.dev/ship (order the audit without a call: https://www.titanix.dev/ship#order)
+
+## App Review rejection guides
+
+Plain-English guides to the App Store Review Guidelines that reject apps most often, with causes, fixes and what to tell App Review: https://www.titanix.dev/app-review
 
 ## How we work
 

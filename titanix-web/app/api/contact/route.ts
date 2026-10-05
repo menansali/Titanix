@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { CONTACT } from '@/lib/data';
+import { sendMail } from '@/lib/mail';
 import { BUDGETS, PROJECT_TYPES, TIMELINES, briefBody, briefSubject, type Brief } from '@/lib/contact';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,27 +41,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Please fill in every field.' }, { status: 422 });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({ error: 'Email delivery is not configured.' }, { status: 503 });
-  }
-
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from: process.env.CONTACT_FROM_EMAIL ?? 'Titanix Website <website@titanix.dev>',
-      to: process.env.CONTACT_TO_EMAIL ?? CONTACT.email,
-      reply_to: brief.email,
-      subject: briefSubject(brief),
-      text: briefBody(brief),
-    }),
-  });
-
-  if (!res.ok) {
-    console.error('Resend error', res.status, await res.text());
-    return NextResponse.json({ error: 'Could not send right now.' }, { status: 502 });
-  }
-
+  const sent = await sendMail({ subject: briefSubject(brief), text: briefBody(brief), replyTo: brief.email });
+  if (sent === 'unconfigured') return NextResponse.json({ error: 'Email delivery is not configured.' }, { status: 503 });
+  if (sent === 'failed') return NextResponse.json({ error: 'Could not send right now.' }, { status: 502 });
   return NextResponse.json({ ok: true });
 }

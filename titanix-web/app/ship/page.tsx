@@ -7,6 +7,8 @@ import Offers from '@/components/Offers';
 import Reveal from '@/components/motion/Reveal';
 import SectionHead from '@/components/ui/SectionHead';
 import BookingLink from '@/components/ui/BookingLink';
+import AuditForm from '@/components/AuditForm';
+import { SAMPLE_AUDIT } from '@/lib/sampleAudit';
 import { CONTACT, OFFERS, PROJECTS, SHIP_STEPS } from '@/lib/data';
 import { SITE_URL } from '@/lib/site';
 
@@ -162,13 +164,53 @@ export default function ShipPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-6 font-mono text-[11px] text-titanix-faint">Numbers are App Review guideline sections.</p>
+          <p className="mt-6 font-mono text-[11px] text-titanix-faint">
+            Numbers are App Review guideline sections.{' '}
+            <Link href="/app-review" className="text-titanix-muted underline underline-offset-4 hover:text-titanix-text">
+              What each one means and how to fix it
+            </Link>
+          </p>
         </section>
 
         <Offers n="02" more={false} />
 
+        <section id="order" className="section scroll-mt-16" aria-labelledby="order-title">
+          <SectionHead
+            n="03"
+            label="Order the audit"
+            id="order-title"
+            title="Send us the app."
+            intro="No call needed. Tell us where the app is and we reply with the fixed price and a start date, usually the same day."
+          />
+          <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
+            <ol className="border-t border-titanix-border">
+              {[
+                ['You send the app', 'An App Store link, or a TestFlight invite or code access if it isn’t live yet.'],
+                ['We confirm price and date', 'A fixed price in writing. Nothing starts until you agree.'],
+                ['Report in 48 hours', 'READY / NOT READY, every problem with its exact fix, ranked by what blocks approval first.'],
+              ].map(([t, d], n) => (
+                <li key={t} className="grid grid-cols-[3rem_1fr] border-b border-titanix-border py-6">
+                  <span className="font-mono text-xs text-titanix-yellow">{String(n + 1).padStart(2, '0')}</span>
+                  <span>
+                    <span className="block font-display text-xl font-semibold tracking-tight">{t}</span>
+                    <span className="mt-1 block text-titanix-muted">{d}</span>
+                  </span>
+                </li>
+              ))}
+              {SAMPLE_AUDIT.published && (
+                <li className="pt-6">
+                  <Link href="/ship/sample-audit" className="inline-flex items-center gap-2 text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+                    See a real sample report <ArrowRight size={15} />
+                  </Link>
+                </li>
+              )}
+            </ol>
+            <AuditForm />
+          </div>
+        </section>
+
         <section className="section" aria-labelledby="faq-title">
-          <SectionHead n="03" label="Questions" id="faq-title" title="Before you book." />
+          <SectionHead n="04" label="Questions" id="faq-title" title="Before you book." />
           <dl className="mt-12 border-t border-titanix-border">
             {FAQ.map((f) => (
               <div key={f.q} className="grid gap-3 border-b border-titanix-border py-8 md:grid-cols-[1fr_1.4fr] md:gap-10">
