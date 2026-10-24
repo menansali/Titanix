@@ -8,6 +8,8 @@ import Footer from '@/components/Footer';
 import TrackedLink from '@/components/ui/TrackedLink';
 import Reveal from '@/components/motion/Reveal';
 import BuildStory from '@/components/case/BuildStory';
+import ScreenVideo from '@/components/case/ScreenVideo';
+import MobileCTA from '@/components/MobileCTA';
 import { getApps, getRatings } from '@/lib/appstore';
 import { PROJECTS } from '@/lib/data';
 import { SITE_URL } from '@/lib/site';
@@ -170,7 +172,11 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
               </dl>
             </div>
 
-            {p.screenshots?.[0] ? (
+            {p.video ? (
+              <div className="relative mx-auto aspect-[1290/2796] w-full max-w-[19rem] overflow-hidden rounded-[2rem] border border-titanix-border bg-titanix-deep">
+                <ScreenVideo src={p.video} poster={p.screenshots?.[0]} label={`${p.title} running on iPhone`} />
+              </div>
+            ) : p.screenshots?.[0] ? (
               <div className="relative mx-auto aspect-[1290/2796] w-full max-w-[19rem] overflow-hidden rounded-[2rem] border border-titanix-border">
                 <Image
                   src={p.screenshots[0]}
@@ -226,7 +232,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
               {result.map(([k, v]) => (
                 <div key={k} className="border-l border-titanix-border pl-4">
                   <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-titanix-faint">{k}</dt>
-                  <dd className="wide mt-2 font-display text-2xl font-extrabold tracking-tight sm:text-4xl">{v}</dd>
+                  <dd className="wide wide-in mt-2 font-display text-2xl font-extrabold tracking-tight sm:text-4xl">{v}</dd>
                 </div>
               ))}
             </dl>
@@ -267,7 +273,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
               )}
               <div className="min-w-0">
                 <p className="label">Next</p>
-                <p className="wide mt-1 font-display text-[7vw] font-extrabold uppercase tracking-tight sm:text-5xl">{next.title.split(":")[0]}</p>
+                <p className="wide wide-in mt-1 font-display text-[7vw] font-extrabold uppercase tracking-tight sm:text-5xl">{next.title.split(":")[0]}</p>
               </div>
             </div>
             <ArrowRight className="shrink-0 text-titanix-faint transition-all group-hover:translate-x-1 group-hover:text-titanix-yellow" />
@@ -275,6 +281,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
         </section>
       </main>
       <Footer />
+      <MobileCTA />
     </>
   );
 }

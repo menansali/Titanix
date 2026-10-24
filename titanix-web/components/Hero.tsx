@@ -1,11 +1,12 @@
 import { ArrowDownRight, ArrowRight } from 'lucide-react';
 import { PROJECTS } from '@/lib/data';
-import { getRatings } from '@/lib/appstore';
+import { getLabLog, getRatings } from '@/lib/appstore';
 import Scramble from './motion/Scramble';
 
 export default async function Hero() {
   const live = PROJECTS.filter((p) => p.status === 'Shipped').length;
-  const ratings = await getRatings();
+  const [ratings, log] = await Promise.all([getRatings(), getLabLog()]);
+  const last = log[0];
 
   const stats: [string, string][] = [
     [String(live).padStart(2, '0'), 'Products live'],
@@ -16,9 +17,29 @@ export default async function Hero() {
 
   return (
     <section id="top" className="relative mx-auto flex min-h-[100svh] max-w-[90rem] flex-col justify-between px-5 pb-8 pt-24 sm:px-8 sm:pt-28 lg:pb-10">
-      <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-titanix-muted">
-        <Scramble immediate delay={0.2} text="Product studio / Est. 2021" />
-        <Scramble immediate delay={0.35} text="iOS · SaaS · IoT" className="hidden sm:inline" />
+      <div className="flex items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.18em] text-titanix-muted">
+        <Scramble immediate delay={0.2} text="Product studio / Est. 2021" className={last ? 'hidden sm:inline' : undefined} />
+        {/* The latest release, from the lab log (App Store releases land there on their own). */}
+        {last ? (
+          <a href="#log" className="group flex items-center gap-2.5 transition-colors hover:text-titanix-text">
+            <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-titanix-yellow opacity-60 motion-reduce:animate-none" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-titanix-yellow" />
+            </span>
+            <span className="hidden sm:inline">Last ship ·</span>
+            <span>
+              {last.project} {last.title === 'Launch' ? 'launch' : last.title}
+              <span className="text-titanix-faint">
+                {' · '}
+                <time dateTime={last.date}>
+                  {new Date(`${last.date}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                </time>
+              </span>
+            </span>
+          </a>
+        ) : (
+          <Scramble immediate delay={0.35} text="iOS · SaaS · IoT" className="hidden sm:inline" />
+        )}
       </div>
 
       {/* CSS-only entrance so the headline paints before any JavaScript (it's the LCP element). */}

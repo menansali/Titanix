@@ -15,7 +15,8 @@ interface SectionHeadProps {
 export default function SectionHead({ n, label, title, intro, id }: SectionHeadProps) {
   return (
     <header>
-      <div className="flex items-center gap-4 border-t border-titanix-border pt-4 font-mono text-[11px] uppercase tracking-[0.18em]">
+      <div className="relative flex items-center gap-4 pt-4 font-mono text-[11px] uppercase tracking-[0.18em]">
+        <span aria-hidden="true" className="draw absolute inset-x-0 top-0 h-px bg-titanix-border" />
         <span className="text-titanix-yellow">({n})</span>
         <Scramble text={label} className="text-titanix-muted" />
       </div>

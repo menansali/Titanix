@@ -36,6 +36,8 @@ export interface Project {
   cover?: string;
   /** App Store screenshots (mzstatic CDN). */
   screenshots?: string[];
+  /** Muted screen recording (MP4 under /public/work), played in the case-study phone. */
+  video?: string;
   caseStudy?: CaseStudy;
 }
 

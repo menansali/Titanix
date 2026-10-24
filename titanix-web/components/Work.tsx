@@ -71,7 +71,7 @@ export default function Work() {
                   </span>
                 )}
                 <span
-                  className="wide block font-display text-[6.6vw] font-extrabold uppercase leading-none tracking-[-0.02em] transition-colors duration-300 group-hover:text-black sm:text-5xl lg:text-6xl"
+                  className="wide wide-hover block font-display text-[6.6vw] font-extrabold uppercase leading-none tracking-[-0.02em] group-hover:text-black sm:text-5xl lg:text-6xl"
                   style={p.caseStudy ? { viewTransitionName: `title-${p.slug}` } : undefined}
                 >
                   {p.title.split(':')[0]}

@@ -102,7 +102,7 @@ export default function Process() {
                 className="flex flex-col justify-between border-t border-black/20 py-8 lg:h-[46svh] lg:w-[34rem] lg:border lg:border-black/15 lg:p-8"
               >
                 <div className="flex items-start justify-between gap-6">
-                  <span className="wide font-display text-7xl font-extrabold leading-none tracking-tight lg:text-[8rem]">
+                  <span className="wide wide-in font-display text-7xl font-extrabold leading-none tracking-tight lg:text-[8rem]">
                     0{i + 1}
                   </span>
                   <span className="mt-2 rounded-md border border-black/30 px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.14em]">

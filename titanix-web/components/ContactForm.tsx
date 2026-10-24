@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { track } from '@vercel/analytics';
 import { CONTACT } from '@/lib/data';
 import { BUDGETS, PROJECT_TYPES, TIMELINES, briefBody, briefSubject, type Brief } from '@/lib/contact';
+import { onScope, projectType, scopeNote } from '@/lib/scope';
 
 type State = 'idle' | 'sending' | 'sent' | 'mailto' | 'error';
 
@@ -43,6 +44,22 @@ function Choice({
 export default function ContactForm() {
   const [state, setState] = useState<State>('idle');
   const [error, setError] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Answers from the Offers scoping step fill in the matching fields.
+  useEffect(
+    () =>
+      onScope((sc) => {
+        const f = formRef.current?.elements;
+        if (!f) return;
+        (f.namedItem('type') as RadioNodeList).value = projectType(sc);
+        if (sc.timeline) (f.namedItem('timeline') as RadioNodeList).value = sc.timeline;
+        const msg = f.namedItem('message') as HTMLTextAreaElement;
+        const note = scopeNote(sc);
+        if (note && (!msg.value || msg.value.startsWith('Stage: '))) msg.value = `${note}\n\n`;
+      }),
+    [],
+  );
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -97,7 +114,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="max-w-2xl space-y-7 text-left">
+    <form ref={formRef} onSubmit={onSubmit} className="max-w-2xl space-y-7 text-left">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="cf-name" className={LABEL}>Name</label>

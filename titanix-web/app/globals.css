@@ -96,6 +96,20 @@ body {
     font-stretch: 125%;
     font-variation-settings: 'wdth' 125;
   }
+  /* Display type that opens up to the wide cut as it scrolls into view
+     (Archivo's width axis runs 62–125). */
+  .wide-in {
+    font-variation-settings: 'wdth' 125;
+  }
+  /* Index rows: a touch narrower at rest, full width on hover. */
+  .wide-hover {
+    font-variation-settings: 'wdth' 108;
+    transition: font-variation-settings 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s;
+  }
+  .group:hover .wide-hover,
+  .group:focus-visible .wide-hover {
+    font-variation-settings: 'wdth' 125;
+  }
   .text-outline {
     color: transparent;
     -webkit-text-stroke: 1.5px var(--stroke, #FAFAF5);
@@ -128,6 +142,46 @@ body {
 
   .chip {
     @apply rounded border border-titanix-border px-2 py-0.5 font-mono text-[11px] text-titanix-muted;
+  }
+}
+
+/* Scroll-driven reveals: plain CSS on the compositor, no JavaScript. Browsers
+   without `animation-timeline` just show everything in place. */
+@keyframes draw-x {
+  from { transform: scaleX(0); }
+}
+@keyframes widen {
+  from { font-variation-settings: 'wdth' 62; }
+}
+@keyframes wipe-up {
+  from { clip-path: inset(100% 0 0 0); }
+}
+@keyframes drift {
+  from { transform: translateY(-8%) scale(1.18); }
+  to { transform: translateY(8%) scale(1.08); }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .draw {
+      transform-origin: left;
+      animation: draw-x linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+    .wide-in {
+      animation: widen linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 35%;
+    }
+    .wipe {
+      animation: wipe-up cubic-bezier(0.7, 0, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+    .drift {
+      animation: drift linear both;
+      animation-timeline: view();
+    }
   }
 }
 

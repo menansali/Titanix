@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { OFFERS } from '@/lib/data';
 import SectionHead from './ui/SectionHead';
 import BookingLink from './ui/BookingLink';
+import ScopePicker from './ScopePicker';
 
 /** A cal.com href opens the booking modal; anything else is a normal link. */
 function Action({ label, href, id, className }: { label: string; href: string; id: string; className: string }) {
@@ -47,7 +48,7 @@ export default function Offers({ n = '06', more = true }: { n?: string; more?: b
               <span className="text-titanix-yellow">({String.fromCharCode(65 + i)})</span>
               <span className="border border-titanix-border px-2.5 py-1 text-titanix-muted">{o.time}</span>
             </div>
-            <h3 className="wide mt-6 font-display text-[8vw] font-extrabold uppercase leading-[0.95] tracking-tight sm:text-5xl xl:text-6xl">
+            <h3 className="wide wide-in mt-6 font-display text-[8vw] font-extrabold uppercase leading-[0.95] tracking-tight sm:text-5xl xl:text-6xl">
               {o.title}
             </h3>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-titanix-muted">{o.summary}</p>
@@ -77,6 +78,8 @@ export default function Offers({ n = '06', more = true }: { n?: string; more?: b
           </article>
         ))}
       </div>
+
+      <ScopePicker />
     </section>
   );
 }

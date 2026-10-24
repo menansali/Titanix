@@ -42,6 +42,14 @@ function loadCal() {
   return calReady;
 }
 
+/** Opens a cal.com URL in the booking modal, or navigates to it if the embed fails. */
+export function openBooking(href: string) {
+  const calLink = new URL(href).pathname.replace(/^\//, '');
+  loadCal()
+    .then((cal) => cal('modal', { calLink, config: { layout: 'month_view', theme: 'dark' } }))
+    .catch(() => window.location.assign(href));
+}
+
 /**
  * A cal.com link that opens the booking calendar in a modal over the page.
  * Modifier clicks, no JS, or a failed embed load all fall back to the plain link.
@@ -52,10 +60,7 @@ export default function BookingLink({ href, slot, onClick, ...rest }: Props) {
     onClick?.(e);
     if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     e.preventDefault();
-    const calLink = new URL(href).pathname.replace(/^\//, '');
-    loadCal()
-      .then((cal) => cal('modal', { calLink, config: { layout: 'month_view', theme: 'dark' } }))
-      .catch(() => window.location.assign(href));
+    openBooking(href);
   };
 
   return <a href={href} target="_blank" rel="noopener noreferrer" onClick={handle} onMouseEnter={() => void loadCal().catch(() => {})} {...rest} />;

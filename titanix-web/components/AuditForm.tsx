@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { track } from '@vercel/analytics';
 import { CONTACT } from '@/lib/data';
 import { AUDIT_ACCESS, auditBody, auditSubject, type AuditOrder } from '@/lib/contact';
+import { onScope, scopeNote } from '@/lib/scope';
 import { FIELD, LABEL } from './ContactForm';
 
 type State = 'idle' | 'sending' | 'sent' | 'mailto' | 'error';
@@ -16,6 +17,18 @@ type State = 'idle' | 'sending' | 'sent' | 'mailto' | 'error';
 export default function AuditForm() {
   const [state, setState] = useState<State>('idle');
   const [error, setError] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Answers from the Offers scoping step start the notes field.
+  useEffect(
+    () =>
+      onScope((sc) => {
+        const el = formRef.current?.elements.namedItem('concern') as HTMLTextAreaElement | null;
+        const note = scopeNote(sc);
+        if (el && note && (!el.value || el.value.startsWith('Stage: '))) el.value = `${note}\n\n`;
+      }),
+    [],
+  );
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -63,7 +76,7 @@ export default function AuditForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6 text-left">
+    <form ref={formRef} onSubmit={onSubmit} className="space-y-6 text-left">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="af-name" className={LABEL}>Name</label>

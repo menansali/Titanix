@@ -32,3 +32,6 @@ export function scrollToHash(hash: string) {
   history.replaceState(null, '', hash);
   return true;
 }
+
+/** The live Lenis instance, if smooth scroll is on (e.g. to pause it under a modal). */
+export const getLenis = () => lenis;

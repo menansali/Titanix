@@ -3,11 +3,14 @@ import { Archivo, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ViewTransitions } from 'next-view-transitions';
-import { PILLARS, PROJECTS, CONTACT, FOUNDER } from '@/lib/data';
+import { PILLARS, PROJECTS, CONTACT, FOUNDER, OFFERS } from '@/lib/data';
+import { GUIDES } from '@/lib/guides';
+import { NOTES } from '@/lib/notes';
 import { SITE_URL, SITE_NAME } from '@/lib/site';
 import SmoothScroll from '@/components/motion/SmoothScroll';
 import SignalField from '@/components/motion/SignalField';
 import Cursor from '@/components/motion/Cursor';
+import CommandPalette, { type PaletteItem } from '@/components/CommandPalette';
 import './globals.css';
 
 // One variable family for display and text; display type uses the wide axis (`.wide`).
@@ -168,6 +171,31 @@ const structuredData = {
   ],
 };
 
+// Everything the ⌘K palette can jump to. Built here so only labels and links reach the client.
+const paletteItems: PaletteItem[] = [
+  ...CONTACT.booking.map((b) => ({ group: 'Actions', label: `Book a ${b.label} call`, hint: b.note, href: b.url, keywords: 'calendar meeting cal' })),
+  { group: 'Actions', label: 'Order the App Launch Audit', hint: '48 hours', href: '/ship#order', keywords: 'review check' },
+  { group: 'Actions', label: 'Send a project brief', href: '/#contact', keywords: 'contact form start' },
+  { group: 'Actions', label: `Email ${CONTACT.email}`, href: `mailto:${CONTACT.email}`, keywords: 'mail' },
+  { group: 'Pages', label: 'Work', href: '/#work', keywords: 'index portfolio projects' },
+  { group: 'Pages', label: 'Offers', hint: OFFERS.map((o) => o.title).join(' · '), href: '/#offers', keywords: 'pricing services' },
+  { group: 'Pages', label: 'How we ship', href: '/ship', keywords: 'process launch steps faq' },
+  { group: 'Pages', label: 'App Review rejection guides', href: '/app-review', keywords: 'rejected guideline apple' },
+  { group: 'Pages', label: 'Studio', href: '/#studio', keywords: 'founder about team' },
+  { group: 'Pages', label: 'Lab log', href: '/#log', keywords: 'releases updates changelog' },
+  { group: 'Pages', label: 'Notes', href: '/notes', keywords: 'blog writing' },
+  { group: 'Pages', label: 'Contact', href: '/#contact' },
+  ...PROJECTS.filter((p) => p.caseStudy).map((p) => ({
+    group: 'Case studies',
+    label: p.title,
+    hint: p.category.split(' · ')[0],
+    href: `/work/${p.slug}`,
+    keywords: `${p.category} ${p.tech.join(' ')}`,
+  })),
+  ...GUIDES.map((g) => ({ group: 'Rejection guides', label: g.name, hint: g.code, href: `/app-review/${g.slug}`, keywords: `guideline ${g.title}` })),
+  ...NOTES.map((n) => ({ group: 'Notes', label: n.title, href: `/notes/${n.slug}`, keywords: n.tags.join(' ') })),
+];
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ViewTransitions>
@@ -183,6 +211,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SignalField />
           <div className="relative z-10">{children}</div>
           <Cursor />
+          <CommandPalette items={paletteItems} />
           <SmoothScroll />
           <Analytics />
           <SpeedInsights />

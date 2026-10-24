@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 import { Link } from 'next-view-transitions';
 import Logo from './Logo';
+import { OPEN_PALETTE } from './CommandPalette';
+
+const openPalette = () => window.dispatchEvent(new Event(OPEN_PALETTE));
 
 const LINKS = [
   { label: 'Work', href: '/#work' },
@@ -17,6 +20,11 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mod, setMod] = useState('⌘');
+
+  useEffect(() => {
+    if (!/Mac|iPhone|iPad/.test(navigator.platform)) setMod('Ctrl ');
+  }, []);
 
   // Slides away while scrolling down, comes back as soon as you scroll up.
   useEffect(() => {
@@ -56,6 +64,14 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-titanix-yellow transition-transform duration-300 group-hover:origin-left group-hover:scale-x-100" />
             </Link>
           ))}
+          <button
+            type="button"
+            onClick={openPalette}
+            aria-label="Search the site"
+            className="chip transition-colors hover:border-white/40 hover:text-titanix-text"
+          >
+            {mod}K
+          </button>
           <Link href="/#contact" className="btn-primary !py-2">
             Start a project
           </Link>
@@ -78,6 +94,16 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              openPalette();
+            }}
+            className="flex w-full items-center gap-2 border-b border-titanix-border py-4 text-left text-base text-titanix-muted hover:text-titanix-text"
+          >
+            <Search size={16} /> Search
+          </button>
           <Link href="/#contact" onClick={() => setOpen(false)} className="btn-primary mt-5 w-full">
             Start a project
           </Link>
