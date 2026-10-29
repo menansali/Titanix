@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { getLabLog } from '@/lib/appstore';
 import { NOTES } from '@/lib/notes';
 import SectionHead from './ui/SectionHead';
+import Subscribe from './Subscribe';
 
 const fmt = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -52,6 +53,10 @@ export default async function LabLog() {
           );
         })}
       </ol>
+
+      <div className="mt-10">
+        <Subscribe />
+      </div>
 
       {latest && (
         <Link

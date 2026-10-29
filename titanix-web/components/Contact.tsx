@@ -5,6 +5,13 @@ import SectionHead from './ui/SectionHead';
 import TrackedLink from './ui/TrackedLink';
 import BookingLink from './ui/BookingLink';
 
+// What happens after the brief is sent, so nobody has to guess.
+const NEXT = [
+  { title: 'Send a brief', text: 'A few lines about the idea, or the app if it already exists.' },
+  { title: 'We reply', text: 'Usually the same day, with questions or a time to talk.' },
+  { title: 'Scope and price', text: 'Agreed in writing before any work starts.' },
+];
+
 const CHANNELS = [
   { label: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: Mail, channel: 'email' },
   { label: `WhatsApp ${CONTACT.whatsapp}`, href: CONTACT.whatsappUrl, icon: MessageCircle, channel: 'whatsapp' },
@@ -23,6 +30,16 @@ export default function Contact() {
         title="Tell us what you want to build."
         intro="A few details is plenty. We reply to every brief, usually the same day."
       />
+
+      <ol className="mt-12 grid border-t border-titanix-border sm:grid-cols-3">
+        {NEXT.map((n, i) => (
+          <li key={n.title} className={`border-b border-titanix-border py-5 sm:border-b-0 sm:py-6 ${i > 0 ? 'sm:border-l sm:pl-6' : ''} ${i < NEXT.length - 1 ? 'sm:pr-6' : ''}`}>
+            <span className="font-mono text-[11px] text-titanix-yellow">{String(i + 1).padStart(2, '0')}</span>
+            <p className="mt-2 font-display text-lg font-bold">{n.title}</p>
+            <p className="mt-1 text-sm text-titanix-muted">{n.text}</p>
+          </li>
+        ))}
+      </ol>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_18rem] lg:gap-16">
         <ContactForm />

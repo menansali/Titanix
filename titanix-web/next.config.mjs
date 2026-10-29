@@ -8,6 +8,8 @@ const nextConfig = {
     return [
       // Removed note.
       { source: '/notes/catch-app-store-rejections-before-you-submit', destination: '/notes', permanent: true },
+      // Qaza Qada was renamed Tevekkul Vakti (same App Store app).
+      { source: '/work/qaza-qada', destination: '/work/tevekkul-vakti', permanent: true },
     ];
   },
   images: {

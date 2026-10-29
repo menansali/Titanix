@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { CONTACT, PROJECTS } from '@/lib/data';
 import Wordmark from './motion/Wordmark';
 import BookingLink from './ui/BookingLink';
+import LocalTime from './ui/LocalTime';
 
 const NAV = [
   { label: 'Work', href: '/#work' },
@@ -77,8 +78,9 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-14 flex items-center justify-between font-mono text-[11px] text-titanix-faint">
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 font-mono text-[11px] text-titanix-faint">
           <span>© 2021–{new Date().getFullYear()} Titanix</span>
+          <LocalTime />
           <a href="#top" className="transition-colors hover:text-titanix-text">Back to top ↑</a>
         </div>
       </div>

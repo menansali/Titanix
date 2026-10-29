@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import { Link } from 'next-view-transitions';
 import { ArrowDownRight, ArrowRight } from 'lucide-react';
 import { PROJECTS } from '@/lib/data';
 import { getLabLog, getRatings } from '@/lib/appstore';
@@ -5,6 +7,7 @@ import Scramble from './motion/Scramble';
 
 export default async function Hero() {
   const live = PROJECTS.filter((p) => p.status === 'Shipped').length;
+  const onStore = PROJECTS.filter((p) => p.icon && p.url?.includes('apps.apple.com'));
   const [ratings, log] = await Promise.all([getRatings(), getLabLog()]);
   const last = log[0];
 
@@ -88,6 +91,25 @@ export default async function Hero() {
             </div>
           ))}
         </dl>
+      </div>
+
+      {/* Proof up front: the apps themselves, each a link to its case study. */}
+      <div className="fade-in mt-8 flex flex-wrap items-center gap-x-5 gap-y-3" style={{ animationDelay: '0.8s' }}>
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-titanix-faint">Live on the App Store</span>
+        <ul className="flex items-center gap-2.5">
+          {onStore.map((p) => (
+            <li key={p.slug}>
+              <Link
+                href={`/work/${p.slug}`}
+                aria-label={p.title}
+                title={p.title.split(':')[0]}
+                className="relative block h-9 w-9 overflow-hidden rounded-[0.6rem] border border-titanix-border transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-titanix-yellow"
+              >
+                <Image src={p.icon!} alt="" fill sizes="36px" className="object-cover" />
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
