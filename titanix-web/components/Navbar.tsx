@@ -12,7 +12,6 @@ const LINKS = [
   { label: 'Work', href: '/#work' },
   { label: 'How we ship', href: '/ship' },
   { label: 'Studio', href: '/#studio' },
-  { label: 'Lab log', href: '/#log' },
   { label: 'Notes', href: '/notes' },
 ];
 

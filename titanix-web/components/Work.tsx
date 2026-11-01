@@ -38,7 +38,7 @@ export default function Work() {
   return (
     <section id="work" className="section" aria-labelledby="work-title">
       <SectionHead
-        n="04"
+        n="01"
         label="Index"
         id="work-title"
         title="Everything we've shipped."

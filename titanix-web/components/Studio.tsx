@@ -10,7 +10,7 @@ export default function Studio() {
   return (
     <section id="studio" className="section" aria-labelledby="studio-title">
       <SectionHead
-        n="07"
+        n="03"
         label="Studio"
         id="studio-title"
         title="A small studio. You talk to the people who write the code."

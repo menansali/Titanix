@@ -36,7 +36,7 @@ export default async function Proof() {
           </div>
         )}
         <div className="space-y-10">
-          {reviews.slice(0, 3).map((r) => (
+          {reviews.slice(0, 1).map((r) => (
             <figure key={`${r.slug}-${r.author}`}>
               <Stars n={r.rating} />
               <Reveal as="blockquote" className="mt-4 font-display text-2xl font-semibold leading-snug tracking-tight sm:text-4xl">

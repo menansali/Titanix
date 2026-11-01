@@ -3,7 +3,6 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { OFFERS } from '@/lib/data';
 import SectionHead from './ui/SectionHead';
 import BookingLink from './ui/BookingLink';
-import ScopePicker from './ScopePicker';
 
 /** A cal.com href opens the booking modal; anything else is a normal link. */
 function Action({ label, href, id, className }: { label: string; href: string; id: string; className: string }) {
@@ -24,7 +23,7 @@ function Action({ label, href, id, className }: { label: string; href: string; i
  * The two fixed offers, side by side on a hairline. Used on the home page and
  * on /ship (where `more` is off, since you're already on the details page).
  */
-export default function Offers({ n = '06', more = true }: { n?: string; more?: boolean }) {
+export default function Offers({ n = '02', more = true }: { n?: string; more?: boolean }) {
   return (
     <section id="offers" className="section" aria-labelledby="offers-title">
       <SectionHead
@@ -79,7 +78,6 @@ export default function Offers({ n = '06', more = true }: { n?: string; more?: b
         ))}
       </div>
 
-      <ScopePicker />
     </section>
   );
 }

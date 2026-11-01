@@ -182,7 +182,6 @@ const paletteItems: PaletteItem[] = [
   { group: 'Pages', label: 'How we ship', href: '/ship', keywords: 'process launch steps faq' },
   { group: 'Pages', label: 'App Review rejection guides', href: '/app-review', keywords: 'rejected guideline apple' },
   { group: 'Pages', label: 'Studio', href: '/#studio', keywords: 'founder about team' },
-  { group: 'Pages', label: 'Lab log', href: '/#log', keywords: 'releases updates changelog' },
   { group: 'Pages', label: 'Notes', href: '/notes', keywords: 'blog writing' },
   { group: 'Pages', label: 'Contact', href: '/#contact' },
   ...PROJECTS.filter((p) => p.caseStudy).map((p) => ({

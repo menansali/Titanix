@@ -220,8 +220,8 @@ export default function ShipPage() {
                   {f.q.startsWith('Is this only') && (
                     <>
                       {' '}
-                      <Link href="/#process" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
-                        See how those run
+                      <Link href="/#work" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+                        See that work
                       </Link>
                       .
                     </>
