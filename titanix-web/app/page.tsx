@@ -8,17 +8,22 @@ import Footer from '@/components/Footer';
 import Proof from '@/components/Proof';
 import Offers from '@/components/Offers';
 import MobileCTA from '@/components/MobileCTA';
+import Guarantee from '@/components/Guarantee';
+import { getLive } from '@/lib/appstore';
 
-export default function Home() {
+export default async function Home() {
+  const live = await getLive();
+
   return (
     <>
       <Navbar />
       <main>
         <Hero />
         <Showreel />
-        <Work />
+        <Work live={live} />
         <Proof />
-        <Offers />
+        <Offers promise={false} />
+        <Guarantee />
         <Studio />
         <Contact />
       </main>

@@ -5,8 +5,10 @@ import Image from 'next/image';
 import { Link } from 'next-view-transitions';
 import { ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PROJECTS } from '@/lib/data';
 import { useScrollProgress } from '@/lib/useScrollProgress';
+import { setTint } from '@/lib/signal';
 import { MARK_SHAPES } from './Logo';
 
 // iOS apps with screenshots, in portfolio order.
@@ -14,7 +16,7 @@ const APPS = PROJECTS.filter((p) => p.screenshots?.length && p.caseStudy);
 const N = APPS.length;
 
 // Phone body: stacked slabs fake the edge thickness in CSS 3D.
-const DEPTH = 16; // px
+const DEPTH = 20; // px
 const SLABS = 12;
 
 const clamp = (v: number, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, v));
@@ -28,6 +30,7 @@ export default function Showreel() {
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
   const reduced = useRef(false);
+  const inView = useRef(false);
 
   useEffect(() => {
     reduced.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -49,8 +52,28 @@ export default function Showreel() {
     if (next !== activeRef.current) {
       activeRef.current = next;
       setActive(next);
+      if (inView.current) setTint(APPS[next].accent ?? null);
     }
   });
+
+  // While the reel is on screen the terrain behind it takes the colour of the
+  // app being shown (see lib/signal.ts), and gives it back on the way out.
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const st = ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: 'top 55%',
+      end: 'bottom 45%',
+      onToggle: (self) => {
+        inView.current = self.isActive;
+        setTint(self.isActive ? APPS[activeRef.current].accent ?? null : null);
+      },
+    });
+    return () => {
+      st.kill();
+      setTint(null);
+    };
+  }, []);
 
   // Cursor tilt on top of the scroll rotation (pointer devices only).
   useEffect(() => {
@@ -72,14 +95,14 @@ export default function Showreel() {
       id="showreel"
       aria-label="Our apps"
       className="relative"
-      style={{ height: `${N * 90 + 30}svh` }}
+      style={{ height: `${N * 62 + 38}svh` }}
     >
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         <div className="section grid w-full items-center gap-6 !pb-0 !pt-16 lg:grid-cols-[1fr_1fr] lg:gap-10 lg:!pt-0 short:grid-cols-[1.3fr_1fr] short:!pt-12">
           {/* Copy */}
           <div className="order-2 text-center lg:order-1 lg:text-left short:order-1 short:text-left">
             <p className="label"><span className="mr-3 text-titanix-yellow">(01)</span>On the App Store now</p>
-            <div className="relative mt-5 min-h-[13rem] sm:min-h-[15rem] short:mt-3 short:min-h-[11rem]">
+            <div className="relative mt-5 min-h-[13rem] sm:min-h-[15rem] lg:mt-7 lg:min-h-[21rem] short:mt-3 short:min-h-[11rem]">
               {APPS.map((a, i) => (
                 <div
                   key={a.slug}
@@ -89,21 +112,21 @@ export default function Showreel() {
                   }`}
                 >
                   <div className="flex items-center justify-center gap-4 lg:justify-start">
-                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-[0.9rem] border border-titanix-border sm:h-14 sm:w-14">
-                      <Image src={a.icon!} alt="" fill sizes="56px" className="object-cover" />
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-[0.9rem] border border-titanix-border sm:h-14 sm:w-14 lg:h-[4.5rem] lg:w-[4.5rem] lg:rounded-[1.15rem]">
+                      <Image src={a.icon!} alt="" fill sizes="(min-width: 1024px) 72px, 56px" className="object-cover" />
                     </div>
                     <div className="text-left">
-                      <p className="text-xs text-titanix-faint">{a.category}</p>
-                      <h2 className="wide font-display text-3xl font-extrabold uppercase tracking-tight sm:text-4xl">{a.title.split(':')[0]}</h2>
+                      <p className="text-xs text-titanix-faint lg:text-sm">{a.category}</p>
+                      <h2 className="wide font-display text-3xl font-extrabold uppercase leading-none tracking-tight sm:text-4xl lg:mt-1 lg:text-5xl xl:text-6xl">{a.title.split(':')[0]}</h2>
                     </div>
                   </div>
-                  <p className="mx-auto mt-5 max-w-md font-display text-xl font-semibold leading-snug text-titanix-text [text-wrap:balance] sm:text-2xl lg:mx-0">
+                  <p className="mx-auto mt-5 max-w-md font-display text-xl font-semibold leading-snug text-titanix-text [text-wrap:balance] sm:text-2xl lg:mx-0 lg:mt-8 lg:max-w-xl lg:text-4xl lg:leading-[1.1] lg:tracking-tight">
                     {a.caseStudy!.tagline}
                   </p>
                   <Link
                     href={`/work/${a.slug}`}
                     tabIndex={i === active ? 0 : -1}
-                    className={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-titanix-yellow hover:underline ${
+                    className={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-titanix-yellow hover:underline lg:mt-7 lg:text-base ${
                       i === active ? '' : 'pointer-events-none'
                     }`}
                   >
@@ -129,7 +152,7 @@ export default function Showreel() {
             <div ref={tiltRef} style={{ transformStyle: 'preserve-3d' }}>
               <div
                 ref={phoneRef}
-                className="relative h-[44svh] max-h-[640px] min-h-[300px] w-auto lg:h-[64svh] short:h-[72svh] short:min-h-0"
+                className="relative h-[44svh] max-h-[640px] min-h-[300px] w-auto lg:h-[78svh] lg:max-h-[860px] short:h-[72svh] short:min-h-0"
                 style={{
                   aspectRatio: '9 / 19.2',
                   transformStyle: 'preserve-3d',
@@ -161,7 +184,7 @@ export default function Showreel() {
                         src={a.screenshots![0]}
                         alt=""
                         fill
-                        sizes="280px"
+                        sizes="(min-width: 1024px) 400px, 280px"
                         priority={i === 0}
                         className={`object-cover transition-opacity duration-300 ${i === active ? 'opacity-100' : 'opacity-0'}`}
                       />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { field, tint } from '@/lib/signal';
 
 /*
  * "Signal over terrain" — the site's background. A slowly drifting height
@@ -9,7 +10,9 @@ import { useEffect, useRef } from 'react';
  * across the contours. A nod to where Titanix started (LoRa networks, radio
  * propagation on real terrain). Raw WebGL2, one full-screen triangle.
  *
- * Strongest behind the hero and the footer, dimmed behind content.
+ * Strongest behind the hero and the footer, dimmed behind content. A section
+ * can lend the terrain its colour through `lib/signal.ts` (the Showreel does,
+ * per app), and the transmitter's state is published there for DOM effects.
  * No WebGL2 → nothing renders and the flat background shows.
  */
 
@@ -25,6 +28,8 @@ uniform vec2 uMouse;
 uniform float uScroll;
 uniform float uAmp;
 uniform float uSignal;
+uniform vec3 uTint;
+uniform float uTintAmt;
 out vec4 o;
 
 vec2 h2(vec2 p) {
@@ -70,7 +75,9 @@ void main() {
 
   float faint = mix(0.055, 0.15, major);
   vec3 col = bg;
-  col += ink * line * faint * uAmp;
+  // A tinted field draws its lines in that colour, and a little stronger.
+  col += mix(ink, uTint, uTintAmt) * line * faint * uAmp * (1.0 + 2.2 * uTintAmt);
+  col += uTint * smoothstep(0.35, 0.85, h) * 0.05 * uTintAmt;
   col += yel * line * (cover * 0.75 + ring * 0.9) * uAmp;
   col += yel * major * cover * 0.25 * uAmp;
   // Faint relief so the field is not flat between lines.
@@ -129,7 +136,7 @@ export default function SignalField() {
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
     const u = (n: string) => gl.getUniformLocation(prog, n);
-    const uRes = u('uRes'), uTime = u('uTime'), uMouse = u('uMouse'), uScroll = u('uScroll'), uAmp = u('uAmp'), uSignal = u('uSignal');
+    const uRes = u('uRes'), uTime = u('uTime'), uMouse = u('uMouse'), uScroll = u('uScroll'), uAmp = u('uAmp'), uSignal = u('uSignal'), uTint = u('uTint'), uTintAmt = u('uTintAmt');
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = window.matchMedia('(pointer: coarse)').matches;
@@ -151,6 +158,7 @@ export default function SignalField() {
     const target = { x: 0.72, y: 0.42, on: coarse };
     const mouse = { x: 0.72, y: 0.42 };
     let signal = 0;
+    const hue = { r: 0, g: 0, b: 0, amt: 0 };
     const onMove = (e: PointerEvent) => {
       if (e.pointerType !== 'mouse') return;
       target.x = e.clientX / window.innerWidth;
@@ -202,7 +210,21 @@ export default function SignalField() {
       const doc = document.documentElement.scrollHeight;
       const top = clamp(1 - y / (vh * 0.9));
       const bottom = clamp(1 - (doc - (y + vh)) / (vh * 1.1));
-      const amp = 0.38 + 0.62 * Math.max(top, bottom);
+      // A tint fades in and out; the colour itself eases between apps.
+      const kt = reduced ? 1 : 1 - Math.exp(-dt * 4);
+      hue.amt += ((tint.on ? 1 : 0) - hue.amt) * kt;
+      if (tint.on) {
+        const kc = hue.amt < 0.05 ? 1 : kt;
+        hue.r += (tint.r - hue.r) * kc;
+        hue.g += (tint.g - hue.g) * kc;
+        hue.b += (tint.b - hue.b) * kc;
+      }
+      const amp = Math.max(0.38 + 0.62 * Math.max(top, bottom), 0.38 + 0.5 * hue.amt);
+
+      field.x = mouse.x * window.innerWidth;
+      field.y = mouse.y * vh;
+      field.signal = signal;
+      field.time = time;
 
       gl.uniform2f(uRes, w, h);
       gl.uniform1f(uTime, time);
@@ -210,6 +232,8 @@ export default function SignalField() {
       gl.uniform1f(uScroll, y / vh);
       gl.uniform1f(uAmp, amp);
       gl.uniform1f(uSignal, signal);
+      gl.uniform3f(uTint, hue.r, hue.g, hue.b);
+      gl.uniform1f(uTintAmt, hue.amt);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
@@ -240,8 +264,10 @@ export default function SignalField() {
     }
     window.addEventListener('resize', onResize);
     canvas.style.opacity = '1';
+    field.live = !reduced;
 
     return () => {
+      field.live = false;
       cancelAnimationFrame(raf);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('resize', onResize);

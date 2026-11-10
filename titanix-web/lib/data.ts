@@ -34,6 +34,8 @@ export interface Project {
   url?: string;
   /** Cover image under /public/work (4:5, from the Instagram kit). */
   cover?: string;
+  /** The app's own colour (from its icon). The Showreel lends it to the terrain. */
+  accent?: string;
   /** App Store screenshots (mzstatic CDN). */
   screenshots?: string[];
   /** Muted screen recording (MP4 under /public/work), played in the case-study phone. */
@@ -82,6 +84,7 @@ export const PROJECTS: Project[] = [
   {
     id: 1,
     slug: 'lovly',
+    accent: '#FF5C8A',
     title: 'Lovly',
     category: 'iOS · Lifestyle · Social',
     year: '2026',
@@ -127,6 +130,7 @@ export const PROJECTS: Project[] = [
   {
     id: 2,
     slug: 'memopix',
+    accent: '#D9A441',
     title: 'Memopix',
     category: 'iOS · Photo & Video',
     year: '2026',
@@ -171,6 +175,7 @@ export const PROJECTS: Project[] = [
   {
     id: 3,
     slug: 'tevekkul-vakti',
+    accent: '#9480D8',
     title: 'Tevekkul Vakti: Daily Ayah',
     category: 'iOS · Lifestyle · Reference',
     year: '2026',
@@ -212,6 +217,7 @@ export const PROJECTS: Project[] = [
   {
     id: 4,
     slug: 'aer',
+    accent: '#22B5A3',
     title: 'Aer',
     category: 'iOS · Weather · Health',
     year: '2026',
@@ -254,6 +260,7 @@ export const PROJECTS: Project[] = [
   {
     id: 5,
     slug: 'pet-portraits',
+    accent: '#FF8A3D',
     title: 'Pet Portraits',
     category: 'iOS · AI',
     year: '2026',

@@ -22,8 +22,10 @@ function Action({ label, href, id, className }: { label: string; href: string; i
 /**
  * The two fixed offers, side by side on a hairline. Used on the home page and
  * on /ship (where `more` is off, since you're already on the details page).
+ * The home page turns `promise` off because the guarantee gets its own band
+ * right after (see Guarantee).
  */
-export default function Offers({ n = '02', more = true }: { n?: string; more?: boolean }) {
+export default function Offers({ n = '03', more = true, promise = true }: { n?: string; more?: boolean; promise?: boolean }) {
   return (
     <section id="offers" className="section" aria-labelledby="offers-title">
       <SectionHead
@@ -58,7 +60,7 @@ export default function Offers({ n = '02', more = true }: { n?: string; more?: b
               ))}
             </ul>
 
-            {o.promise && (
+            {promise && o.promise && (
               <p className="mt-8 bg-titanix-yellow p-5 text-black">
                 <span className="wide block font-display text-xl font-extrabold uppercase">{o.promise.split('. ')[0]}.</span>
                 <span className="mt-1.5 block text-sm text-black/75">{o.promise.split('. ').slice(1).join('. ')}</span>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { PROJECTS } from '@/lib/data';
+import type { AppLive } from '@/lib/appstore';
 import { gsap } from '@/lib/motion';
 import SectionHead from './ui/SectionHead';
 import TrackedLink from './ui/TrackedLink';
@@ -11,7 +12,10 @@ import TrackedLink from './ui/TrackedLink';
 const code = (id: number) => `TX-${String(id).padStart(2, '0')}`;
 const img = (p: (typeof PROJECTS)[number]) => p.screenshots?.[0] ?? p.cover;
 
-export default function Work() {
+const day = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+
+/** `live` is the App Store snapshot per slug (version, date, rating); rows without one fall back to the year. */
+export default function Work({ live = {} }: { live?: Record<string, AppLive> }) {
   const previewRef = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState<string | null>(null);
 
@@ -38,7 +42,7 @@ export default function Work() {
   return (
     <section id="work" className="section" aria-labelledby="work-title">
       <SectionHead
-        n="01"
+        n="02"
         label="Index"
         id="work-title"
         title="Everything we've shipped."
@@ -80,7 +84,15 @@ export default function Work() {
               <span className="relative hidden text-right text-sm text-titanix-muted transition-colors duration-300 group-hover:text-black/70 md:block">
                 {p.category}
                 <span className="block font-mono text-[11px] text-titanix-faint group-hover:text-black/50">
-                  {p.status === 'Lab' ? 'Lab' : p.year}
+                  {p.status === 'Lab' ? (
+                    'Lab'
+                  ) : live[p.slug] ? (
+                    <>
+                      {live[p.slug].rating ? `${live[p.slug].rating!.toFixed(1)}★ · ` : ''}v{live[p.slug].version} · {day(live[p.slug].released)}
+                    </>
+                  ) : (
+                    `Live · ${p.year}`
+                  )}
                 </span>
               </span>
               <span className="relative flex justify-end">
