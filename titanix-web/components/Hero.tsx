@@ -3,6 +3,7 @@ import { Link } from 'next-view-transitions';
 import { ArrowDownRight, ArrowRight } from 'lucide-react';
 import { PROJECTS } from '@/lib/data';
 import Scramble from './motion/Scramble';
+import SignalType from './motion/SignalType';
 
 export default function Hero() {
   const onStore = PROJECTS.filter((p) => p.icon && p.url?.includes('apps.apple.com'));
@@ -14,19 +15,12 @@ export default function Hero() {
         <Scramble immediate delay={0.35} text="iOS · SaaS · IoT" className="hidden sm:inline" />
       </div>
 
-      {/* CSS-only entrance so the headline paints before any JavaScript (it's the LCP element). */}
-      <h1
+      {/* CSS-only entrance so the headline paints before any JavaScript (it's the LCP element);
+          afterwards its letters respond to the signal (see SignalType). */}
+      <SignalType
+        lines={['From bare', 'metal to the', 'App Store']}
         className="wide my-10 font-display short:my-6 text-[9.1vw] font-extrabold uppercase leading-[0.86] tracking-[-0.025em] sm:text-[9.4vw] 2xl:text-[8.6rem]"
-      >
-        {['From bare', 'metal to the', 'App Store'].map((line, i) => (
-          <span key={line} className="block overflow-hidden pb-[0.04em]">
-            <span className="rise" style={{ animationDelay: `${0.08 + i * 0.09}s` }}>
-              {line}
-              {i === 2 && <span className="text-titanix-yellow">.</span>}
-            </span>
-          </span>
-        ))}
-      </h1>
+      />
 
       <div className="grid gap-10 border-t border-titanix-border pt-6 xl:grid-cols-[1fr_auto] xl:items-end">
         <div className="max-w-xl">

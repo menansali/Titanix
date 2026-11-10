@@ -227,3 +227,9 @@ html,
 body {
   overflow-x: clip;
 }
+
+/* On the yellow band the selection colours swap, or selected text disappears. */
+.on-yellow ::selection {
+  background: #0A0A08;
+  color: #EFE200;
+}

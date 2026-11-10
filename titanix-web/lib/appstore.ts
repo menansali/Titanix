@@ -92,6 +92,29 @@ export async function getRatings(slug?: string): Promise<Ratings | null> {
   return { count, average: Math.round(average * 10) / 10 };
 }
 
+/** What the Work index shows per app: the current version, its date, and the rating where there is one. */
+export interface AppLive {
+  version: string;
+  released: string;
+  rating?: number;
+  count?: number;
+}
+
+export async function getLive(): Promise<Record<string, AppLive>> {
+  const [apps, rows] = await Promise.all([getApps(), getRatingsByCountry()]);
+  const out: Record<string, AppLive> = {};
+  for (const a of apps) {
+    const mine = rows.filter((r) => r.slug === a.slug);
+    const count = mine.reduce((n, r) => n + r.count, 0);
+    out[a.slug] = {
+      version: a.version,
+      released: a.released,
+      ...(count ? { count, rating: Math.round((mine.reduce((n, r) => n + r.avg * r.count, 0) / count) * 10) / 10 } : {}),
+    };
+  }
+  return out;
+}
+
 interface RssEntry {
   'im:rating'?: { label: string };
   title: { label: string };

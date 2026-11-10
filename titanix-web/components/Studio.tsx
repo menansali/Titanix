@@ -10,7 +10,7 @@ export default function Studio() {
   return (
     <section id="studio" className="section" aria-labelledby="studio-title">
       <SectionHead
-        n="03"
+        n="04"
         label="Studio"
         id="studio-title"
         title="A small studio. You talk to the people who write the code."
@@ -24,8 +24,10 @@ export default function Studio() {
               alt={`${FOUNDER.name}, ${FOUNDER.role.toLowerCase()} of Titanix`}
               fill
               sizes="(min-width: 1024px) 22rem, (min-width: 768px) 18rem, 100vw"
-              className="object-cover grayscale-[35%]"
+              className="object-cover brightness-[0.95] contrast-[1.15] grayscale"
             />
+            {/* Pulls the studio backdrop down into the page's near-black. */}
+            <span aria-hidden="true" className="absolute inset-0 bg-[#9f9f90] mix-blend-multiply" />
           </RevealImage>
           <figcaption className="mt-3 flex items-baseline justify-between font-mono text-xs">
             <span className="text-titanix-text">{FOUNDER.name}</span>
