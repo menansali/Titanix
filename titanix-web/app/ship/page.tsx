@@ -13,7 +13,7 @@ import { CONTACT, OFFERS, PROJECTS, SHIP_STEPS } from '@/lib/data';
 import { SITE_URL } from '@/lib/site';
 
 const DESCRIPTION =
-  'The launch process every Titanix app goes through, from checking the idea to the App Store, plus the App Launch Audit and the Idea to App Store build with an approval guarantee.';
+  'The launch process every Titanix app goes through, from checking the idea to the App Store. Plus App Rescue for apps built with AI tools that are stuck in review, the App Launch Audit, and the Idea to App Store build with an approval guarantee.';
 
 export const metadata: Metadata = {
   title: 'How we ship iOS apps',
@@ -39,6 +39,10 @@ const CHECKS = [
 
 const FAQ = [
   {
+    q: 'Can you take over an app built with Lovable, Rork, Bolt or Cursor?',
+    a: 'Yes, that is what App Rescue is for. We read the code first. Often the backend and the logic can stay, and the screens people use most get rebuilt natively. If starting over would be cheaper, we tell you before you pay anything.',
+  },
+  {
     q: 'What does “approved, or we fix it free” cover?',
     a: 'The app we built for you. If App Review rejects it, we fix what they flag and resubmit, at no extra cost, until it is approved. It does not cover features added after the scope is agreed, or an idea Apple will not accept in any form. Step one exists to catch that before any code is written.',
   },
@@ -48,7 +52,7 @@ const FAQ = [
   },
   {
     q: 'How much does it cost?',
-    a: 'Both offers are fixed price. We quote after a short call, once we know the app, and you have the number in writing before anything starts.',
+    a: 'Every offer is fixed price. We quote once we have seen the app, and you have the number in writing before anything starts.',
   },
   {
     q: 'Where are your clients?',
@@ -56,7 +60,7 @@ const FAQ = [
   },
   {
     q: 'Is this only for iOS?',
-    a: 'This process is for iOS apps. We build SaaS platforms and IoT systems too, on the usual project process.',
+    a: 'This process is for iOS apps. We also build the hardware side of connected products, and SaaS platforms, on the usual project process.',
   },
 ];
 
@@ -174,9 +178,42 @@ export default function ShipPage() {
 
         <Offers n="02" more={false} />
 
-        <section id="order" className="section scroll-mt-16" aria-labelledby="order-title">
+        <section id="rescue-form" className="section scroll-mt-16" aria-labelledby="rescue-title">
           <SectionHead
             n="03"
+            label="App Rescue"
+            id="rescue-title"
+            title="Built it with AI? Send it over."
+            intro="Rejected, crashing, or never submitted because it doesn't feel like an app yet. Tell us what you have and where it's stuck."
+          />
+          <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
+            <ol className="border-t border-titanix-border">
+              {[
+                ['You send what you have', 'A repo, a TestFlight invite or a project link, and the rejection message if you got one.'],
+                ['We read it and quote', 'What can stay, what has to be rebuilt natively, and a fixed price in writing. If starting over is cheaper, we say so.'],
+                ['We fix it and ship it', 'Native screens, purchases, privacy and the listing, then submission and every reply to App Review.'],
+              ].map(([t, d], n) => (
+                <li key={t} className="grid grid-cols-[3rem_1fr] border-b border-titanix-border py-6">
+                  <span className="font-mono text-xs text-titanix-yellow">{String(n + 1).padStart(2, '0')}</span>
+                  <span>
+                    <span className="block font-display text-xl font-semibold tracking-tight">{t}</span>
+                    <span className="mt-1 block text-titanix-muted">{d}</span>
+                  </span>
+                </li>
+              ))}
+              <li className="pt-6">
+                <Link href="/app-review/check" className="inline-flex items-center gap-2 text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+                  Not sure? Run the free risk check first <ArrowRight size={15} />
+                </Link>
+              </li>
+            </ol>
+            <AuditForm kind="rescue" />
+          </div>
+        </section>
+
+        <section id="order" className="section scroll-mt-16" aria-labelledby="order-title">
+          <SectionHead
+            n="04"
             label="Order the audit"
             id="order-title"
             title="Send us the app."
@@ -210,7 +247,7 @@ export default function ShipPage() {
         </section>
 
         <section className="section" aria-labelledby="faq-title">
-          <SectionHead n="04" label="Questions" id="faq-title" title="Before you book." />
+          <SectionHead n="05" label="Questions" id="faq-title" title="Before you book." />
           <dl className="mt-12 border-t border-titanix-border">
             {FAQ.map((f) => (
               <div key={f.q} className="grid gap-3 border-b border-titanix-border py-8 md:grid-cols-[1fr_1.4fr] md:gap-10">
@@ -220,8 +257,8 @@ export default function ShipPage() {
                   {f.q.startsWith('Is this only') && (
                     <>
                       {' '}
-                      <Link href="/#work" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
-                        See that work
+                      <Link href="/hardware" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+                        Hardware + app
                       </Link>
                       .
                     </>

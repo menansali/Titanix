@@ -27,9 +27,9 @@ const mono = JetBrains_Mono({
   display: 'swap',
 });
 
-const SITE_TITLE = 'Titanix — iOS Apps, SaaS & IoT Studio';
+const SITE_TITLE = 'Titanix — iOS product studio: our apps, your launch';
 const SITE_DESCRIPTION =
-  'Titanix is a product studio forging iOS apps, SaaS platforms, and IoT systems. From bare metal to the App Store, we build things that matter.';
+  'Titanix is a two-person iOS studio with five apps of its own on the App Store. We take yours, from an idea or a stuck AI-built app, through App Review to a paying product.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   keywords: [
-    'iOS development', 'iOS app studio', 'SaaS development', 'IoT development',
-    'Swift', 'SwiftUI', 'product studio', 'embedded systems', 'app development agency',
-    'Next.js development', 'software engineering', 'Titanix',
+    'iOS app studio', 'App Store rejection', 'App Review help', 'AI-built app to App Store',
+    'Lovable app App Store', 'Rork app App Store', 'Swift', 'SwiftUI', 'product studio',
+    'IoT companion app', 'LoRa', 'embedded firmware', 'Titanix',
   ],
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],
@@ -124,20 +124,23 @@ const structuredData = {
       },
       areaServed: 'Worldwide',
       knowsAbout: [
-        'iOS development', 'Swift', 'SwiftUI', 'SaaS platforms',
-        'IoT systems', 'embedded firmware', 'machine learning', 'Next.js',
+        'iOS development', 'Swift', 'SwiftUI', 'App Store Review Guidelines',
+        'App Store launch', 'IoT systems', 'embedded firmware', 'LoRa', 'Next.js',
       ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Services',
-        itemListElement: PILLARS.map((p) => ({
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: p.title,
-            description: p.description,
-          },
-        })),
+        itemListElement: [
+          ...OFFERS.map((o) => ({
+            '@type': 'Offer',
+            url: `${SITE_URL}/ship#${o.id}`,
+            itemOffered: { '@type': 'Service', name: o.title, description: o.summary },
+          })),
+          ...PILLARS.map((p) => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: p.title, description: p.description },
+          })),
+        ],
       },
     },
     {
@@ -174,6 +177,8 @@ const structuredData = {
 // Everything the ⌘K palette can jump to. Built here so only labels and links reach the client.
 const paletteItems: PaletteItem[] = [
   ...CONTACT.booking.map((b) => ({ group: 'Actions', label: `Book a ${b.label} call`, hint: b.note, href: b.url, keywords: 'calendar meeting cal' })),
+  { group: 'Actions', label: 'Check my app’s rejection risk', hint: 'Free', href: '/app-review/check', keywords: 'will my app get rejected quiz test' },
+  { group: 'Actions', label: 'Rescue an AI-built app', hint: 'App Rescue', href: '/ship#rescue-form', keywords: 'lovable rork bolt cursor stuck rejected fix' },
   { group: 'Actions', label: 'Order the App Launch Audit', hint: '48 hours', href: '/ship#order', keywords: 'review check' },
   { group: 'Actions', label: 'Send a project brief', href: '/#contact', keywords: 'contact form start' },
   { group: 'Actions', label: `Email ${CONTACT.email}`, href: `mailto:${CONTACT.email}`, keywords: 'mail' },
@@ -181,6 +186,7 @@ const paletteItems: PaletteItem[] = [
   { group: 'Pages', label: 'Offers', hint: OFFERS.map((o) => o.title).join(' · '), href: '/#offers', keywords: 'pricing services' },
   { group: 'Pages', label: 'How we ship', href: '/ship', keywords: 'process launch steps faq' },
   { group: 'Pages', label: 'App Review rejection guides', href: '/app-review', keywords: 'rejected guideline apple' },
+  { group: 'Pages', label: 'Hardware + app', href: '/hardware', keywords: 'iot firmware lora sensors device bluetooth' },
   { group: 'Pages', label: 'Studio', href: '/#studio', keywords: 'founder about team' },
   { group: 'Pages', label: 'Notes', href: '/notes', keywords: 'blog writing' },
   { group: 'Pages', label: 'Contact', href: '/#contact' },

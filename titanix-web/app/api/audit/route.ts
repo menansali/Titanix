@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { sendMail } from '@/lib/mail';
-import { AUDIT_ACCESS, auditBody, auditSubject, type AuditOrder } from '@/lib/contact';
+import { ORDER_KINDS, auditBody, auditSubject, type AuditOrder, type OrderKind } from '@/lib/contact';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const text = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 
-/** Receives an App Launch Audit request. Same delivery and fallbacks as /api/contact. */
+/** Receives an App Launch Audit or App Rescue request. Same delivery and fallbacks as /api/contact. */
 export async function POST(req: Request) {
   let data: Record<string, unknown>;
   try {
@@ -16,15 +16,18 @@ export async function POST(req: Request) {
   }
   if (text(data.company, 200)) return NextResponse.json({ ok: true });
 
+  const kind: OrderKind = data.kind === 'rescue' ? 'rescue' : 'audit';
+  const options = ORDER_KINDS[kind].options as readonly string[];
   const order: AuditOrder = {
+    kind,
     name: text(data.name, 120),
     email: text(data.email, 200),
     app: text(data.app, 300),
-    access: (AUDIT_ACCESS as readonly string[]).includes(String(data.access)) ? String(data.access) : '',
+    access: options.includes(String(data.access)) ? String(data.access) : '',
     concern: text(data.concern, 3000),
   };
   if (!order.name || !EMAIL_RE.test(order.email) || order.app.length < 3 || !order.access) {
-    return NextResponse.json({ error: 'Please fill in your name, email, the app and how we can access it.' }, { status: 422 });
+    return NextResponse.json({ error: 'Please fill in your name, email, the app and pick one option.' }, { status: 422 });
   }
 
   const sent = await sendMail({ subject: auditSubject(order), text: auditBody(order), replyTo: order.email });

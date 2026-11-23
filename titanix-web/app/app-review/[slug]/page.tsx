@@ -44,7 +44,7 @@ export default async function GuidePage({ params }: { params: Params }) {
         '@type': 'TechArticle',
         headline: g.title,
         description: g.summary,
-        dateModified: '2026-10-05',
+        dateModified: g.checked,
         author: { '@id': `${SITE_URL}/#founder` },
         publisher: { '@id': `${SITE_URL}/#organization` },
         mainEntityOfPage: url,
@@ -133,6 +133,9 @@ export default async function GuidePage({ params }: { params: Params }) {
                 <Link href="/ship#order" className="inline-flex items-center gap-2 whitespace-nowrap bg-black px-5 py-3 text-sm font-semibold text-titanix-yellow">
                   Order the audit <ArrowRight size={16} />
                 </Link>
+                <Link href="/ship#rescue" className="inline-flex items-center gap-2 whitespace-nowrap border border-black/40 px-5 py-3 text-sm font-semibold">
+                  Built it with AI? App Rescue
+                </Link>
                 {SAMPLE_AUDIT.published && (
                   <Link href="/ship/sample-audit" className="inline-flex items-center gap-2 whitespace-nowrap border border-black/40 px-5 py-3 text-sm font-semibold">
                     See a sample report
@@ -146,7 +149,8 @@ export default async function GuidePage({ params }: { params: Params }) {
               <a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-titanix-text">
                 full text on Apple&apos;s site
               </a>{' '}
-              is what counts. Last checked 5 October 2026.
+              is what counts. Last checked{' '}
+              {new Date(`${g.checked}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}.
             </p>
           </div>
 

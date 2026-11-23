@@ -2,7 +2,8 @@
  * App Review rejection guides: one page per guideline that commonly gets apps
  * rejected, rendered at /app-review/[slug]. Quotes are short excerpts from
  * Apple's App Review Guidelines (developer.apple.com/app-store/review/guidelines),
- * checked 2026-10-05. Keep the advice practical and generic, no invented stats.
+ * checked 2026-10-05 (4.2, 1.2 and 5.1.2 added and checked 2026-11-24 against
+ * the version updated 2026-10-16). Keep the advice practical and generic, no invented stats.
  */
 
 export interface Guide {
@@ -20,7 +21,12 @@ export interface Guide {
   fix: string[];
   /** What to write back to App Review after fixing. */
   reply: string;
+  /** ISO date the quote was last checked against Apple's page. */
+  checked: string;
 }
+
+/** Guides first written on 2026-10-05; newer ones set their own `checked`. */
+const FIRST_CHECK = '2026-10-05';
 
 export const GUIDES: Guide[] = [
   {
@@ -48,6 +54,7 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       'Say what was broken and what you changed, for example: “The crash on launch on iOS 18 was caused by X and is fixed in build 42. A demo account is in the review notes.” Then submit the new build.',
+    checked: FIRST_CHECK,
   },
   {
     slug: 'guideline-2-3-3-screenshots',
@@ -72,6 +79,7 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       'Screenshots are metadata, so you usually don’t need a new build. Replace them in App Store Connect and reply: “We updated the screenshots to show the app in use.”',
+    checked: FIRST_CHECK,
   },
   {
     slug: 'guideline-2-3-accurate-metadata',
@@ -97,6 +105,7 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       'List what you changed: “We removed X from the keywords and updated the description to match the current features.” Metadata-only fixes don’t need a new build.',
+    checked: FIRST_CHECK,
   },
   {
     slug: 'guideline-3-1-1-in-app-purchase',
@@ -121,6 +130,7 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       '“All premium features are now sold through in-app purchase, and Restore Purchases is on the paywall and in Settings.” Submit the new build.',
+    checked: FIRST_CHECK,
   },
   {
     slug: 'guideline-3-1-2-subscriptions',
@@ -145,6 +155,7 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       '“The paywall now shows the full price and billing period, explains auto-renewal, and links our Terms of Use and Privacy Policy.” Submit the new build with a screenshot of the paywall in the notes.',
+    checked: FIRST_CHECK,
   },
   {
     slug: 'guideline-4-3-spam',
@@ -168,6 +179,7 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       'Explain concretely what is new, with screens: “Unlike other X apps, ours does Y, shown in screenshots 1 and 2.” If you believe the rejection is wrong, you can appeal to the App Review Board.',
+    checked: FIRST_CHECK,
   },
   {
     slug: 'guideline-4-8-sign-in-with-apple',
@@ -191,6 +203,7 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       '“We added Sign in with Apple as an equal option on the sign-in screen.” Submit the new build.',
+    checked: FIRST_CHECK,
   },
   {
     slug: 'guideline-5-1-1-privacy',
@@ -218,6 +231,7 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       'Describe each change: “Updated the location purpose string to explain X, added the privacy policy link in Settings.” Purpose strings live in the build, so submit a new one.',
+    checked: FIRST_CHECK,
   },
   {
     slug: 'guideline-5-1-1-v-account-deletion',
@@ -241,6 +255,87 @@ export const GUIDES: Guide[] = [
     ],
     reply:
       '“Users can now delete their account in Settings → Account → Delete Account, which removes the account and its data.” Submit the new build and say where to find it.',
+    checked: FIRST_CHECK,
+  },
+  {
+    slug: 'guideline-4-2-minimum-functionality',
+    code: '4.2',
+    name: 'Minimum Functionality',
+    title: 'Guideline 4.2 rejection: “repackaged website”, and how to fix it',
+    summary:
+      'Apple thinks the app is a website in a wrapper, or too thin to be useful. This is the rejection apps made with web-first and AI app builders hit most.',
+    quote:
+      'Your app should include features, content, and UI that elevate it beyond a repackaged website.',
+    causes: [
+      'The whole app is one web view loading your site, with a tab bar around it.',
+      'Web-style screens: no native navigation, no back swipe, text that ignores Dynamic Type, buttons that look like links.',
+      'Nothing the phone does that a browser can’t: no notifications, widgets, offline use, camera or share sheet.',
+      'The app is mostly a list of links, a marketing page or an aggregator of other people’s content (4.2.2).',
+      'A single prompt box in front of a chatbot API, with nothing else around it.',
+    ],
+    fix: [
+      'Rebuild the screens people use most as native screens. Keep the web view only for content that really is web content, like help pages.',
+      'Add at least one thing a website can’t do and make it central: a widget, notifications people ask for, offline access, camera input, Lock Screen or Shortcuts support.',
+      'Use the system navigation, text sizes and controls so it behaves like an iPhone app.',
+      'For AI apps, build the workflow around the model: history, saved results, editing, sharing, presets for one clear job.',
+      'Lead the screenshots and the review notes with those native features.',
+    ],
+    reply:
+      'List what changed and where to see it: “The app now has native screens for X and Y, a Home Screen widget, and offline access to saved items. Only the help pages are web content.” Submit the new build.',
+    checked: '2026-11-24',
+  },
+  {
+    slug: 'guideline-1-2-user-generated-content',
+    code: '1.2',
+    name: 'User-Generated Content',
+    title: 'Guideline 1.2 rejection: AI and user content without moderation',
+    summary:
+      'People can post, share or generate content in your app, including with AI, and the app has no way to filter it, report it or block someone.',
+    quote:
+      'This includes social media, user-generated content platforms, and AI content creation apps.',
+    causes: [
+      'An AI image, video or chat app with no filter on what can be generated.',
+      'Users can see each other’s posts, profiles or generated images, but there is no Report button.',
+      'No way to block another user.',
+      'No published contact information for reaching the developer.',
+      'A report button that goes nowhere, with nobody reading the reports.',
+    ],
+    fix: [
+      'Filter prompts and outputs before anything is shown or shared. Most AI providers offer a moderation endpoint; use it on both sides.',
+      'Add Report on every piece of content and every profile, and send those reports somewhere a person reads them.',
+      'Add Block user, and hide a blocked user’s content straight away.',
+      'Publish a support email or contact page in the app and in App Store Connect.',
+      'Write the moderation setup in the review notes, so the reviewer doesn’t have to find it.',
+    ],
+    reply:
+      '“The app now filters generated content with X before it is shown, every item and profile has Report and Block, reports go to our support team, and our contact details are in Settings.” Submit the new build.',
+    checked: '2026-11-24',
+  },
+  {
+    slug: 'guideline-5-1-2-third-party-ai',
+    code: '5.1.2(i)',
+    name: 'Data Use and Sharing: third-party AI',
+    title: 'Guideline 5.1.2(i) rejection: sending user data to an AI service without asking',
+    summary:
+      'The app sends what people type, say or upload to an outside AI service, like OpenAI, Anthropic or Google, without telling them first and asking.',
+    quote:
+      'You must clearly disclose where personal data will be shared with third parties, including with third-party AI, and obtain explicit permission before doing so.',
+    causes: [
+      'Prompts, photos, voice or documents go to an AI API and the user is never told.',
+      'The disclosure is only in the privacy policy, not in the app before the first request.',
+      'Consent is assumed by using the app, with no explicit “Allow” step.',
+      'The App Privacy answers in App Store Connect don’t list the data the AI provider receives.',
+    ],
+    fix: [
+      'Before the first AI request, show a short screen that names the provider, says what is sent and why, and has a clear Allow button.',
+      'Let people decline and still use the parts of the app that don’t need the AI.',
+      'Remember the choice and let people change it later in Settings.',
+      'Name the AI provider and what it receives in the privacy policy, and update the App Privacy answers to match.',
+      'Send only what the feature needs: strip names, locations and photo metadata the model doesn’t use.',
+    ],
+    reply:
+      '“Before any data is sent to X, the app now explains what is shared and asks for permission. People can decline and change this in Settings. The privacy policy and App Privacy details are updated.” Submit the new build.',
+    checked: '2026-11-24',
   },
 ];
 

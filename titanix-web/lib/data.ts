@@ -68,11 +68,11 @@ export const PILLARS: Pillar[] = [
   },
   {
     id: 'iot',
-    title: 'IoT systems',
+    title: 'Hardware + app',
     description:
-      'Sensors, firmware, long-range radio networks and the pipelines that turn raw readings into something people can use.',
-    stack: ['C++', 'Arduino', 'Raspberry Pi', 'LoRa', 'Grafana'],
-    examples: ['env-monitor', 'edge-lora'],
+      'Firmware, sensors and long-range radio on one side, the iOS app and the data pipeline on the other, built by the same two people.',
+    stack: ['C++', 'Arduino', 'Raspberry Pi', 'LoRa', 'FastAPI'],
+    examples: ['env-monitor', 'edge-lora', 'aer'],
   },
 ];
 
@@ -451,6 +451,21 @@ export interface Offer {
 }
 
 export const OFFERS: Offer[] = [
+  {
+    id: 'rescue',
+    title: 'App Rescue',
+    time: 'Fixed scope',
+    summary: 'You built it with Lovable, Rork, Bolt, Cursor or a freelancer, and now it is stuck: rejected, crashing, or not quite an app yet. We take what you have to approved and earning, without starting over unless we have to.',
+    includes: [
+      'A read of the code and the rejection before we quote',
+      'Native screens where App Review sees a wrapped website',
+      'StoreKit subscriptions, paywall and restore purchases',
+      'Privacy, AI data disclosure and account deletion done properly',
+      'Listing, submission and the replies to App Review',
+    ],
+    cta: { label: 'Rescue my app', href: '/ship#rescue-form' },
+    alt: { label: 'Free risk check', href: '/app-review/check' },
+  },
   {
     id: 'audit',
     title: 'App Launch Audit',

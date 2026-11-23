@@ -10,6 +10,8 @@ const NAV = [
   { label: 'How we ship', href: '/ship' },
   { label: 'Offers', href: '/#offers' },
   { label: 'Rejection guides', href: '/app-review' },
+  { label: 'Rejection-risk check', href: '/app-review/check' },
+  { label: 'Hardware + app', href: '/hardware' },
   { label: 'Studio', href: '/#studio' },
   { label: 'Notes', href: '/notes' },
   { label: 'Contact', href: '/#contact' },

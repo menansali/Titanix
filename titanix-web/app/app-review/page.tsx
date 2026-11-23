@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 import { Link } from 'next-view-transitions';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SectionHead from '@/components/ui/SectionHead';
 import { GUIDES } from '@/lib/guides';
+import { RISK_QUESTIONS } from '@/lib/riskCheck';
 
 export const metadata: Metadata = {
   title: 'App Store rejection guides',
   description:
-    'What the most common App Review rejections mean and how to fix them: 2.1, 2.3, 2.3.3, 3.1.1, 3.1.2, 4.3, 4.8 and 5.1.1, in plain English.',
+    `What the most common App Review rejections mean and how to fix them, in plain English: ${GUIDES.map((g) => g.code).join(', ')}. Plus a free rejection-risk check.`,
   alternates: { canonical: '/app-review' },
 };
 
@@ -26,6 +27,18 @@ export default function GuidesPage() {
             title="Got rejected? Start here."
             intro="The App Review guidelines that reject apps most often, what each one means, and what to change before you resubmit."
           />
+          <Link
+            href="/app-review/check"
+            className="group mt-12 flex flex-col gap-4 bg-titanix-yellow p-6 text-black sm:flex-row sm:items-center sm:justify-between sm:p-8"
+          >
+            <span>
+              <span className="wide block font-display text-2xl font-extrabold uppercase leading-tight">Not submitted yet?</span>
+              <span className="mt-1 block text-black/75">Answer {RISK_QUESTIONS.length} yes-or-no questions and see which guidelines your app is likely to trip. Nothing you answer leaves your browser.</span>
+            </span>
+            <span className="inline-flex items-center gap-2 whitespace-nowrap bg-black px-5 py-3 text-sm font-semibold text-titanix-yellow">
+              Check my app <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
           <ol className="mt-14 border-t border-titanix-border">
             {GUIDES.map((g) => (
               <li key={g.slug}>

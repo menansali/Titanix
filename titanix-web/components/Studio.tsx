@@ -50,6 +50,15 @@ export default function Studio() {
             work, and why we are happy to own a product from the firmware to the App Store listing.
           </Reveal>
           <p>
+            Titanix is two of us: a designer who draws every screen before it is built, and me writing the code.
+            Our own apps come first. They are where we try things out, and how we know what App Review will say
+            before you submit. If your product has a device in it,{' '}
+            <Link href="/hardware" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+              we build that side too
+            </Link>
+            .
+          </p>
+          <p>
             Every app we ship, ours or a client&apos;s, goes through the same launch process and the same
             checks before Apple sees it.{' '}
             <Link href="/ship" className="text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">

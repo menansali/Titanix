@@ -19,8 +19,10 @@ function Action({ label, href, id, className }: { label: string; href: string; i
   );
 }
 
+const COUNT = ['', 'One way', 'Two ways', 'Three ways', 'Four ways'];
+
 /**
- * The two fixed offers, side by side on a hairline. Used on the home page and
+ * The fixed offers, side by side on a hairline. Used on the home page and
  * on /ship (where `more` is off, since you're already on the details page).
  * The home page turns `promise` off because the guarantee gets its own band
  * right after (see Guarantee).
@@ -32,24 +34,24 @@ export default function Offers({ n = '03', more = true, promise = true }: { n?: 
         n={n}
         label="Offers"
         id="offers-title"
-        title="Two ways to start."
-        intro="Both are fixed price, agreed before we begin. The audit is the quick way to find out where an app stands."
+        title={`${COUNT[OFFERS.length] ?? 'Ways'} to start.`}
+        intro="All fixed price, agreed before we begin. Already built something that's stuck? Start with the rescue."
       />
 
-      <div className="mt-12 grid border-t border-titanix-border lg:grid-cols-2">
+      <div className="mt-12 grid border-t border-titanix-border lg:grid-cols-3">
         {OFFERS.map((o, i) => (
           <article
             key={o.id}
             id={o.id}
-            className={`flex scroll-mt-24 flex-col border-b border-titanix-border py-10 lg:border-b-0 lg:py-12 ${
-              i === 0 ? 'lg:border-r lg:pr-12' : 'lg:pl-12'
-            }`}
+            className={`flex scroll-mt-24 flex-col border-b border-titanix-border py-10 lg:border-b-0 lg:px-8 lg:py-12 xl:px-10 ${
+              i < OFFERS.length - 1 ? 'lg:border-r' : ''
+            } ${i === 0 ? 'lg:!pl-0' : ''} ${i === OFFERS.length - 1 ? 'lg:!pr-0' : ''}`}
           >
             <div className="flex items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.18em]">
               <span className="text-titanix-yellow">({String.fromCharCode(65 + i)})</span>
               <span className="border border-titanix-border px-2.5 py-1 text-titanix-muted">{o.time}</span>
             </div>
-            <h3 className="wide wide-in mt-6 font-display text-[8vw] font-extrabold uppercase leading-[0.95] tracking-tight sm:text-5xl xl:text-6xl">
+            <h3 className="wide wide-in mt-6 font-display text-[8vw] font-extrabold uppercase leading-[0.95] tracking-tight sm:text-5xl lg:text-4xl 2xl:text-5xl">
               {o.title}
             </h3>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-titanix-muted">{o.summary}</p>
@@ -80,6 +82,12 @@ export default function Offers({ n = '03', more = true, promise = true }: { n?: 
         ))}
       </div>
 
+      <p className="mt-10 flex flex-col gap-2 border-t border-titanix-border pt-6 text-titanix-muted sm:flex-row sm:items-baseline sm:justify-between">
+        <span>Building a physical product? We write the firmware and the app that pairs with it.</span>
+        <Link href="/hardware" className="inline-flex items-center gap-2 text-titanix-text underline decoration-titanix-border underline-offset-4 hover:decoration-titanix-yellow">
+          Hardware + app <ArrowRight size={15} />
+        </Link>
+      </p>
     </section>
   );
 }
